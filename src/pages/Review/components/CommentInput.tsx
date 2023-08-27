@@ -1,9 +1,10 @@
-const CommentInput = () => {
+const CommentInput = ({ onComment }: { onComment: () => void }) => {
     return (
         <form
             className="w-full max-w-5xl"
             onSubmit={(event) => {
                 event.preventDefault();
+                onComment();
             }}
         >
             <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">

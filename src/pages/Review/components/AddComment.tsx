@@ -4,6 +4,9 @@ import CommentInput from './CommentInput';
 
 const AddComment = () => {
     const [showArea, setShowArea] = useState(false);
+    const onComment = () => {
+        setShowArea(false);
+    };
     return (
         <div className="flex flex-col w-full max-w-5xl justify-center items-center">
             <button
@@ -12,7 +15,7 @@ const AddComment = () => {
             >
                 {showArea ? 'Hide' : 'Add new comment +'}
             </button>
-            {showArea && <CommentInput />}
+            {showArea && <CommentInput onComment={onComment} />}
         </div>
     );
 };

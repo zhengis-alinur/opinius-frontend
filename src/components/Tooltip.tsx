@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Tooltip = ({ text }: { text: string }) => {
     return (
         <div

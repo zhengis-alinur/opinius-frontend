@@ -3,7 +3,7 @@ import { useState } from 'react';
 import ReviewCard from '../../components/ReviewCard';
 
 const BestReviews = () => {
-    const [hidden, setHidden] = useState(false);
+    const [hidden, setHidden] = useState(true);
     return (
         <div
             className="`w-full max-w-5xl"
@@ -24,7 +24,7 @@ const BestReviews = () => {
                     <span>Top 12 the best reviews</span>
                     <svg
                         data-accordion-icon
-                        className={`w-3 h-3 rotate-${hidden ? 0 : 180} shrink-0`}
+                        className={`w-3 h-3 rotate-${hidden ? 180 : 0} shrink-0`}
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"

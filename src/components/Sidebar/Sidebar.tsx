@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 
+import { user } from '../../data';
 import ProfileImage from '../ProfileImage';
 import Account from './icons/Account';
 import Home from './icons/Home';
@@ -17,7 +18,7 @@ const Sidebar = (
         <div
             className={`hidden flex-col items-center whitespace-nowrap h-fit bg-white p-5 gap-10 rounded-xl shadow-xl ${props.className} md:flex`}
         >
-            <ProfileImage url="https://i.pinimg.com/originals/ae/ec/c2/aeecc22a67dac7987a80ac0724658493.jpg" />
+            <ProfileImage url={user.img} />
             <div className="flex flex-col items-start justify-between gap-10">
                 <SidebarItem>
                     <Link to="/" className="flex flex-nowrap gap-2 items-center">
@@ -32,7 +33,7 @@ const Sidebar = (
                     </Link>
                 </SidebarItem>
                 <SidebarItem>
-                    <Link to="/" className="flex flex-nowrap gap-2 items-center">
+                    <Link to="/profile" className="flex flex-nowrap gap-2 items-center">
                         <Account />
                         <p>Profile page</p>
                     </Link>

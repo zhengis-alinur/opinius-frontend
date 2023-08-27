@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const Logo = () => (
     <svg
         width="40"
@@ -53,10 +55,10 @@ const Logo = () => (
 );
 const View = () => {
     return (
-        <div className="flex items-center">
+        <Link className="flex items-center" to="/">
             <Logo />
             <h1 className="font-logo text-4xl text-sky-800 cursor-pointer">Opinius</h1>
-        </div>
+        </Link>
     );
 };
 

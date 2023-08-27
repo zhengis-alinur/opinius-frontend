@@ -1,3 +1,5 @@
+import { PRIMARY } from '../../../constants/colors';
+
 const SVG = () => {
     return (
         <svg
@@ -9,7 +11,7 @@ const SVG = () => {
         >
             <path
                 d="M0 0V7.03013H57V0H0ZM0 20.8795V27.9096H57V20.8795H0ZM0 41.9699V49H57V41.9699H0Z"
-                fill="#105F8A"
+                fill={PRIMARY}
             />
         </svg>
     );

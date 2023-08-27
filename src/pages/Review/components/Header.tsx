@@ -1,5 +1,3 @@
-import React from 'react';
-
 import ProfileImage from '../../../components/ProfileImage';
 import { Review, User } from '../../../types';
 

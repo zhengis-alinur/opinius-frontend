@@ -1,5 +1,3 @@
-import React from 'react';
-
 const SearchBar = () => {
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();

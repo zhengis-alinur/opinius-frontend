@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Container from '../../../components/Container';
 import { Comment } from '../../../types/Review';
 

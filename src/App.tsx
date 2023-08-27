@@ -4,8 +4,10 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import Layout from './components/Layout';
 import Home from './pages/Home';
+import Login from './pages/Login';
+import Profile from './pages/Profile';
 import Review from './pages/Review';
-import Signup from './pages/Signup';
+import Signup from './pages/Singup';
 
 function App() {
     const routers = createBrowserRouter([
@@ -18,8 +20,8 @@ function App() {
                     // loader: authLoader,
                 },
                 {
-                    path: '/signup',
-                    element: <Signup />,
+                    path: '/profile',
+                    element: <Profile />,
                 },
                 {
                     path: '/review/:id',
@@ -27,6 +29,8 @@ function App() {
                 },
             ],
         },
+        { element: <Login />, path: '/login' },
+        { element: <Signup />, path: '/signup' },
     ]);
 
     return <RouterProvider router={routers} />;
