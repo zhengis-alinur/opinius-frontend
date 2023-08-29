@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import ReviewCard from '../../components/ReviewCard';
+import { review } from '../../data';
 
 const BestReviews = () => {
     const [hidden, setHidden] = useState(true);
@@ -48,13 +49,7 @@ const BestReviews = () => {
                 {' '}
                 <div className="relative w-full mt-4">
                     <div className="flex items-center justify-center gap-5 w-full flex-wrap">
-                        {new Array(12).fill(
-                            <ReviewCard
-                                reviewId={String(Math.random() * 10)}
-                                title="Call of Duty: Modern Warfare 2 Multiplayer Review"
-                                url="https://cdn.cloudflare.steamstatic.com/steam/apps/1938090/header.jpg?t=1692824991"
-                            />,
-                        )}
+                        {new Array(12).fill(<ReviewCard review={review} />)}
                     </div>
                 </div>{' '}
             </div>

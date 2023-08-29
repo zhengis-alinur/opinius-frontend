@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 
+import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Logo from '../../components/Logo';
 
@@ -19,14 +20,12 @@ const Signup = () => {
                         <Input required type="text" label="Last name" placeholder="Doe" />
                     </div>
                     <Input
-                        className="mb-2"
                         required
                         type="email"
                         label="Email"
                         placeholder="some@mail.com"
                     />
                     <Input
-                        className="mb-2"
                         required
                         type="password"
                         label="Password"
@@ -39,12 +38,7 @@ const Signup = () => {
                         label="Confirm password"
                         placeholder="Enter your password"
                     />
-                    <button
-                        type="button"
-                        className="w-full text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-                    >
-                        Sign up
-                    </button>
+                    <Button>Sign up</Button>
                     <p className="text-xs mt-3 text-center">
                         You already have an account?
                         <Link className="font-bold ml-3" to="/login">

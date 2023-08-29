@@ -4,13 +4,13 @@ export type Comment = {
 };
 export type Review = {
     id: string;
-    object: string;
-    likes: number;
-    grade: number;
-    rating: number;
     title: string;
-    tags: string[];
+    object: string;
     text: string;
+    grade: number;
+    tags: string[];
     img: string;
+    likes: number;
+    rating: number;
     comments: Comment[];
 };

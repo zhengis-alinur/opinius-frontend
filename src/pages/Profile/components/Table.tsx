@@ -54,7 +54,7 @@ const TableHead = () => (
         <tr>
             <Checkbox />
             <TableHeadItem title="Review title" />
-            <TableHeadItem title="Review object" sortable />
+            <TableHeadItem title="Review object" />
             <TableHeadItem title="My grade" sortable />
             <TableHeadItem title="Tags" />
             <TableHeadItem title="Likes" sortable />
@@ -107,7 +107,7 @@ const TableSearch = () => (
 
 const Table = () => {
     return (
-        <div className="relative max-w-5xl overflow-x-auto shadow-md sm:rounded-lg p-4 bg-white">
+        <div className="relative w-full max-w-5xl overflow-x-auto shadow-md sm:rounded-lg p-4 bg-white">
             <TableSearch />
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <TableHead />

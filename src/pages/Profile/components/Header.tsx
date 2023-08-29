@@ -1,3 +1,4 @@
+import Button from '../../../components/Button';
 import ProfileImage from '../../../components/ProfileImage';
 import { User } from '../../../types';
 
@@ -17,10 +18,7 @@ const UserInfo = ({
 );
 
 const CreateReviewButton = () => (
-    <button
-        type="button"
-        className="relative flex items-center text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-    >
+    <Button>
         Create new Review
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -33,9 +31,9 @@ const CreateReviewButton = () => (
             <path
                 d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
                 fill="white"
-            ></path>{' '}
+            ></path>
         </svg>
-    </button>
+    </Button>
 );
 
 const Header = ({ user }: { user: User }) => {

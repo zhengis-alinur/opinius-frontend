@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
 
-import { review, user } from '../data';
+import { user } from '../data';
 import Comment from '../icons/Comment';
 import Likes from '../icons/Likes';
+import { Review } from '../types';
 import ProfileImage from './ProfileImage';
 
 const ReviewCard = ({
+    review,
     ...props
-}: { reviewId: string; title: string; url: string } & React.DetailedHTMLProps<
+}: { review: Review } & React.DetailedHTMLProps<
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
 >) => {
@@ -35,13 +37,13 @@ const ReviewCard = ({
                 <div className="flex gap-2">
                     <Likes />
                     <p className="text-xs">
-                        <span className="font-bold">245</span>
+                        <span className="font-bold">{review.likes}</span>
                     </p>
                 </div>
                 <div className="flex gap-2">
                     <Comment />
                     <p className="text-xs">
-                        <span className="font-bold">100</span>
+                        <span className="font-bold">{}</span>
                     </p>
                 </div>
             </div>
