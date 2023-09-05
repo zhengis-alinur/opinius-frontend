@@ -1,10 +1,12 @@
 import { useState } from 'react';
 
+import { useGetReviewsQuery } from '../../api/reviewApi';
 import ReviewCard from '../../components/ReviewCard';
-import { review } from '../../data';
 
 const BestReviews = () => {
     const [hidden, setHidden] = useState(true);
+    const { data, error, isLoading } = useGetReviewsQuery();
+
     return (
         <div
             className="`w-full max-w-5xl"
@@ -49,7 +51,13 @@ const BestReviews = () => {
                 {' '}
                 <div className="relative w-full mt-4">
                     <div className="flex items-center justify-center gap-5 w-full flex-wrap">
-                        {new Array(12).fill(<ReviewCard review={review} />)}
+                        {isLoading ? (
+                            <p>Loading</p>
+                        ) : (
+                            data?.map((review) => (
+                                <ReviewCard key={review.id} review={review} />
+                            ))
+                        )}
                     </div>
                 </div>{' '}
             </div>
