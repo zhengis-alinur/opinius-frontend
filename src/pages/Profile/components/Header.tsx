@@ -1,6 +1,10 @@
+import { useEffect, useState } from 'react';
+
+import { useGetUserStatsQuery } from '../../../api/userApi';
 import Button from '../../../components/Button';
 import ProfileImage from '../../../components/ProfileImage';
 import { User } from '../../../types';
+import { UserStats } from '../../../types/UserStats';
 
 const UserInfo = ({
     info,
@@ -8,7 +12,7 @@ const UserInfo = ({
     colorClass,
 }: {
     info: string;
-    value: string;
+    value: number;
     colorClass: string;
 }) => (
     <div className="flex flex-col items-center">
@@ -17,8 +21,8 @@ const UserInfo = ({
     </div>
 );
 
-const CreateReviewButton = () => (
-    <Button>
+const CreateReviewButton = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
+    <Button onClick={props.onClick}>
         Create new Review
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +40,27 @@ const CreateReviewButton = () => (
     </Button>
 );
 
-const Header = ({ user }: { user: User }) => {
+const Header = ({ user, onCreateReview }: { user: User; onCreateReview: () => void }) => {
+    const [stats, setStats] = useState<UserStats>({
+        comments: 0,
+        likes: 0,
+        reviews: 0,
+        ratings: 0,
+    });
+    const getStats = useGetUserStatsQuery(user.id);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const stats = (await getStats.refetch()).data; // Use userData from the query
+                if (stats) {
+                    setStats(stats);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData();
+    }, []);
     return (
         <div className="relative flex flex-col items-center max-w-5xl w-full rounded-lg overflow-hidden pb-5">
             <div
@@ -50,17 +74,31 @@ const Header = ({ user }: { user: User }) => {
                 </div>
                 <div className="flex flex-col items-center  gap-16 lg:flex-row lg:items-end">
                     <div className="flex flex-col items-center">
-                        <h1 className="text-gray-200 text-7xl text-left ">
-                            {user.userName}
+                        <h1 className="text-gray-200 text-3xl text-left ">
+                            {user.username}
                         </h1>
-                        <h1 className="text-gray-200 text-3xl text-left ">15 reviews</h1>
+                        <h1 className="text-gray-200 text-3xl text-left ">
+                            {stats.reviews} reviews
+                        </h1>
                     </div>
-                    <UserInfo colorClass="text-red-500" info="Likes" value="45" />
-                    <UserInfo colorClass="text-cyan-500" info="Comments" value="45" />
-                    <UserInfo colorClass="text-amber-500" info="Rating" value="4.5/5" />
+                    <UserInfo
+                        colorClass="text-red-500"
+                        info="Likes"
+                        value={stats.likes}
+                    />
+                    <UserInfo
+                        colorClass="text-cyan-500"
+                        info="Comments"
+                        value={stats.comments}
+                    />
+                    <UserInfo
+                        colorClass="text-amber-500"
+                        info="Rating"
+                        value={stats.ratings}
+                    />
                 </div>
             </div>
-            <CreateReviewButton />
+            <CreateReviewButton onClick={() => onCreateReview()} />
         </div>
     );
 };

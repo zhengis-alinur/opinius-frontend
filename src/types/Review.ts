@@ -9,8 +9,18 @@ export type Review = {
     text: string;
     grade: number;
     tags: string[];
-    img: string;
+    categoryId: number;
+    image: string;
     likes: number;
     rating: number;
+    userId: number;
     comments: Comment[];
+};
+
+export type CreateReview = Omit<
+    Review,
+    'comments' | 'likes' | 'rating' | 'id' | 'categoryId' | 'grade'
+> & {
+    categoryId: string;
+    grade: string;
 };

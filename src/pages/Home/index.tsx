@@ -6,7 +6,7 @@ import RecentReviews from './RecentReviews';
 
 const Home = () => {
     return (
-        <div className="flex flex-col justify-between 2xl:flex-row w-full gap-5">
+        <div className="flex flex-col justify-center 2xl:flex-row w-full gap-5">
             <div className="flex flex-col gap-5">
                 <Container className="flex flex-col">
                     <div className="flex flex-col justify-start items-center">

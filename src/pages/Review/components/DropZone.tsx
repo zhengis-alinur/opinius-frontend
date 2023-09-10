@@ -1,5 +1,3 @@
-import React from 'react';
-
 const DropZone = () => {
     return (
         <div className="flex items-center justify-center w-full">
@@ -33,6 +31,7 @@ const DropZone = () => {
                 </div>
                 <input id="dropzone-file" type="file" className="hidden" />
             </label>
+            <button>Send</button>
         </div>
     );
 };

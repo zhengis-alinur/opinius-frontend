@@ -3,6 +3,7 @@ import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import Layout from './components/Layout';
+import CreateReview from './pages/CreateReview';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
@@ -26,6 +27,10 @@ function App() {
                 {
                     path: '/review/:id',
                     element: <Review />,
+                },
+                {
+                    path: '/createReview',
+                    element: <CreateReview />,
                 },
             ],
         },

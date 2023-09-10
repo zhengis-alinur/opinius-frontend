@@ -1,18 +1,17 @@
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { LoginRequest, useLoginMutation, UserResponse } from '../../api/authApi';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Logo from '../../components/Logo';
+import { useAppDispatch } from '../../redux/hooks';
 import { setToken, setUser } from '../../redux/reducers/auth';
 import { setAuthDataToLocalStorage } from '../../utils';
 
 const Login = () => {
     const [login, { isLoading, isSuccess }] = useLoginMutation();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const [formState, setFormState] = useState<LoginRequest>({

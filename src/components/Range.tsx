@@ -1,11 +1,18 @@
 import { ChangeEvent, InputHTMLAttributes, useState } from 'react';
 
+import Alert from './Alert';
+
 const Range = ({
     label,
+    error,
     ...props
-}: { label: string } & InputHTMLAttributes<HTMLInputElement>) => {
+}: {
+    label: string;
+    error: string | false | undefined;
+} & InputHTMLAttributes<HTMLInputElement>) => {
     return (
         <div className={`relative mb-7 ${props.className}`}>
+            {error && <Alert type="danger">{error}</Alert>}
             <label
                 htmlFor="steps-range"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -13,6 +20,7 @@ const Range = ({
                 {label}
             </label>
             <input
+                {...props}
                 onChange={props.onChange}
                 id="steps-range"
                 type="range"

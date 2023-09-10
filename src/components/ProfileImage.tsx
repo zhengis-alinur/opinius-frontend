@@ -15,7 +15,7 @@ const ProfileImage = ({
                         large ? 'h-40 w-40' : ''
                     } rounded-full ring-2 ring-white dark:ring-gray-800`}
                     src={url}
-                    alt="Description"
+                    alt="profile"
                 />
                 <Tooltip text="This is you avatar" />
             </a>

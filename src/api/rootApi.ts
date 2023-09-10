@@ -4,7 +4,7 @@ import { getTokenFromLocalStorage } from '../utils';
 
 export const rootApi = createApi({
     reducerPath: 'api',
-    tagTypes: ['Reviews', 'Auth'],
+    tagTypes: ['Reviews', 'Auth', 'User', 'Categories'],
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:4000/api/v1/',
         prepareHeaders: (headers) => {
