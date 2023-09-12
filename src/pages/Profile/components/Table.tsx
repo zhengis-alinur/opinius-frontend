@@ -1,6 +1,5 @@
 import Badge from '../../../components/Badge';
 import Checkbox from '../../../components/Checkbox';
-import { review } from '../../../data';
 import { Review } from '../../../types';
 
 const TableHeadItem = ({
@@ -111,7 +110,6 @@ const Table = () => {
             <TableSearch />
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <TableHead />
-                <TableBody reviews={Array(10).fill(review)} />
             </table>
         </div>
     );

@@ -6,12 +6,12 @@ const Header = ({ user, review }: { user: User; review: Review }) => {
         <div className="relative w-full rounded-lg overflow-hidden">
             <div
                 className="absolute w-full h-full bg-center bg-no-repeat bg-cover brightness-50"
-                style={{ backgroundImage: `url(${review.img})` }}
+                style={{ backgroundImage: `url(${review.image})` }}
             />
             <div className="relative flex flex-col w-full items-center p-8">
                 <div className="flex flex-col items-center">
-                    <ProfileImage url={user.img} />
-                    <p className="text-white">{user.userName}</p>
+                    <ProfileImage url={user.avatar} />
+                    <p className="text-white">{user.username}</p>
                 </div>
                 <div className="text-4xl text-center">
                     <h1 className="text-white">{review.title}</h1>

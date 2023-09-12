@@ -6,7 +6,7 @@ export const rootApi = createApi({
     reducerPath: 'api',
     tagTypes: ['Reviews', 'Auth', 'User', 'Categories'],
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:4000/api/v1/',
+        baseUrl: 'http://localhost:4001/api/v1/',
         prepareHeaders: (headers) => {
             const token = getTokenFromLocalStorage();
             if (token) {

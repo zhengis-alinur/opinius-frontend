@@ -15,7 +15,8 @@ import { useAppSelector } from '../../redux/hooks';
 import { selectUser } from '../../redux/selectors';
 import { CreateReview } from '../../types/Review';
 import { categoriesToSelectOptions } from '../../utils';
-import UploadWidget from './components/UploadWidget';
+import { url } from '../../utils/cloudinary';
+import ImageLoader from './components/ImageLoader';
 
 const СreateReview = () => {
     const user = useAppSelector(selectUser);
@@ -37,8 +38,19 @@ const СreateReview = () => {
         fetchData();
     }, []);
 
-    const onUpload = (url: string) => {
-        setImageUrl(url);
+    const onUpload = (imageUrl: string) => {
+        console.log(
+            url(imageUrl, {
+                cloudName: import.meta.env.VITE_CLOUD_NAME,
+                uploadPreset: import.meta.env.VITE_UPLOAD_PRESET,
+            }),
+        );
+        setImageUrl(
+            url(imageUrl, {
+                cloudName: import.meta.env.VITE_CLOUD_NAME,
+                uploadPreset: import.meta.env.VITE_UPLOAD_PRESET,
+            }),
+        );
     };
 
     const formik = useFormik({
@@ -137,7 +149,7 @@ const СreateReview = () => {
                             </div>
                         </div>
                     </div>
-                    <UploadWidget onUpload={onUpload} />
+                    <ImageLoader onUpload={onUpload} />
                     <div className="flex-1 w-full">
                         <Alert type="info">
                             <p>

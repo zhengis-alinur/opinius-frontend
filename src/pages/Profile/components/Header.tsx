@@ -41,12 +41,7 @@ const CreateReviewButton = (props: React.ButtonHTMLAttributes<HTMLButtonElement>
 );
 
 const Header = ({ user, onCreateReview }: { user: User; onCreateReview: () => void }) => {
-    const [stats, setStats] = useState<UserStats>({
-        comments: 0,
-        likes: 0,
-        reviews: 0,
-        ratings: 0,
-    });
+    const [stats, setStats] = useState<UserStats>();
     const getStats = useGetUserStatsQuery(user.id);
     useEffect(() => {
         const fetchData = async () => {
@@ -65,38 +60,45 @@ const Header = ({ user, onCreateReview }: { user: User; onCreateReview: () => vo
         <div className="relative flex flex-col items-center max-w-5xl w-full rounded-lg overflow-hidden pb-5">
             <div
                 className="absolute w-full h-full bg-center bg-no-repeat bg-cover brightness-50"
-                style={{ backgroundImage: `url(${user.img})` }}
+                style={{
+                    backgroundImage: `url(${
+                        user.avatar ||
+                        'https://res.cloudinary.com/dsnccfdsh/image/upload/v1694499821/bdhjzikbjrxqjozd7i3b.png'
+                    })`,
+                }}
             />
             <div className="relative flex flex-col w-full items-center gap-10 p-8 2xl:flex-row">
                 <div className="flex flex-col items-center">
-                    <ProfileImage className="mb-1" large url={user.img} />
+                    <ProfileImage className="mb-1" large url={user.avatar} />
                     <p className="text-gray-300">{user.email}</p>
                 </div>
-                <div className="flex flex-col items-center  gap-16 lg:flex-row lg:items-end">
-                    <div className="flex flex-col items-center">
-                        <h1 className="text-gray-200 text-3xl text-left ">
-                            {user.username}
-                        </h1>
-                        <h1 className="text-gray-200 text-3xl text-left ">
-                            {stats.reviews} reviews
-                        </h1>
+                {stats && (
+                    <div className="flex flex-col items-center  gap-16 lg:flex-row lg:items-end">
+                        <div className="flex flex-col items-center">
+                            <h1 className="text-gray-200 text-3xl text-left ">
+                                {user.username}
+                            </h1>
+                            <h1 className="text-gray-200 text-3xl text-left ">
+                                {stats.reviews} reviews
+                            </h1>
+                        </div>
+                        <UserInfo
+                            colorClass="text-red-500"
+                            info="Likes"
+                            value={stats.likes}
+                        />
+                        <UserInfo
+                            colorClass="text-cyan-500"
+                            info="Comments"
+                            value={stats.comments}
+                        />
+                        <UserInfo
+                            colorClass="text-amber-500"
+                            info="Rating"
+                            value={stats.ratings}
+                        />
                     </div>
-                    <UserInfo
-                        colorClass="text-red-500"
-                        info="Likes"
-                        value={stats.likes}
-                    />
-                    <UserInfo
-                        colorClass="text-cyan-500"
-                        info="Comments"
-                        value={stats.comments}
-                    />
-                    <UserInfo
-                        colorClass="text-amber-500"
-                        info="Rating"
-                        value={stats.ratings}
-                    />
-                </div>
+                )}
             </div>
             <CreateReviewButton onClick={() => onCreateReview()} />
         </div>

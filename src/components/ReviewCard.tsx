@@ -14,12 +14,12 @@ const ReviewCard = ({
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
 >) => {
-    const [user, setUser] = useState<User | null>(null); // Initialize user state as null or with a default value
+    const [user, setUser] = useState<User | null>(null);
     const getUser = useGetUserQuery(review.userId);
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const user = (await getUser.refetch()).data; // Use userData from the query
+                const user = (await getUser.refetch()).data;
                 if (user) {
                     setUser(user);
                 }
@@ -32,10 +32,10 @@ const ReviewCard = ({
     return (
         <Link
             className={`flex flex-col gap-3 w-60 max-h-80 relative p-2 pb-3 rounded-lg overflow-hidden cursor-pointer shadow-xl ${props.className}`}
-            to={`/review/:id=${review.id}`}
+            to={`/review/${review.id}`}
         >
             <div className="flex gap-3 items-center">
-                <ProfileImage url={'user.img'} />
+                <ProfileImage url={user ? user.avatar : ''} />
                 <div className="flex flex-col gap-0">
                     <p className="font-bold text-sm">{user?.username}</p>
                     <p className="text-xs">Munbai, India</p>

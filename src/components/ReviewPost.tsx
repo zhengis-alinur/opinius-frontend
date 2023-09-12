@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
+import { useGetUserQuery } from '../api/userApi';
 import Comment from '../icons/Comment';
 import Likes from '../icons/Likes';
 import { Review, User } from '../types';
@@ -13,26 +15,39 @@ const ReviewPost = ({
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
 >) => {
-    const user: User = {
-        userName: 'Aliko',
-        img: 'https://xsgames.co/randomusers/assets/avatars/male/23.jpg',
-    };
+    const getUser = useGetUserQuery(review.userId);
+    const [user, setUser] = useState<User>();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const user = (await getUser.refetch()).data;
+                if (user) {
+                    setUser(user);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData();
+    }, []);
+
     return (
         <Link
             className={`flex flex-col gap-3 w-full relative p-2 pb-3 rounded-lg overflow-hidden cursor-pointer shadow-xl ${props.className}`}
-            to={`/review/:id=${review.id}`}
+            to={`/review/${review.id}`}
         >
             <div className="flex gap-3 items-center">
-                <ProfileImage url={user.img} />
+                <ProfileImage url={user ? user.avatar : ''} />
                 <div className="flex flex-col gap-0">
-                    <p className="font-bold text-sm">{user.userName}</p>
+                    <p className="font-bold text-sm">{user && user.username}</p>
                     <p className="text-xs">Munbai, India</p>
                 </div>
             </div>
             <div className="flex flex-col items-center gap-8 justify-between lg:flex-row lg:items-start">
                 <div
                     className="flex flex-col-reverse p-2 h-96 w-full flex-3 bg-center bg-no-repeat bg-cover rounded-lg lg:flex-1"
-                    style={{ backgroundImage: `url(${review.img})` }}
+                    style={{ backgroundImage: `url(${review.image})` }}
                 >
                     <p className="text-white font-semibold text-center whitespace-nowrap truncate">
                         {review.title}
