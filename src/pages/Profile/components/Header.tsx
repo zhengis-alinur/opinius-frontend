@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import { useGetUserStatsQuery } from '../../../api/userApi';
 import Button from '../../../components/Button';
 import ProfileImage from '../../../components/ProfileImage';
+import UploadImageIcon from '../../../icons/UploadImageIcon';
 import { User } from '../../../types';
 import { UserStats } from '../../../types/UserStats';
+import AvatarUpload from './AvatarUpload';
 
 const UserInfo = ({
     info,
@@ -40,7 +43,8 @@ const CreateReviewButton = (props: React.ButtonHTMLAttributes<HTMLButtonElement>
     </Button>
 );
 
-const Header = ({ user, onCreateReview }: { user: User; onCreateReview: () => void }) => {
+const Header = ({ user }: { user: User }) => {
+    const navigate = useNavigate();
     const [stats, setStats] = useState<UserStats>();
     const getStats = useGetUserStatsQuery(user.id);
     useEffect(() => {
@@ -57,7 +61,7 @@ const Header = ({ user, onCreateReview }: { user: User; onCreateReview: () => vo
         fetchData();
     }, []);
     return (
-        <div className="relative flex flex-col items-center max-w-5xl w-full rounded-lg overflow-hidden pb-5">
+        <div className="relative flex flex-col items-center max-w-6xl w-full rounded-lg overflow-hidden pb-5">
             <div
                 className="absolute w-full h-full bg-center bg-no-repeat bg-cover brightness-50"
                 style={{
@@ -69,7 +73,8 @@ const Header = ({ user, onCreateReview }: { user: User; onCreateReview: () => vo
             />
             <div className="relative flex flex-col w-full items-center gap-10 p-8 2xl:flex-row">
                 <div className="flex flex-col items-center">
-                    <ProfileImage className="mb-1" large url={user.avatar} />
+                    <AvatarUpload />
+                    <p className="text-gray-300">{user.username}</p>
                     <p className="text-gray-300">{user.email}</p>
                 </div>
                 {stats && (
@@ -100,7 +105,7 @@ const Header = ({ user, onCreateReview }: { user: User; onCreateReview: () => vo
                     </div>
                 )}
             </div>
-            <CreateReviewButton onClick={() => onCreateReview()} />
+            <CreateReviewButton onClick={() => navigate('/createReview')} />
         </div>
     );
 };

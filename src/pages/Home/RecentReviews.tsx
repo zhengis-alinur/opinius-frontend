@@ -5,7 +5,7 @@ import ReviewPost from '../../components/ReviewPost';
 import { User } from '../../types';
 
 const RecentReviews = () => {
-    const { data, error, isLoading } = useGetReviewsQuery();
+    const { data } = useGetReviewsQuery();
 
     return (
         <div className="relative w-full">

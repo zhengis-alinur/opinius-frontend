@@ -1,6 +1,7 @@
 import { Cloudinary } from '@cloudinary/url-gen';
 import { useState } from 'react';
 
+import Button from '../../../components/Button';
 import CldGallery from './CldGallery';
 import ImageUpload from './ImageUpload';
 
@@ -18,7 +19,7 @@ function ImageLoader({ onUpload }: { onUpload: (url: string) => void }) {
         setImagesUploadedList((prevState) => [...prevState, publicId]);
     };
 
-    const deleteAllImages = async () => {
+    const deleteImage = async () => {
         try {
             setImagesUploadedList([]);
         } catch (error) {
@@ -27,23 +28,28 @@ function ImageLoader({ onUpload }: { onUpload: (url: string) => void }) {
     };
     return (
         <div className="App">
-            <button className="redButton" onClick={deleteAllImages}>
-                Delete all images
-            </button>
-            <ImageUpload
-                cloudName={import.meta.env.VITE_CLOUD_NAME}
-                uploadPreset={import.meta.env.VITE_UPLOAD_PRESET}
-                onImageUpload={(publicId: string) => onImageUploadHandler(publicId)}
-            />
-            <p>
-                This mini project demonstrates the use of Upload widget + transformations
-                on uploaded images in responsive way useing hooks in React
-            </p>
+            <label
+                htmlFor="image"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+                Upload image
+            </label>
             <CldGallery
                 imagesUploaded={imagesUploadedList}
                 {...cld}
                 cloudName={import.meta.env.VITE_CLOUD_NAME}
             />
+            {imagesUploadedList.length === 0 ? (
+                <ImageUpload
+                    cloudName={import.meta.env.VITE_CLOUD_NAME}
+                    uploadPreset={import.meta.env.VITE_UPLOAD_PRESET}
+                    onImageUpload={(publicId: string) => onImageUploadHandler(publicId)}
+                />
+            ) : (
+                <Button className="m-3" onClick={deleteImage}>
+                    Delete image
+                </Button>
+            )}
         </div>
     );
 }

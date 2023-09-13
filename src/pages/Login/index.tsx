@@ -1,77 +1,107 @@
-import { useEffect, useState } from 'react';
+import { useFormik } from 'formik';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import * as Yup from 'yup'; // for form validation
 
-import { LoginRequest, useLoginMutation, UserResponse } from '../../api/authApi';
+import { useLoginMutation, UserResponse } from '../../api/authApi';
+import Alert from '../../components/Alert';
 import Button from '../../components/Button';
-import Input from '../../components/Input';
 import Logo from '../../components/Logo';
 import { useAppDispatch } from '../../redux/hooks';
-import { setToken, setUser } from '../../redux/reducers/auth';
+import { setAuthData, setToken, setUser } from '../../redux/reducers/auth';
 import { setAuthDataToLocalStorage } from '../../utils';
 
 const Login = () => {
-    const [login, { isLoading, isSuccess }] = useLoginMutation();
+    const [login, { isLoading, error }] = useLoginMutation();
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const [formState, setFormState] = useState<LoginRequest>({
-        email: '',
-        password: '',
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+        },
+        validationSchema: Yup.object({
+            email: Yup.string().email('Invalid email address').required('Required'),
+            password: Yup.string().required('Required'),
+        }),
+        onSubmit: async (values) => {
+            try {
+                const response = await login(values);
+                if ('error' in response) {
+                    return;
+                }
+                const { user, token } = (response as { data: UserResponse }).data;
+                dispatch(setAuthData({ user, token }));
+                navigate('/');
+            } catch (error) {
+                console.error('Login error:', error);
+            }
+        },
     });
-
-    useEffect(() => {
-        if (isSuccess) {
-            navigate('/');
-        }
-    }, [isSuccess]);
-
-    const handleChange = ({
-        target: { name, value },
-    }: React.ChangeEvent<HTMLInputElement>) => {
-        setFormState((prev) => ({ ...prev, [name]: value }));
-    };
-
-    const handleLogin = async () => {
-        login(formState).then((response) => {
-            const { user, token } = (response as { data: UserResponse }).data;
-            setAuthDataToLocalStorage(user, token);
-            dispatch(setUser(user));
-            dispatch(setToken(token));
-        });
-    };
 
     return (
         <div className="container mx-auto w-full h-screen flex flex-col justify-center items-center">
             <div className="flex flex-col items-center gap-6 bg-white rounded-lg shadow-xl p-10 pb-3">
                 <Logo />
-                <div className="flex flex-col w-96">
-                    <Input
-                        onChange={(e) => handleChange(e)}
-                        name="email"
-                        type="email"
-                        label="Email"
-                        placeholder="Enter your email"
-                        required
-                    />
-                    <Input
-                        onChange={handleChange}
-                        name="password"
-                        type="password"
-                        label="Password"
-                        placeholder="Enter your password"
-                        required
-                    />
-                    <Button onClick={handleLogin}>
-                        {isLoading ? 'logging in...' : 'Login'}
-                    </Button>
-                    <p className="text-xs mt-3 text-center">
-                        Don&apos;t have an account?
-                        <Link className="font-bold ml-3" to="/signup">
-                            Sign up
-                        </Link>
-                        `
-                    </p>
-                </div>
+                <form onSubmit={formik.handleSubmit}>
+                    <div className="flex flex-col w-96">
+                        <div className="mb-4">
+                            <label
+                                htmlFor="email"
+                                className="block text-sm font-medium text-gray-700"
+                            >
+                                Email
+                            </label>
+                            <input
+                                id="email"
+                                name="email"
+                                type="email"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.email}
+                                className="mt-1 p-2 border rounded-md w-full"
+                            />
+                            {formik.touched.email && formik.errors.email ? (
+                                <div className="text-red-600 text-xs mt-1">
+                                    {formik.errors.email}
+                                </div>
+                            ) : null}
+                        </div>
+                        <div className="mb-4">
+                            <label
+                                htmlFor="password"
+                                className="block text-sm font-medium text-gray-700"
+                            >
+                                Password
+                            </label>
+                            <input
+                                id="password"
+                                name="password"
+                                type="password"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.password}
+                                className="mt-1 p-2 border rounded-md w-full"
+                            />
+                            {formik.touched.password && formik.errors.password ? (
+                                <div className="text-red-600 text-xs mt-1">
+                                    {formik.errors.password}
+                                </div>
+                            ) : null}
+                        </div>
+                        <Button type="submit" disabled={isLoading}>
+                            {isLoading ? 'Logging in...' : 'Login'}
+                        </Button>
+                        {error && <Alert type="warning">{error?.data?.message}</Alert>}
+                        <p className="text-xs mt-3 text-center">
+                            Dont have an account?{' '}
+                            <Link className="font-bold ml-3" to="/signup">
+                                Sign up
+                            </Link>
+                        </p>
+                    </div>
+                </form>
             </div>
         </div>
     );

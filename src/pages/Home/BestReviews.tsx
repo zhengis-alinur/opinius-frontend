@@ -5,14 +5,10 @@ import ReviewCard from '../../components/ReviewCard';
 
 const BestReviews = () => {
     const [hidden, setHidden] = useState(true);
-    const { data, error, isLoading } = useGetReviewsQuery();
+    const { data, isLoading } = useGetReviewsQuery();
 
     return (
-        <div
-            className="`w-full max-w-5xl"
-            id="accordion-collapse"
-            data-accordion="collapse"
-        >
+        <div className="`w-full" id="accordion-collapse" data-accordion="collapse">
             <h2 id="accordion-collapse-heading-1">
                 <button
                     onClick={() => {
@@ -48,7 +44,6 @@ const BestReviews = () => {
                 id="accordion-collapse-body-1"
                 aria-labelledby="accordion-collapse-heading-1"
             >
-                {' '}
                 <div className="relative w-full mt-4">
                     <div className="flex items-center justify-center gap-5 w-full flex-wrap">
                         {isLoading ? (

@@ -39,12 +39,6 @@ const СreateReview = () => {
     }, []);
 
     const onUpload = (imageUrl: string) => {
-        console.log(
-            url(imageUrl, {
-                cloudName: import.meta.env.VITE_CLOUD_NAME,
-                uploadPreset: import.meta.env.VITE_UPLOAD_PRESET,
-            }),
-        );
         setImageUrl(
             url(imageUrl, {
                 cloudName: import.meta.env.VITE_CLOUD_NAME,
