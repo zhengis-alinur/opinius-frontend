@@ -19,7 +19,6 @@ const Comments = ({ reviewId }: { reviewId: number }) => {
             }
         };
         fetchData();
-        setInterval(fetchData, 5000);
     }, []);
     return (
         <>

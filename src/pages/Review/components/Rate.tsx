@@ -1,9 +1,7 @@
-import { useState } from 'react';
 import Rating from 'react-rating';
 
 import { useRateReviewMutation, useRatingOfReviewQuery } from '../../../api/reviewApi';
 import Star from '../../../icons/Star';
-import { useAppSelector } from '../../../redux/hooks';
 import { Review } from '../../../types';
 
 const Rate = ({ review }: { review: Review }) => {
@@ -11,7 +9,8 @@ const Rate = ({ review }: { review: Review }) => {
     const getRating = useRatingOfReviewQuery(review.id);
     return (
         <Rating
-            initialRating={getRating.data}
+            readonly={getRating.data?.rated}
+            initialRating={getRating.data?.rating}
             onChange={async (e) => {
                 await rate({
                     rating: e,

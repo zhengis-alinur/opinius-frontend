@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
-import { useGetReviewByIdQuery } from '../../api/reviewApi';
+import {
+    useGetReviewByIdQuery,
+    useLikeOfReviewQuery,
+    useLikeReviewMutation,
+} from '../../api/reviewApi';
 import Container from '../../components/Container';
 import Likes from '../../icons/Likes';
 import { Review, User } from '../../types';
@@ -13,21 +17,30 @@ import Rate from './components/Rate';
 
 const View = () => {
     const { id } = useParams();
-
-    const [review, setReview] = useState<Review>();
-    const [user, setUser] = useState<User>();
-
     const getReview = useGetReviewByIdQuery(id || '');
+    const getLike = useLikeOfReviewQuery(id || '');
+    const [user, setUser] = useState<User>();
+    const [review, setReview] = useState<Review>();
+    const [likeReview] = useLikeReviewMutation();
+
     useEffect(() => {
         const fetchData = async () => {
             const data = (await getReview.refetch()).data;
             if (data) {
                 setReview(data.review);
                 setUser(data.user);
+                await getLike.refetch();
             }
         };
         fetchData();
     }, []);
+
+    const onLike = async () => {
+        if (id) {
+            await likeReview({ reviewId: id });
+            getLike.refetch();
+        }
+    };
     return (
         <div className="flex flex-col justify-between w-full gap-5">
             {review && user && (
@@ -41,7 +54,13 @@ const View = () => {
                             </p>
                         </div>
                         <h1>Did you like this review?</h1>
-                        <Likes scale={4} />
+                        <Likes
+                            scale={4}
+                            liked={getLike.data}
+                            onClick={() => {
+                                onLike();
+                            }}
+                        />
                         <Rate review={review} />
                     </Container>
                     <AddComment review={review} />

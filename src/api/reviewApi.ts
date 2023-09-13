@@ -12,6 +12,11 @@ type GetReviewByIdResponse = {
     user: User;
 };
 
+type RatingOfReviewByIdResponse = {
+    rating: number;
+    rated: boolean;
+};
+
 type CommentReviewRequest = {
     reviewId: number;
     comment: string;
@@ -20,6 +25,10 @@ type CommentReviewRequest = {
 type RateReviewRequest = {
     reviewId: number;
     rating: number;
+};
+
+type LikeReviewRequest = {
+    reviewId: string;
 };
 
 const reviewApi = rootApi.injectEndpoints({
@@ -60,14 +69,27 @@ const reviewApi = rootApi.injectEndpoints({
             }),
             invalidatesTags: ['Reviews'],
         }),
+        likeReview: builder.mutation<void, LikeReviewRequest>({
+            query: (reviewId) => ({
+                url: '/review/like',
+                method: 'POST',
+                body: reviewId,
+            }),
+            invalidatesTags: ['Reviews'],
+        }),
         commentsOfReview: builder.query<void, number>({
             query: (reviewId) => ({
                 url: `/review/comments/?id=${reviewId}`,
             }),
         }),
-        ratingOfReview: builder.query<number, number>({
+        ratingOfReview: builder.query<RatingOfReviewByIdResponse, number>({
             query: (reviewId) => ({
                 url: `/review/rating/?id=${reviewId}`,
+            }),
+        }),
+        likeOfReview: builder.query<boolean, string>({
+            query: (reviewId) => ({
+                url: `/review/like/?id=${reviewId}`,
             }),
         }),
     }),
@@ -82,4 +104,6 @@ export const {
     useCommentsOfReviewQuery,
     useRateReviewMutation,
     useRatingOfReviewQuery,
+    useLikeOfReviewQuery,
+    useLikeReviewMutation,
 } = reviewApi;
