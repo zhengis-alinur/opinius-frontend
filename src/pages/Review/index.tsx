@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
 import { useGetReviewByIdQuery } from '../../api/reviewApi';
-import { useGetUserQuery } from '../../api/userApi';
 import Container from '../../components/Container';
 import Likes from '../../icons/Likes';
 import { Review, User } from '../../types';
@@ -43,10 +42,10 @@ const View = () => {
                         </div>
                         <h1>Did you like this review?</h1>
                         <Likes scale={4} />
-                        <Rate rating={review.rating} />
+                        <Rate review={review} />
                     </Container>
-                    <AddComment />
-                    <Comments comments={review.comments} />
+                    <AddComment review={review} />
+                    <Comments reviewId={review.id} />
                 </>
             )}
         </div>

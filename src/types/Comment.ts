@@ -1,3 +1,4 @@
 export type Comment = {
-    text: string;
+    comment: string;
+    userId: number;
 };

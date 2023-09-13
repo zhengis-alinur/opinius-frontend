@@ -1,10 +1,16 @@
-const CommentInput = ({ onComment }: { onComment: () => void }) => {
+import { FormEvent, useState } from 'react';
+
+const CommentInput = ({ onComment }: { onComment: (text: string) => void }) => {
+    const [comment, setComment] = useState('');
+    const handleComment = (e: FormEvent<HTMLTextAreaElement>) => {
+        setComment(e.currentTarget.value);
+    };
     return (
         <form
-            className="w-full max-w-5xl"
+            className="w-full"
             onSubmit={(event) => {
                 event.preventDefault();
-                onComment();
+                onComment(comment);
             }}
         >
             <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
@@ -17,6 +23,8 @@ const CommentInput = ({ onComment }: { onComment: () => void }) => {
                         rows={4}
                         className="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
                         placeholder="Write a comment..."
+                        value={comment}
+                        onChange={handleComment}
                         required
                     ></textarea>
                 </div>

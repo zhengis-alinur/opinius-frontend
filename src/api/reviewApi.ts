@@ -12,6 +12,16 @@ type GetReviewByIdResponse = {
     user: User;
 };
 
+type CommentReviewRequest = {
+    reviewId: number;
+    comment: string;
+};
+
+type RateReviewRequest = {
+    reviewId: number;
+    rating: number;
+};
+
 const reviewApi = rootApi.injectEndpoints({
     endpoints: (builder) => ({
         getReviews: builder.query<Review[], void>({
@@ -34,9 +44,42 @@ const reviewApi = rootApi.injectEndpoints({
             }),
             invalidatesTags: ['Reviews'],
         }),
+        commentReview: builder.mutation<void, CommentReviewRequest>({
+            query: (review) => ({
+                url: '/review/comment',
+                method: 'POST',
+                body: review,
+            }),
+            invalidatesTags: ['Reviews'],
+        }),
+        rateReview: builder.mutation<void, RateReviewRequest>({
+            query: (review) => ({
+                url: '/review/rate',
+                method: 'POST',
+                body: review,
+            }),
+            invalidatesTags: ['Reviews'],
+        }),
+        commentsOfReview: builder.query<void, number>({
+            query: (reviewId) => ({
+                url: `/review/comments/?id=${reviewId}`,
+            }),
+        }),
+        ratingOfReview: builder.query<number, number>({
+            query: (reviewId) => ({
+                url: `/review/rating/?id=${reviewId}`,
+            }),
+        }),
     }),
     overrideExisting: false,
 });
 
-export const { useGetReviewsQuery, useCreateReviewMutation, useGetReviewByIdQuery } =
-    reviewApi;
+export const {
+    useGetReviewsQuery,
+    useCreateReviewMutation,
+    useGetReviewByIdQuery,
+    useCommentReviewMutation,
+    useCommentsOfReviewQuery,
+    useRateReviewMutation,
+    useRatingOfReviewQuery,
+} = reviewApi;

@@ -1,9 +1,7 @@
-export type Comment = {
-    userId: string;
-    text: string;
-};
+import type { Comment } from './Comment';
+
 export type Review = {
-    id: string;
+    id: number;
     title: string;
     object: string;
     text: string;
