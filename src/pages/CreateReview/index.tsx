@@ -50,7 +50,7 @@ const СreateReview = () => {
     const formik = useFormik({
         initialValues: {
             title: '',
-            object: '',
+            objectName: '',
             grade: '0',
             category: '',
             image: '',
@@ -58,7 +58,7 @@ const СreateReview = () => {
         },
         validationSchema: Yup.object({
             title: Yup.string().required('Title is required'),
-            object: Yup.string().required('Object name is required'),
+            objectName: Yup.string().required('Object name is required'),
             grade: Yup.number()
                 .min(0, 'Grade must be at least 0')
                 .max(10, 'Grade cannot be greater than 10')
@@ -70,7 +70,7 @@ const СreateReview = () => {
             try {
                 const reviewData: CreateReview = {
                     title: values.title,
-                    object: values.object,
+                    objectName: values.objectName,
                     grade: values.grade,
                     categoryId: values.category,
                     text: values.text,
@@ -78,6 +78,7 @@ const СreateReview = () => {
                     image: imageUrl,
                     userId: user.id,
                 };
+                console.log(reviewData);
                 await createReview(reviewData);
             } catch (error) {
                 console.error('Error creating review:', error);
@@ -100,13 +101,13 @@ const СreateReview = () => {
                             error={formik.touched.title && formik.errors.title}
                         />
                         <Input
-                            name="object"
+                            name="objectName"
                             label="Object name"
                             placeholder="Object name"
                             onChange={formik.handleChange}
-                            value={formik.values.object}
+                            value={formik.values.objectName}
                             onBlur={formik.handleBlur}
-                            error={formik.touched.object && formik.errors.object}
+                            error={formik.touched.objectName && formik.errors.objectName}
                         />
                         <div className="flex flex-col gap-6 items-center mb-3 md:flex-row">
                             <div className="flex w-full gap-10 justify-between items-center md:w-1/2">

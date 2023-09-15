@@ -53,13 +53,13 @@ const ReviewCard = ({
                 <div className="flex gap-2">
                     <Likes />
                     <p className="text-xs">
-                        <span className="font-bold">{review.likes}</span>
+                        <span className="font-bold">{review.likes.length}</span>
                     </p>
                 </div>
                 <div className="flex gap-2">
                     <Comment />
                     <p className="text-xs">
-                        <span className="font-bold">{}</span>
+                        <span className="font-bold">{review.comments.length}</span>
                     </p>
                 </div>
             </div>

@@ -59,13 +59,15 @@ const ReviewPost = ({
                         <div className="flex gap-2">
                             <Likes />
                             <p className="text-xs">
-                                <span className="font-bold">245</span>
+                                <span className="font-bold">{review.likes.length}</span>
                             </p>
                         </div>
                         <div className="flex gap-2">
                             <Comment />
                             <p className="text-xs">
-                                <span className="font-bold">100</span>
+                                <span className="font-bold">
+                                    {review.comments.length}
+                                </span>
                             </p>
                         </div>
                     </div>

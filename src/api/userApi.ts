@@ -1,4 +1,4 @@
-import { User } from '../types';
+import { Review, User } from '../types';
 import { UserStats } from '../types/UserStats';
 import { rootApi } from './rootApi';
 
@@ -33,8 +33,18 @@ const userApi = rootApi.injectEndpoints({
             }),
             providesTags: ['User'],
         }),
+        getUserReviews: builder.query<Review[], number>({
+            query: (id) => ({
+                url: `/user/reviews/?id=${id}`,
+            }),
+        }),
     }),
     overrideExisting: false,
 });
 
-export const { useGetUserQuery, useGetUserStatsQuery, useSetAvatarMutation } = userApi;
+export const {
+    useGetUserQuery,
+    useGetUserStatsQuery,
+    useSetAvatarMutation,
+    useGetUserReviewsQuery,
+} = userApi;

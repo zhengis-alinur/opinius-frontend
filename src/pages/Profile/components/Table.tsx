@@ -1,5 +1,11 @@
+import { useEffect, useState } from 'react';
+
+import { useRatingOfReviewQuery } from '../../../api/reviewApi';
+import { useGetUserReviewsQuery } from '../../../api/userApi';
 import Badge from '../../../components/Badge';
 import Checkbox from '../../../components/Checkbox';
+import { useAppSelector } from '../../../redux/hooks';
+import { selectUser } from '../../../redux/selectors';
 import { Review } from '../../../types';
 
 const TableHeadItem = ({
@@ -29,24 +35,25 @@ const TableHeadItem = ({
     </th>
 );
 
-const TableRow = ({ review }: { review: Review }) => (
-    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-        <Checkbox />
-        <td className="px-6 py-4 w-10">{review.title}</td>
-        <td className="px-6 py-4">{review.object}</td>
-        <td className="px-6 py-4">{review.grade}</td>
-        <td className="px-6 py-4">
-            <div className="flex flex-col items-start">
-                {review.tags.map((tag, index) => (
-                    <Badge key={index}>{tag}</Badge>
-                ))}
-            </div>
-        </td>
-        <td className="px-6 py-4">{review.likes}</td>
-        <td className="px-6 py-4">{review.comments.length}</td>
-        <td className="px-6 py-4">{review.rating}</td>
-    </tr>
-);
+const TableRow = ({ review }: { review: Review }) => {
+    return (
+        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            <Checkbox />
+            <td className="px-6 py-4 w-10">{review.title}</td>
+            <td className="px-6 py-4">{review.objectName}</td>
+            <td className="px-6 py-4">{review.grade}</td>
+            <td className="px-6 py-4">
+                <div className="flex flex-col items-start">
+                    {review.tags &&
+                        review.tags.map((tag, index) => <Badge key={index}>{tag}</Badge>)}
+                </div>
+            </td>
+            <td className="px-6 py-4">{review.likes.length}</td>
+            <td className="px-6 py-4">{review.comments.length}</td>
+            <td className="px-6 py-4">{review.rating}</td>
+        </tr>
+    );
+};
 
 const TableHead = () => (
     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -65,9 +72,8 @@ const TableHead = () => (
 
 const TableBody = ({ reviews }: { reviews: Review[] }) => (
     <tbody>
-        {reviews.map((review, index) => (
-            <TableRow review={review} key={index} />
-        ))}
+        {reviews &&
+            reviews.map((review, index) => <TableRow review={review} key={index} />)}
     </tbody>
 );
 
@@ -105,11 +111,29 @@ const TableSearch = () => (
 );
 
 const Table = () => {
+    const user = useAppSelector(selectUser);
+    const [reviews, setReviews] = useState<Review[]>([]);
+    const getReviews = useGetUserReviewsQuery(user.id);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = (await getReviews.refetch()).data;
+                if (data) {
+                    setReviews(data);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData();
+    }, []);
     return (
         <div className="relative w-full max-w-6xl overflow-x-auto shadow-md sm:rounded-lg p-4 bg-white">
             <TableSearch />
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <TableHead />
+                <TableBody reviews={reviews} />
             </table>
         </div>
     );

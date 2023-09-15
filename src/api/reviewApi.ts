@@ -27,6 +27,8 @@ type RateReviewRequest = {
     rating: number;
 };
 
+type RateReviewResponse = { rated: boolean; rating: number };
+
 type LikeReviewRequest = {
     reviewId: string;
 };
@@ -61,7 +63,7 @@ const reviewApi = rootApi.injectEndpoints({
             }),
             invalidatesTags: ['Reviews'],
         }),
-        rateReview: builder.mutation<void, RateReviewRequest>({
+        rateReview: builder.mutation<RateReviewResponse, RateReviewRequest>({
             query: (review) => ({
                 url: '/review/rate',
                 method: 'POST',
