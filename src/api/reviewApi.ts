@@ -55,6 +55,14 @@ const reviewApi = rootApi.injectEndpoints({
             }),
             invalidatesTags: ['Reviews'],
         }),
+        updateReview: builder.mutation<Review, Partial<Review>>({
+            query: (review) => ({
+                url: '/review/update',
+                method: 'POST',
+                body: review,
+            }),
+            invalidatesTags: ['Reviews'],
+        }),
         commentReview: builder.mutation<void, CommentReviewRequest>({
             query: (review) => ({
                 url: '/review/comment',
@@ -108,4 +116,5 @@ export const {
     useRatingOfReviewQuery,
     useLikeOfReviewQuery,
     useLikeReviewMutation,
+    useUpdateReviewMutation,
 } = reviewApi;

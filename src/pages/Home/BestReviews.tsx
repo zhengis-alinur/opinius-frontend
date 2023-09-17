@@ -6,7 +6,6 @@ import ReviewCard from '../../components/ReviewCard';
 const BestReviews = () => {
     const [hidden, setHidden] = useState(true);
     const { data, isLoading } = useGetReviewsQuery();
-    console.log(data);
     return (
         <div className="`w-full" id="accordion-collapse" data-accordion="collapse">
             <h2 id="accordion-collapse-heading-1">

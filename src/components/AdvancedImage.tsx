@@ -1,13 +1,10 @@
-import { ImgHTMLAttributes } from 'react';
-
-import Tooltip from './Tooltip';
-
-const ProfileImage = ({
+const ReviewImage = ({
     children,
     large = false,
+    rounded = false,
     src,
     ...props
-}: { large?: boolean; src?: string } & React.DetailedHTMLProps<
+}: { large?: boolean; rounded?: boolean; src?: string } & React.DetailedHTMLProps<
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
 >) => {
@@ -16,10 +13,8 @@ const ProfileImage = ({
             <img
                 className={`object-cover inline-block h-16 w-16 ${
                     large ? 'h-40 w-40' : ''
-                } rounded-full ring-2 ring-white dark:ring-gray-800`}
-                src={
-                    src || 'https://dentistree.kg/wp-content/uploads/2020/12/default.png'
-                }
+                } ${rounded && 'rounded-full'} ring-2 ring-white dark:ring-gray-800`}
+                src={src}
                 alt="profile"
             />
             {children}
@@ -27,4 +22,4 @@ const ProfileImage = ({
     );
 };
 
-export default ProfileImage;
+export default ReviewImage;

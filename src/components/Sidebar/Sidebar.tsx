@@ -20,7 +20,7 @@ const Sidebar = (
         <div
             className={`hidden flex-col items-center whitespace-nowrap h-fit bg-white p-5 gap-10 rounded-xl shadow-xl ${props.className} md:flex`}
         >
-            <ProfileImage url={user.avatar} />
+            <ProfileImage src={user.avatar} />
             <div className="flex flex-col items-start justify-between gap-10">
                 <SidebarItem>
                     <Link to="/" className="flex flex-nowrap gap-2 items-center">

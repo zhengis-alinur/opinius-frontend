@@ -18,6 +18,7 @@ const Input = ({
                 {label}
             </label>
             <input
+                value={props.value}
                 onChange={props.onChange}
                 name={props.name}
                 type={type}

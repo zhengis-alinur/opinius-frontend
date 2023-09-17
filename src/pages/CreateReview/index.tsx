@@ -7,20 +7,20 @@ import { useCreateReviewMutation } from '../../api/reviewApi';
 import Alert from '../../components/Alert';
 import Button from '../../components/Button';
 import Container from '../../components/Container';
+import ImageUploader from '../../components/ImageUploader';
 import Input from '../../components/Input';
 import Range from '../../components/Range';
 import Select from '../../components/Select';
 import TextArea from '../../components/TextArea';
 import { useAppSelector } from '../../redux/hooks';
 import { selectUser } from '../../redux/selectors';
+import { Category } from '../../types';
 import { CreateReview } from '../../types/Review';
-import { categoriesToSelectOptions } from '../../utils';
 import { url } from '../../utils/cloudinary';
-import ImageLoader from './components/ImageLoader';
 
 const СreateReview = () => {
     const user = useAppSelector(selectUser);
-    const [categories, setCategories] = useState<{ value: string; label: string }[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
     const [createReview, { isLoading }] = useCreateReviewMutation();
     const getCategories = useGetCategoriesQuery();
     const [imageUrl, setImageUrl] = useState('');
@@ -29,7 +29,7 @@ const СreateReview = () => {
             try {
                 const allCategories = (await getCategories.refetch()).data;
                 if (allCategories) {
-                    setCategories(categoriesToSelectOptions(allCategories));
+                    setCategories(allCategories);
                 }
             } catch (error) {
                 console.error('Error fetching categories:', error);
@@ -51,8 +51,8 @@ const СreateReview = () => {
         initialValues: {
             title: '',
             objectName: '',
-            grade: '0',
-            category: '',
+            grade: 0,
+            category: 0,
             image: '',
             text: '',
         },
@@ -78,7 +78,6 @@ const СreateReview = () => {
                     image: imageUrl,
                     userId: user.id,
                 };
-                console.log(reviewData);
                 await createReview(reviewData);
             } catch (error) {
                 console.error('Error creating review:', error);
@@ -144,7 +143,11 @@ const СreateReview = () => {
                             </div>
                         </div>
                     </div>
-                    <ImageLoader onUpload={onUpload} />
+                    <ImageUploader
+                        bgImage={imageUrl || '/assets/no-image.jpg'}
+                        onUpload={onUpload}
+                    />
+
                     <div className="flex-1 w-full">
                         <Alert type="info">
                             <p>

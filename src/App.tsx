@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import Layout from './components/Layout';
 import CreateReview from './pages/CreateReview';
+import EditReview from './pages/EditReview';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
@@ -31,6 +32,10 @@ function App() {
                 {
                     path: '/createReview',
                     element: <CreateReview />,
+                },
+                {
+                    path: '/editReview/:id',
+                    element: <EditReview />,
                 },
             ],
         },

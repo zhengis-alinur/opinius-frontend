@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import { useGetUserStatsQuery } from '../../../api/userApi';
+import { useGetUserStatsQuery, useSetAvatarMutation } from '../../../api/userApi';
 import Button from '../../../components/Button';
-import ProfileImage from '../../../components/ProfileImage';
-import UploadImageIcon from '../../../icons/UploadImageIcon';
+import ImageUpload from '../../../components/ImageUploader';
+import { useAppDispatch } from '../../../redux/hooks';
+import { setUser } from '../../../redux/reducers/auth';
 import { User } from '../../../types';
 import { UserStats } from '../../../types/UserStats';
-import AvatarUpload from './AvatarUpload';
 
 const UserInfo = ({
     info,
@@ -47,6 +47,9 @@ const Header = ({ user }: { user: User }) => {
     const navigate = useNavigate();
     const [stats, setStats] = useState<UserStats>();
     const getStats = useGetUserStatsQuery(user.id);
+    const dispatch = useAppDispatch();
+
+    const [setAvatar, { isLoading }] = useSetAvatarMutation();
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -60,20 +63,28 @@ const Header = ({ user }: { user: User }) => {
         };
         fetchData();
     }, []);
+
+    const onAvatarUpload = async (imageUrl: string) => {
+        const response = await setAvatar({ id: user.id, imageUrl });
+        if ('data' in response) {
+            dispatch(setUser(response.data));
+        }
+    };
+
     return (
         <div className="relative flex flex-col items-center max-w-6xl w-full rounded-lg overflow-hidden pb-5">
             <div
                 className="absolute w-full h-full bg-center bg-no-repeat bg-cover brightness-50"
                 style={{
-                    backgroundImage: `url(${
-                        user.avatar ||
-                        'https://res.cloudinary.com/dsnccfdsh/image/upload/v1694499821/bdhjzikbjrxqjozd7i3b.png'
-                    })`,
+                    backgroundImage: `url(${user.avatar || '/assets/review-bg.png'})`,
                 }}
             />
             <div className="relative flex flex-col w-full items-center gap-10 p-8 2xl:flex-row">
                 <div className="flex flex-col items-center">
-                    <AvatarUpload />
+                    <ImageUpload
+                        bgImage={user.avatar || '/assets/no-avatar.jpg'}
+                        onUpload={onAvatarUpload}
+                    />
                     <p className="text-gray-300">{user.username}</p>
                     <p className="text-gray-300">{user.email}</p>
                 </div>

@@ -8,6 +8,8 @@ import {
 } from '../../api/reviewApi';
 import Container from '../../components/Container';
 import Likes from '../../icons/Likes';
+import { useAppSelector } from '../../redux/hooks';
+import { selectUser } from '../../redux/selectors';
 import { Review, User } from '../../types';
 import AddComment from './components/AddComment';
 import Comments from './components/Comments';
@@ -17,9 +19,10 @@ import Rate from './components/Rate';
 
 const View = () => {
     const { id } = useParams();
+    const user = useAppSelector(selectUser);
     const getReview = useGetReviewByIdQuery(id || '');
     const getLike = useLikeOfReviewQuery(id || '');
-    const [user, setUser] = useState<User>();
+    const [reviewUser, setReviewUserUser] = useState<User>();
     const [review, setReview] = useState<Review>();
     const [likeReview] = useLikeReviewMutation();
 
@@ -28,7 +31,7 @@ const View = () => {
             const data = (await getReview.refetch()).data;
             if (data) {
                 setReview(data.review);
-                setUser(data.user);
+                setReviewUserUser(data.user);
                 await getLike.refetch();
             }
         };
@@ -43,14 +46,14 @@ const View = () => {
     };
     return (
         <div className="flex flex-col justify-between w-full gap-5">
-            {review && user && (
+            {review && reviewUser && (
                 <>
                     <Container className="flex flex-col gap-5 items-center">
-                        <Header user={user} review={review} />
+                        <Header reviewUser={reviewUser} review={review} />
                         <Content text={review.text} />
                         <div className="self-start">
                             <p className="font-bold">
-                                {user.username + "'"}s final rate: {review.grade}/10
+                                {reviewUser.username + "'"}s final rate: {review.grade}/10
                             </p>
                         </div>
                         <h1>Did you like this review?</h1>

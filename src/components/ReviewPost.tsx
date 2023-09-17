@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useGetUserQuery } from '../api/userApi';
 import Comment from '../icons/Comment';
 import Likes from '../icons/Likes';
+import Star from '../icons/Star';
 import { Review, User } from '../types';
 import ProfileImage from './ProfileImage';
 
@@ -38,7 +39,7 @@ const ReviewPost = ({
             to={`/review/${review.id}`}
         >
             <div className="flex gap-3 items-center">
-                <ProfileImage url={user ? user.avatar : ''} />
+                <ProfileImage src={user ? user.avatar : ''} />
                 <div className="flex flex-col gap-0">
                     <p className="font-bold text-sm">{user && user.username}</p>
                     <p className="text-xs">Munbai, India</p>
@@ -47,7 +48,11 @@ const ReviewPost = ({
             <div className="flex flex-col items-center gap-8 justify-between lg:flex-row lg:items-start">
                 <div
                     className="flex flex-col-reverse p-2 h-96 w-full flex-3 bg-center bg-no-repeat bg-cover rounded-lg lg:flex-1"
-                    style={{ backgroundImage: `url(${review.image})` }}
+                    style={{
+                        backgroundImage: `url(${
+                            review.image || '/assets/review-bg.png'
+                        })`,
+                    }}
                 >
                     <p className="text-white font-semibold text-center whitespace-nowrap truncate">
                         {review.title}
@@ -68,6 +73,12 @@ const ReviewPost = ({
                                 <span className="font-bold">
                                     {review.comments.length}
                                 </span>
+                            </p>
+                        </div>
+                        <div className="flex gap-2">
+                            <Star />
+                            <p className="text-xs">
+                                <span className="font-bold">{review.rating}</span>
                             </p>
                         </div>
                     </div>

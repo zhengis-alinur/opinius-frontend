@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { useSetAvatarMutation } from '../../../api/userApi';
 import ProfileImage from '../../../components/ProfileImage';
 import UploadImageIcon from '../../../icons/UploadImageIcon';

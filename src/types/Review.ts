@@ -20,8 +20,6 @@ export type Review = {
 
 export type CreateReview = Omit<
     Review,
-    'comments' | 'likes' | 'rating' | 'id' | 'categoryId' | 'grade' | 'ratings'
-> & {
-    categoryId: string;
-    grade: string;
-};
+    'comments' | 'likes' | 'rating' | 'id' | 'ratings'
+>;
+export type UpdateReview = Omit<Review, 'comments' | 'likes' | 'rating' | 'ratings'>;

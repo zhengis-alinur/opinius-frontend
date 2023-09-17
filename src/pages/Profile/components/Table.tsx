@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { useRatingOfReviewQuery } from '../../../api/reviewApi';
 import { useGetUserReviewsQuery } from '../../../api/userApi';
@@ -39,7 +40,9 @@ const TableRow = ({ review }: { review: Review }) => {
     return (
         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
             <Checkbox />
-            <td className="px-6 py-4 w-10">{review.title}</td>
+            <td className="px-6 py-4 w-10">
+                <Link to={`/review/${review.id}`}>{review.title}</Link>
+            </td>
             <td className="px-6 py-4">{review.objectName}</td>
             <td className="px-6 py-4">{review.grade}</td>
             <td className="px-6 py-4">

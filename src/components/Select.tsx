@@ -1,29 +1,31 @@
 import { SelectHTMLAttributes, useState } from 'react';
 import Select from 'react-select';
 
+import { Category } from '../types';
 import Alert from './Alert';
+
+type Option = {
+    value: number;
+    label: string;
+};
 
 const View = ({
     label,
     options,
     onChange,
     error,
+    selectedOption,
     name,
+    ...props
 }: {
     label: string;
     error: string | false | undefined;
-    options: {
-        value: string;
-        label: string;
-    }[];
+    options: Category[];
+    selectedOption?: Option;
     name: string;
-    onChange: (option: string) => void;
+    onChange: (option?: number) => void;
 } & Omit<SelectHTMLAttributes<HTMLSelectElement>, 'onChange'>) => {
-    const [selectedOption, setSelectedOption] = useState<{
-        value: string;
-        label: string;
-    } | null>(null);
-
+    const [selected, setSelected] = useState<Option | null>(selectedOption || null);
     return (
         <>
             {error && <Alert type="danger">{error}</Alert>}
@@ -36,12 +38,15 @@ const View = ({
             <Select
                 name={name}
                 className="w-full"
-                value={selectedOption}
+                value={selected}
                 onChange={(option) => {
-                    setSelectedOption(option);
-                    onChange(option?.value || '');
+                    setSelected(option);
+                    onChange(option?.value);
                 }}
-                options={options}
+                options={options.map((category) => ({
+                    value: category.id,
+                    label: category.name,
+                }))}
             />
         </>
     );
