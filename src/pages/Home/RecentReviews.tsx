@@ -1,8 +1,5 @@
-import { useState } from 'react';
-
 import { useGetReviewsQuery } from '../../api/reviewApi';
-import ReviewPost from '../../components/ReviewPost';
-import { User } from '../../types';
+import { ReviewPost } from '../../components';
 
 const RecentReviews = () => {
     const { data } = useGetReviewsQuery();

@@ -1,5 +1,3 @@
-import { useNavigate } from 'react-router';
-
 import { useAppSelector } from '../../redux/hooks';
 import { selectUser } from '../../redux/selectors';
 import Header from './components/Header';

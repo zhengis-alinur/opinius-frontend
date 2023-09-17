@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from './components/Layout';
 import CreateReview from './pages/CreateReview';
 import EditReview from './pages/EditReview';
+import Favorites from './pages/Favorites';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
@@ -36,6 +37,10 @@ function App() {
                 {
                     path: '/editReview/:id',
                     element: <EditReview />,
+                },
+                {
+                    path: '/favorites',
+                    element: <Favorites />,
                 },
             ],
         },

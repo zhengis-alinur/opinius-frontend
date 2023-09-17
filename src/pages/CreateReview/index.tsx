@@ -4,14 +4,16 @@ import * as Yup from 'yup';
 
 import { useGetCategoriesQuery } from '../../api/categoryApi';
 import { useCreateReviewMutation } from '../../api/reviewApi';
-import Alert from '../../components/Alert';
-import Button from '../../components/Button';
-import Container from '../../components/Container';
-import ImageUploader from '../../components/ImageUploader';
-import Input from '../../components/Input';
-import Range from '../../components/Range';
-import Select from '../../components/Select';
-import TextArea from '../../components/TextArea';
+import {
+    Alert,
+    Button,
+    Container,
+    ImageUploader,
+    Input,
+    Range,
+    Select,
+    TextArea,
+} from '../../components';
 import { useAppSelector } from '../../redux/hooks';
 import { selectUser } from '../../redux/selectors';
 import { Category } from '../../types';

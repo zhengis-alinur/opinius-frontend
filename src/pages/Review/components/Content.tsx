@@ -1,7 +1,7 @@
 const Content = ({ text }: { text: string }) => {
     return (
         <div>
-            <p>{text}</p>
+            <p className="text-xl">{text}</p>
         </div>
     );
 };

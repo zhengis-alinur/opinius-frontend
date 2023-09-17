@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useGetReviewsQuery } from '../../api/reviewApi';
-import ReviewCard from '../../components/ReviewCard';
+import { ReviewCard } from '../../components';
 
 const BestReviews = () => {
     const [hidden, setHidden] = useState(true);

@@ -56,17 +56,25 @@ const View = () => {
                                 {reviewUser.username + "'"}s final rate: {review.grade}/10
                             </p>
                         </div>
-                        <h1>Did you like this review?</h1>
-                        <Likes
-                            scale={4}
-                            liked={getLike.data}
-                            onClick={() => {
-                                onLike();
-                            }}
-                        />
-                        <Rate review={review} />
+                        {user ? (
+                            <>
+                                <h1>Did you like this review?</h1>
+                                <Likes
+                                    scale={4}
+                                    liked={getLike.data}
+                                    onClick={() => {
+                                        onLike();
+                                    }}
+                                />
+                                <Rate review={review} />
+                            </>
+                        ) : (
+                            <h1>
+                                Please, log in to be able to like, rate or comment review
+                            </h1>
+                        )}
                     </Container>
-                    <AddComment review={review} />
+                    {user && <AddComment review={review} />}
                     <Comments reviewId={review.id} />
                 </>
             )}

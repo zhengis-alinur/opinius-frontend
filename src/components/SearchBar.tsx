@@ -4,12 +4,12 @@ const SearchBar = () => {
     };
 
     return (
-        <form className="max-w-[480px] w-full px-4" onSubmit={onSubmit}>
+        <form className="max-w-[480px] w-full px-4 border-none" onSubmit={onSubmit}>
             <div className="relative">
                 <input
                     type="text"
-                    name="q"
-                    className="w-full h-12 shadow p-4 rounded-2xl bg-slate-100 focus:outline-none"
+                    name="search"
+                    className="w-full h-12 shadow p-4 rounded-2xl border-none bg-slate-100 border-transparent focus:border-transparent focus:ring-0"
                     placeholder="Search"
                 />
                 <button type="submit">

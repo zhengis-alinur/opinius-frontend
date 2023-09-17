@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 
 import { useCommentsOfReviewQuery } from '../../../api/reviewApi';
+import { Container } from '../../../components';
 import { Comment as CommentType } from '../../../types/Comment';
 import Comment from './Comment';
 
 const Comments = ({ reviewId }: { reviewId: number }) => {
-    const [comments, setComments] = useState<CommentType[]>();
+    const [comments, setComments] = useState<CommentType[]>([]);
     const getComments = useCommentsOfReviewQuery(reviewId);
     useEffect(() => {
         const fetchData = async () => {
@@ -22,10 +23,13 @@ const Comments = ({ reviewId }: { reviewId: number }) => {
     }, []);
     return (
         <>
-            {comments &&
+            {comments.length > 0 ? (
                 comments.map((comment, index) => (
                     <Comment comment={comment} key={index} />
-                ))}
+                ))
+            ) : (
+                <h1 className="text-center">No comments</h1>
+            )}
         </>
     );
 };

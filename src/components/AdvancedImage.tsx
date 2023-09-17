@@ -1,4 +1,4 @@
-const ReviewImage = ({
+const AdvancedImage = ({
     children,
     large = false,
     rounded = false,
@@ -22,4 +22,4 @@ const ReviewImage = ({
     );
 };
 
-export default ReviewImage;
+export default AdvancedImage;

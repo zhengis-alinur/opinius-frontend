@@ -29,7 +29,7 @@ const Sidebar = (
                     </Link>
                 </SidebarItem>
                 <SidebarItem>
-                    <Link to="/" className="flex flex-nowrap gap-2 items-center">
+                    <Link to="/favorites" className="flex flex-nowrap gap-2 items-center">
                         <Likes />
                         <p>Favorites reviews</p>
                     </Link>

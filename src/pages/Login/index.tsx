@@ -1,15 +1,11 @@
 import { useFormik } from 'formik';
-import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import * as Yup from 'yup'; // for form validation
+import * as Yup from 'yup';
 
 import { useLoginMutation, UserResponse } from '../../api/authApi';
-import Alert from '../../components/Alert';
-import Button from '../../components/Button';
-import Logo from '../../components/Logo';
+import { Alert, Button, Logo } from '../../components';
 import { useAppDispatch } from '../../redux/hooks';
-import { setAuthData, setToken, setUser } from '../../redux/reducers/auth';
-import { setAuthDataToLocalStorage } from '../../utils';
+import { setAuthData } from '../../redux/reducers/auth';
 
 const Login = () => {
     const [login, { isLoading, error }] = useLoginMutation();
@@ -93,7 +89,9 @@ const Login = () => {
                         <Button type="submit" disabled={isLoading}>
                             {isLoading ? 'Logging in...' : 'Login'}
                         </Button>
-                        {error && <Alert type="warning">{error?.data?.message}</Alert>}
+                        {error && 'data' in error && (
+                            <Alert type="warning">{error.data}</Alert>
+                        )}
                         <p className="text-xs mt-3 text-center">
                             Dont have an account?{' '}
                             <Link className="font-bold ml-3" to="/signup">

@@ -64,14 +64,16 @@ const ReviewPost = ({
                         <div className="flex gap-2">
                             <Likes />
                             <p className="text-xs">
-                                <span className="font-bold">{review.likes.length}</span>
+                                <span className="font-bold">
+                                    {review.likes ? review.likes.length : 0}
+                                </span>
                             </p>
                         </div>
                         <div className="flex gap-2">
                             <Comment />
                             <p className="text-xs">
                                 <span className="font-bold">
-                                    {review.comments.length}
+                                    {review.comments ? review.comments.length : 0}
                                 </span>
                             </p>
                         </div>
