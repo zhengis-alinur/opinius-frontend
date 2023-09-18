@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { useEffect, useState } from 'react';
+import { ChangeEventHandler, useEffect, useState } from 'react';
 import * as Yup from 'yup';
 
 import { useGetCategoriesQuery } from '../../api/categoryApi';
@@ -18,6 +18,7 @@ import { useAppSelector } from '../../redux/hooks';
 import { selectUser } from '../../redux/selectors';
 import { Category } from '../../types';
 import { CreateReview } from '../../types/Review';
+import { extractHashtags } from '../../utils';
 import { url } from '../../utils/cloudinary';
 
 const СreateReview = () => {
@@ -26,6 +27,7 @@ const СreateReview = () => {
     const [createReview, { isLoading }] = useCreateReviewMutation();
     const getCategories = useGetCategoriesQuery();
     const [imageUrl, setImageUrl] = useState('');
+    const [tags, setTags] = useState<Set<string>>(new Set());
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -47,6 +49,11 @@ const СreateReview = () => {
                 uploadPreset: import.meta.env.VITE_UPLOAD_PRESET,
             }),
         );
+    };
+
+    const onTextChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
+        formik.handleChange(e);
+        setTags(extractHashtags(e.target.value));
     };
 
     const formik = useFormik({
@@ -76,7 +83,7 @@ const СreateReview = () => {
                     grade: values.grade,
                     categoryId: values.category,
                     text: values.text,
-                    tags: ['books'], // Add tags logic here
+                    tags: Array.from(tags),
                     image: imageUrl,
                     userId: user.id,
                 };
@@ -111,7 +118,7 @@ const СreateReview = () => {
                             error={formik.touched.objectName && formik.errors.objectName}
                         />
                         <div className="flex flex-col gap-6 items-center mb-3 md:flex-row">
-                            <div className="flex w-full gap-10 justify-between items-center md:w-1/2">
+                            <div className="flex w-full gap-16 justify-start items-center md:w-1/2">
                                 <Range
                                     name="grade"
                                     label="My grade"
@@ -158,12 +165,13 @@ const СreateReview = () => {
                             </p>
                         </Alert>
                         <TextArea
+                            tags={tags}
                             className="your-custom-textarea-class"
                             name="text"
                             label="My Review"
                             placeholder="Share your opinion ..."
                             value={formik.values.text}
-                            onChange={formik.handleChange}
+                            onChange={onTextChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.text && formik.errors.text}
                         />

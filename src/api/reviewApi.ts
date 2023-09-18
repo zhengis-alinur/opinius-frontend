@@ -1,5 +1,5 @@
 import { Review, User } from '../types';
-import { CreateReview } from '../types/Review';
+import { CreateReview, UpdateReview } from '../types/Review';
 import { rootApi } from './rootApi';
 
 type CreateReviewResponse = {
@@ -55,7 +55,7 @@ const reviewApi = rootApi.injectEndpoints({
             }),
             invalidatesTags: ['Reviews'],
         }),
-        updateReview: builder.mutation<Review, Partial<Review>>({
+        updateReview: builder.mutation<Review, Partial<UpdateReview>>({
             query: (review) => ({
                 url: '/review/update',
                 method: 'POST',

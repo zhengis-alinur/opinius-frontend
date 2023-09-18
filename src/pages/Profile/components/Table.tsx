@@ -48,7 +48,11 @@ const TableRow = ({ review }: { review: Review }) => {
             <td className="px-6 py-4">
                 <div className="flex flex-col items-start">
                     {review.tags &&
-                        review.tags.map((tag, index) => <Badge key={index}>{tag}</Badge>)}
+                        review.tags.map((tag) => (
+                            <Link to={'/'} className="font-bold" key={tag.name}>
+                                #{tag.name}
+                            </Link>
+                        ))}
                 </div>
             </td>
             <td className="px-6 py-4">{review.likes.length}</td>

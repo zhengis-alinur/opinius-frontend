@@ -1,17 +1,17 @@
 import Badge from '../../../components/Badge';
-import { Review } from '../../../types';
+import { Tag } from '../../../types/Tag';
 
 const Tags = ({
     tags,
     ...props
-}: { tags: string[] } & React.DetailedHTMLProps<
+}: { tags: Tag[] } & React.DetailedHTMLProps<
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
 >) => {
     return (
         <div className={`${props.className}`}>
-            {tags.map((tag, index) => (
-                <Badge key={index}>{tag}</Badge>
+            {tags.map((tag) => (
+                <Badge key={tag.id}>{tag.name}</Badge>
             ))}
         </div>
     );

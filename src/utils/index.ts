@@ -24,3 +24,17 @@ export const categoriesToSelectOptions = (categories: Category[]) =>
 export const isFetchBaseQueryError = (error: unknown): error is FetchBaseQueryError => {
     return typeof error === 'object' && error != null && 'status' in error;
 };
+
+export const extractHashtags = (text: string): Set<string> => {
+    const hashtagRegex = /#(\w+)/g;
+    const hashtags = text.match(hashtagRegex);
+    const uniqueHashtags = new Set<string>();
+
+    if (hashtags) {
+        hashtags.forEach((tag) => {
+            uniqueHashtags.add(tag.slice(1)); // Remove the '#' symbol and add to Set
+        });
+    }
+
+    return uniqueHashtags;
+};

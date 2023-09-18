@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { useEffect, useState } from 'react';
+import { ChangeEventHandler, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import * as Yup from 'yup';
 
@@ -19,22 +19,21 @@ import { useAppSelector } from '../../redux/hooks';
 import { selectUser } from '../../redux/selectors';
 import { Category } from '../../types';
 import { Review, UpdateReview } from '../../types/Review';
+import { extractHashtags } from '../../utils';
 import { url } from '../../utils/cloudinary';
 
 const EditReview = () => {
     const { id } = useParams();
     const user = useAppSelector(selectUser);
     const [review, setReview] = useState<
-        Omit<
-            Review,
-            'likes' | 'id' | 'comments' | 'userId' | 'ratings' | 'rating' | 'tags'
-        >
+        Omit<Review, 'likes' | 'id' | 'comments' | 'userId' | 'ratings' | 'rating'>
     >({
         title: '',
         objectName: '',
         grade: 0,
         categoryId: 0,
         image: '',
+        tags: [],
         text: '',
     });
     const [updateReview, { isLoading }] = useUpdateReviewMutation();
@@ -43,6 +42,7 @@ const EditReview = () => {
     const getCategories = useGetCategoriesQuery();
     const [categories, setCategories] = useState<Category[]>([]);
     const [category, setCategory] = useState<Category>();
+    const [tags, setTags] = useState<Set<string>>(new Set());
 
     const [imageUrl, setImageUrl] = useState<string>('');
     useEffect(() => {
@@ -51,6 +51,7 @@ const EditReview = () => {
                 const data = (await getReview.refetch()).data?.review;
                 if (data) {
                     setReview(data);
+                    setTags(new Set(data.tags.map((tag) => tag.name)));
                 }
                 const allCategories = (await getCategories.refetch()).data;
                 if (allCategories) {
@@ -73,6 +74,11 @@ const EditReview = () => {
                 uploadPreset: import.meta.env.VITE_UPLOAD_PRESET,
             }),
         );
+    };
+
+    const onTextChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
+        formik.handleChange(e);
+        setTags(extractHashtags(e.target.value));
     };
 
     const formik = useFormik({
@@ -104,7 +110,7 @@ const EditReview = () => {
                     grade: values.grade,
                     categoryId: values.category,
                     text: values.text,
-                    tags: ['books'],
+                    tags: Array.from(tags),
                     image: imageUrl || review.image,
                     userId: user.id,
                 };
@@ -142,7 +148,7 @@ const EditReview = () => {
                                 }
                             />
                             <div className="flex flex-col gap-6 items-center mb-3 md:flex-row">
-                                <div className="flex w-full gap-10 justify-between items-center md:w-1/2">
+                                <div className="flex w-full  gap-16 justify-start items-center md:w-1/2">
                                     <Range
                                         name="grade"
                                         label="My grade"
@@ -199,12 +205,13 @@ const EditReview = () => {
                                 </p>
                             </Alert>
                             <TextArea
+                                tags={tags}
                                 className="your-custom-textarea-class"
                                 name="text"
                                 label="My Review"
                                 placeholder="Share your opinion ..."
                                 value={formik.values.text}
-                                onChange={formik.handleChange}
+                                onChange={onTextChange}
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.text && formik.errors.text}
                             />

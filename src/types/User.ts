@@ -4,6 +4,9 @@ export type User = {
     username: string;
     avatar: string;
     firstName: string;
+    likesCount: number;
+    commentsCount: number;
+    ratedCount: number;
     lastName: string;
     email: string;
 };

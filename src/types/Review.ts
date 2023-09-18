@@ -1,6 +1,7 @@
 import type { Comment } from './Comment';
 import { Like } from './Like';
 import { Rating } from './Rating';
+import { Tag } from './Tag';
 
 export type Review = {
     id: number;
@@ -8,7 +9,7 @@ export type Review = {
     objectName: string;
     text: string;
     grade: number;
-    tags: string[];
+    tags: Tag[];
     categoryId: number;
     image: string;
     likes: Like[];
@@ -18,8 +19,25 @@ export type Review = {
     comments: Comment[];
 };
 
-export type CreateReview = Omit<
-    Review,
-    'comments' | 'likes' | 'rating' | 'id' | 'ratings'
->;
-export type UpdateReview = Omit<Review, 'comments' | 'likes' | 'rating' | 'ratings'>;
+export type CreateReview = {
+    title: string;
+    objectName: string;
+    text: string;
+    grade: number;
+    tags: string[];
+    categoryId: number;
+    image: string;
+    userId: number;
+};
+
+export type UpdateReview = {
+    id: number;
+    title: string;
+    objectName: string;
+    text: string;
+    grade: number;
+    tags: string[];
+    categoryId: number;
+    image: string;
+    userId: number;
+};

@@ -92,28 +92,26 @@ const Header = ({ user }: { user: User }) => {
                 </div>
                 {stats && (
                     <div className="flex flex-col items-center  gap-16 lg:flex-row lg:items-end">
-                        <div className="flex flex-col items-center">
+                        <div className="flewwx flex-col items-center">
                             <h1 className="text-gray-200 text-3xl text-left ">
-                                {user.username}
-                            </h1>
-                            <h1 className="text-gray-200 text-3xl text-left ">
-                                {stats.reviews} reviews
+                                {stats.reviews === 0 ? 'No' : stats.reviews} review
+                                {stats.reviews === 1 ? '' : 's'}
                             </h1>
                         </div>
                         <UserInfo
                             colorClass="text-red-500"
                             info="Likes"
-                            value={stats.likes}
+                            value={user.likesCount}
                         />
                         <UserInfo
                             colorClass="text-cyan-500"
                             info="Comments"
-                            value={stats.comments}
+                            value={user.commentsCount}
                         />
                         <UserInfo
                             colorClass="text-amber-500"
-                            info="Rating"
-                            value={stats.ratings}
+                            info="Rated"
+                            value={user.ratedCount}
                         />
                     </div>
                 )}
