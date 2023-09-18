@@ -6,7 +6,7 @@ export const rootApi = createApi({
     reducerPath: 'api',
     tagTypes: ['Reviews', 'Auth', 'User', 'Categories'],
     baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.SERVER_URL,
+        baseUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1`,
         prepareHeaders: (headers) => {
             const token = getTokenFromLocalStorage();
             if (token) {
