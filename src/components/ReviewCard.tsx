@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { HTMLAttributes, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useGetUserQuery } from '../api/userApi';
@@ -11,10 +11,7 @@ import ProfileImage from './ProfileImage';
 const ReviewCard = ({
     review,
     ...props
-}: { review: Review } & React.DetailedHTMLProps<
-    React.HTMLAttributes<HTMLDivElement>,
-    HTMLDivElement
->) => {
+}: { review: Review } & HTMLAttributes<HTMLDivElement>) => {
     const [user, setUser] = useState<User | null>(null);
     const getUser = useGetUserQuery(review.userId);
     useEffect(() => {

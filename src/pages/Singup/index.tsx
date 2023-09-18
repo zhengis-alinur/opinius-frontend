@@ -104,9 +104,6 @@ const Signup = () => {
                     <Button onClick={() => formik.handleSubmit()}>
                         {isLoading ? 'Signing up...' : 'Sign up'}
                     </Button>
-                    {error && 'data' in error && (
-                        <Alert type="warning">{error?.data}</Alert>
-                    )}
                     <p className="text-xs mt-3 text-center">
                         You already have an account?
                         <Link className="font-bold ml-3" to="/login">

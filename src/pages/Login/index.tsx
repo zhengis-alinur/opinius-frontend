@@ -89,9 +89,6 @@ const Login = () => {
                         <Button type="submit" disabled={isLoading}>
                             {isLoading ? 'Logging in...' : 'Login'}
                         </Button>
-                        {error && 'data' in error && (
-                            <Alert type="warning">{error.data}</Alert>
-                        )}
                         <p className="text-xs mt-3 text-center">
                             Dont have an account?{' '}
                             <Link className="font-bold ml-3" to="/signup">

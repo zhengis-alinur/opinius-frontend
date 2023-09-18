@@ -1,13 +1,16 @@
+import { HTMLAttributes } from 'react';
+
 const AdvancedImage = ({
     children,
     large = false,
     rounded = false,
     src,
     ...props
-}: { large?: boolean; rounded?: boolean; src?: string } & React.DetailedHTMLProps<
-    React.HTMLAttributes<HTMLDivElement>,
-    HTMLDivElement
->) => {
+}: {
+    large?: boolean;
+    rounded?: boolean;
+    src?: string;
+} & HTMLAttributes<HTMLDivElement>) => {
     return (
         <div className={`hs-tooltip inline-block ${props.className}`} {...props}>
             <img

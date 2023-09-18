@@ -39,7 +39,7 @@ const AvatarUpload = () => {
         <ProfileImage
             className="relative mb-1 hover:opacity-50 cursor-pointer"
             large
-            url={user.avatar}
+            src={user.avatar}
             onClick={() => {
                 uploadImageWidget();
             }}

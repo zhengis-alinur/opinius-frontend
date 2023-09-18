@@ -1,11 +1,10 @@
-import { ReactNode } from 'react';
+import { HTMLAttributes } from 'react';
 
 type Props = {
-    children: ReactNode;
     type: 'info' | 'danger' | 'success' | 'warning' | 'dark';
-};
+} & HTMLAttributes<HTMLDivElement>;
 
-const Alert = ({ type, children }: Props) => {
+const Alert = ({ type, ...props }: Props) => {
     const typeMap = {
         info: 'text-blue-800 bg-blue-50 dark:text-blue-400',
         danger: 'text-red-800 bg-red-50 dark:textrede-400',
@@ -18,7 +17,7 @@ const Alert = ({ type, children }: Props) => {
             className={`p-4 mb-4 text-sm rounded-lg bg-blue-50 dark:bg-dark ${typeMap[type]}`}
             role="alert"
         >
-            {children}
+            {props.children}
         </div>
     );
 };

@@ -1,3 +1,4 @@
+import { HTMLAttributes } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { useAppSelector } from '../../redux/hooks';
@@ -8,13 +9,11 @@ import Home from './icons/Home';
 import Likes from './icons/Likes';
 import Settings from './icons/Settings';
 
-const SidebarItem = (
-    props: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
-) => <div className="flex gap-3 items-center">{props.children}</div>;
+const SidebarItem = (props: HTMLAttributes<HTMLDivElement>) => (
+    <div className="flex gap-3 items-center">{props.children}</div>
+);
 
-const Sidebar = (
-    props: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
-) => {
+const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
     const user = useAppSelector(selectUser);
     const navigate = useNavigate();
     return (

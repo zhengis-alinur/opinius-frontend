@@ -1,13 +1,9 @@
+import { HTMLAttributes } from 'react';
+
 import Badge from '../../../components/Badge';
 import { Tag } from '../../../types/Tag';
 
-const Tags = ({
-    tags,
-    ...props
-}: { tags: Tag[] } & React.DetailedHTMLProps<
-    React.HTMLAttributes<HTMLDivElement>,
-    HTMLDivElement
->) => {
+const Tags = ({ tags, ...props }: { tags: Tag[] } & HTMLAttributes<HTMLDivElement>) => {
     return (
         <div className={`${props.className}`}>
             {tags.map((tag) => (

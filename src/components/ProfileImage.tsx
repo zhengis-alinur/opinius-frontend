@@ -1,12 +1,11 @@
+import { HTMLAttributes } from 'react';
+
 const ProfileImage = ({
     children,
     large = false,
     src,
     ...props
-}: { large?: boolean; src?: string } & React.DetailedHTMLProps<
-    React.HTMLAttributes<HTMLDivElement>,
-    HTMLDivElement
->) => {
+}: { large?: boolean; src?: string } & HTMLAttributes<HTMLDivElement>) => {
     return (
         <div className={`hs-tooltip inline-block ${props.className}`} {...props}>
             <img
