@@ -23,7 +23,7 @@ function App() {
                     // loader: authLoader,
                 },
                 {
-                    path: '/profile',
+                    path: '/profile/:id',
                     element: <Profile />,
                 },
                 {
@@ -48,7 +48,11 @@ function App() {
         { element: <Signup />, path: '/signup' },
     ]);
 
-    return <RouterProvider router={routers} />;
+    return (
+        <div className="dark text-primary  bg-bg dark:dark dark:text-white">
+            <RouterProvider router={routers} />
+        </div>
+    );
 }
 
 export default App;

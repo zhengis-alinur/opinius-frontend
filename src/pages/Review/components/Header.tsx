@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import ProfileImage from '../../../components/ProfileImage';
 import Edit from '../../../icons/Edit';
@@ -18,10 +19,13 @@ const Header = ({ reviewUser, review }: { reviewUser: User; review: Review }) =>
                 }}
             />
             <div className="relative flex flex-col w-full items-center p-8">
-                <div className="flex flex-col items-center">
+                <Link
+                    to={`/profile/${review.userId}`}
+                    className="flex flex-col items-center"
+                >
                     <ProfileImage large src={reviewUser.avatar} />
                     <p className="text-white mt-3 text-xl">{reviewUser.username}</p>
-                </div>
+                </Link>
                 <div className="text-4xl text-center">
                     <h1 className="text-white">{review.title}</h1>
                 </div>

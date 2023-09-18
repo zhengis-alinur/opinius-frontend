@@ -28,7 +28,7 @@ const Range = ({
                 max={props.max || '5'}
                 value={props.value}
                 step={props.step || '1'}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-dark"
             ></input>
             <span className="absolute left-0 top-12">{props.min}</span>
             <span className="absolute right-0  top-12">{props.max}</span>

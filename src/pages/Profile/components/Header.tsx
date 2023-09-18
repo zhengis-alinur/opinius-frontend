@@ -4,8 +4,9 @@ import { useNavigate } from 'react-router';
 import { useGetUserStatsQuery, useSetAvatarMutation } from '../../../api/userApi';
 import Button from '../../../components/Button';
 import ImageUpload from '../../../components/ImageUploader';
-import { useAppDispatch } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { setUser } from '../../../redux/reducers/auth';
+import { selectUser } from '../../../redux/selectors';
 import { User } from '../../../types';
 import { UserStats } from '../../../types/UserStats';
 
@@ -45,6 +46,7 @@ const CreateReviewButton = (props: React.ButtonHTMLAttributes<HTMLButtonElement>
 
 const Header = ({ user }: { user: User }) => {
     const navigate = useNavigate();
+    const currentUser = useAppSelector(selectUser);
     const [stats, setStats] = useState<UserStats>();
     const getStats = useGetUserStatsQuery(user.id);
     const dispatch = useAppDispatch();
@@ -116,7 +118,9 @@ const Header = ({ user }: { user: User }) => {
                     </div>
                 )}
             </div>
-            <CreateReviewButton onClick={() => navigate('/createReview')} />
+            {user.id === currentUser.id && (
+                <CreateReviewButton onClick={() => navigate('/createReview')} />
+            )}
         </div>
     );
 };

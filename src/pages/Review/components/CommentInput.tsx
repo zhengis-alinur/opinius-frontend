@@ -13,7 +13,7 @@ const CommentInput = ({ onComment }: { onComment: (text: string) => void }) => {
                 onComment(comment);
             }}
         >
-            <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+            <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-600">
                 <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
                     <label htmlFor="comment" className="sr-only">
                         Your comment

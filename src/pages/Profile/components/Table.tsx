@@ -7,7 +7,7 @@ import Badge from '../../../components/Badge';
 import Checkbox from '../../../components/Checkbox';
 import { useAppSelector } from '../../../redux/hooks';
 import { selectUser } from '../../../redux/selectors';
-import { Review } from '../../../types';
+import { Review, User } from '../../../types';
 
 const TableHeadItem = ({
     title,
@@ -38,7 +38,7 @@ const TableHeadItem = ({
 
 const TableRow = ({ review }: { review: Review }) => {
     return (
-        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+        <tr className="bg-white border-b dark:bg-gray dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
             <Checkbox />
             <td className="px-6 py-4 w-10">
                 <Link to={`/review/${review.id}`}>{review.title}</Link>
@@ -59,7 +59,7 @@ const TableRow = ({ review }: { review: Review }) => {
 };
 
 const TableHead = () => (
-    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray dark:text-gray-400">
         <tr>
             <Checkbox />
             <TableHeadItem title="Review title" />
@@ -81,8 +81,8 @@ const TableBody = ({ reviews }: { reviews: Review[] }) => (
 );
 
 const TableSearch = () => (
-    <div className="pb-4 bg-white dark:bg-gray-900">
-        <label htmlFor="table-search" className="sr-only">
+    <div className="pb-4 bg-white dark:bg-gray">
+        <label htmlFor="table-search" className="sr-only ">
             Search
         </label>
         <div className="relative mt-1">
@@ -106,15 +106,14 @@ const TableSearch = () => (
             <input
                 type="text"
                 id="table-search"
-                className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Search for items"
             />
         </div>
     </div>
 );
 
-const Table = () => {
-    const user = useAppSelector(selectUser);
+const Table = ({ user }: { user: User }) => {
     const [reviews, setReviews] = useState<Review[]>([]);
     const getReviews = useGetUserReviewsQuery(user.id);
 
@@ -132,7 +131,7 @@ const Table = () => {
         fetchData();
     }, []);
     return (
-        <div className="relative w-full max-w-6xl overflow-x-auto shadow-md sm:rounded-lg p-4 bg-white">
+        <div className="relative bg-white w-full max-w-6xl overflow-x-auto shadow-md sm:rounded-lg p-4 dark:bg-gray ">
             <TableSearch />
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <TableHead />

@@ -32,18 +32,18 @@ const ReviewCard = ({
     }, []);
     return (
         <Link
-            className={`flex flex-col gap-3 w-60 max-h-80 relative p-2 pb-3 rounded-lg overflow-hidden cursor-pointer shadow-xl ${props.className}`}
+            className={`flex flex-col gap-3 w-60 max-h-80 relative p-2 pb-3 rounded-lg overflow-hidden cursor-pointer shadow-xl dark:bg-gray ${props.className}`}
             to={`/review/${review.id}`}
         >
-            <div className="flex gap-3 items-center">
+            <Link to={`/profile/${review.userId}`} className="flex gap-3 items-center">
                 <ProfileImage src={user ? user.avatar : ''} />
                 <div className="flex flex-col gap-0">
-                    <p className="font-bold text-sm">{user?.username}</p>
+                    <p className="font-bold text-sm ">{user?.username}</p>
                     <p className="text-xs">Munbai, India</p>
                 </div>
-            </div>
+            </Link>
             <div
-                className="flex flex-col-reverse p-2 w-full h-96 bg-center rounded-lg bg-cover"
+                className="flex flex-col-reverse p-2 w-full h-96 bg-center rounded-lg bg-cover "
                 style={{
                     backgroundImage: `url(${review.image || '/assets/review-bg.png'})`,
                 }}

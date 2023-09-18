@@ -5,10 +5,8 @@
 @tailwind utilities;
 
 * {
-	color: #105F8A;
 	box-sizing: border-box;
 }
-
 body {
-	background-color: #F4F8FA;
+	min-height: 100vh;
 }

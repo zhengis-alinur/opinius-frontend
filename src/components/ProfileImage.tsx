@@ -1,7 +1,3 @@
-import { ImgHTMLAttributes } from 'react';
-
-import Tooltip from './Tooltip';
-
 const ProfileImage = ({
     children,
     large = false,

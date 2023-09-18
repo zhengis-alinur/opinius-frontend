@@ -15,7 +15,7 @@ const Alert = ({ type, children }: Props) => {
     };
     return (
         <div
-            className={`p-4 mb-4 text-sm rounded-lg bg-blue-50 dark:bg-gray-800 ${typeMap[type]}`}
+            className={`p-4 mb-4 text-sm rounded-lg bg-blue-50 dark:bg-dark ${typeMap[type]}`}
             role="alert"
         >
             {children}

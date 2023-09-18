@@ -35,16 +35,16 @@ const ReviewPost = ({
 
     return (
         <Link
-            className={`flex flex-col gap-3 w-full relative p-2 pb-3 rounded-lg overflow-hidden cursor-pointer shadow-xl ${props.className}`}
+            className={`flex flex-col gap-3 w-full relative p-2 pb-3 rounded-lg overflow-hidden cursor-pointer shadow-xl dark:bg-gray ${props.className}`}
             to={`/review/${review.id}`}
         >
-            <div className="flex gap-3 items-center">
+            <Link to={`/profile/${review.userId}`} className="flex gap-3 items-center">
                 <ProfileImage src={user ? user.avatar : ''} />
                 <div className="flex flex-col gap-0">
                     <p className="font-bold text-sm">{user && user.username}</p>
                     <p className="text-xs">Munbai, India</p>
                 </div>
-            </div>
+            </Link>
             <div className="flex flex-col items-center gap-8 justify-between lg:flex-row lg:items-start">
                 <div
                     className="flex flex-col-reverse p-2 h-96 w-full flex-3 bg-center bg-no-repeat bg-cover rounded-lg lg:flex-1"

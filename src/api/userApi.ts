@@ -17,7 +17,7 @@ type GetFavoritesResponseType = {
 
 const userApi = rootApi.injectEndpoints({
     endpoints: (builder) => ({
-        getUser: builder.query<User, number>({
+        getUser: builder.query<User, number | string>({
             query: (id) => ({
                 url: `/user/?id=${id}`,
             }),

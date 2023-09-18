@@ -57,7 +57,7 @@ const View = () => {
     return (
         <Link className="flex items-center" to="/">
             <Logo />
-            <h1 className="font-logo text-4xl text-sky-800 cursor-pointer">Opinius</h1>
+            <h1 className="font-logo text-4xl text-sky-800 cursor-pointer e">Opinius</h1>
         </Link>
     );
 };

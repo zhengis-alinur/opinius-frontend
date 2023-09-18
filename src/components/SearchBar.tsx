@@ -9,7 +9,7 @@ const SearchBar = () => {
                 <input
                     type="text"
                     name="search"
-                    className="w-full h-12 shadow p-4 rounded-2xl border-none bg-slate-100 border-transparent focus:border-transparent focus:ring-0"
+                    className="w-full h-12 shadow p-4 rounded-2xl border-none bg-slate-100 border-transparent focus:border-transparent focus:ring-0 dark:bg-dark"
                     placeholder="Search"
                 />
                 <button type="submit">

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useAppSelector } from '../../redux/hooks';
 import { selectUser } from '../../redux/selectors';
@@ -16,14 +16,15 @@ const Sidebar = (
     props: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
 ) => {
     const user = useAppSelector(selectUser);
+    const navigate = useNavigate();
     return (
         <div
-            className={`hidden flex-col items-center whitespace-nowrap h-fit bg-white p-5 gap-10 rounded-xl shadow-xl ${props.className} md:flex`}
+            className={`hidden flex-col items-center whitespace-nowrap h-fit bg-white p-5 gap-10 rounded-xl shadow-xl ${props.className} md:flex dark:bg-gray`}
         >
             <ProfileImage src={user.avatar} />
             <div className="flex flex-col items-start justify-between gap-10">
                 <SidebarItem>
-                    <Link to="/" className="flex flex-nowrap gap-2 items-center">
+                    <Link to="/" className="flex flex-nowrap gap-2 items-center ">
                         <Home />
                         <p> Home page</p>
                     </Link>
@@ -35,10 +36,13 @@ const Sidebar = (
                     </Link>
                 </SidebarItem>
                 <SidebarItem>
-                    <Link to="/profile" className="flex flex-nowrap gap-2 items-center">
+                    <button
+                        onClick={() => navigate(`/profile/${user.id}`)}
+                        className="flex flex-nowrap gap-2 items-center"
+                    >
                         <Account />
                         <p>Profile page</p>
-                    </Link>
+                    </button>
                 </SidebarItem>
                 <SidebarItem>
                     <Link to="/" className="flex flex-nowrap gap-2 items-center">
