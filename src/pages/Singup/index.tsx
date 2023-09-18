@@ -4,10 +4,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import { useSignupMutation } from '../../api/authApi';
-import { Alert, Button, Input, Logo } from '../../components';
+import { Button, Input, Logo } from '../../components';
 
 const Signup = () => {
-    const [signup, { isLoading, error }] = useSignupMutation();
+    const [signup, { isLoading }] = useSignupMutation();
     const navigate = useNavigate();
     const [confirmPassword, setConfirmPassword] = useState<string>('');
     const formik = useFormik({
@@ -32,8 +32,8 @@ const Signup = () => {
         },
     });
     return (
-        <div className="container mx-auto w-full h-screen flex flex-col justify-center items-center">
-            <div className="flex flex-col items-center gap-6 bg-white rounded-lg shadow-xl p-10 pb-3">
+        <div className="container mx-auto w-full h-screen flex flex-col justify-center items-center dark:bg-dark dark:text-dark-text">
+            <div className="flex flex-col items-center gap-6 bg-white rounded-lg shadow-xl p-10 pb-3 dark:bg-gray">
                 <Logo />
                 <form className="flex flex-col w-96">
                     <div className="flex gap-5 mb-2">

@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import { useLoginMutation, UserResponse } from '../../api/authApi';
-import { Alert, Button, Logo } from '../../components';
+import { Alert, Button, Input, Logo } from '../../components';
 import { useAppDispatch } from '../../redux/hooks';
 import { setAuthData } from '../../redux/reducers/auth';
 
@@ -37,55 +37,31 @@ const Login = () => {
     });
 
     return (
-        <div className="container mx-auto w-full h-screen flex flex-col justify-center items-center">
-            <div className="flex flex-col items-center gap-6 bg-white rounded-lg shadow-xl p-10 pb-3">
+        <div className="container mx-auto w-full h-screen flex flex-col justify-center items-center dark:bg-dark dark:text-dark-text">
+            <div className="flex flex-col items-center gap-6 bg-white rounded-lg shadow-xl p-10 pb-3 dark:bg-gray">
                 <Logo />
                 <form onSubmit={formik.handleSubmit}>
                     <div className="flex flex-col w-96">
-                        <div className="mb-4">
-                            <label
-                                htmlFor="email"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                Email
-                            </label>
-                            <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.email}
-                                className="mt-1 p-2 border rounded-md w-full"
-                            />
-                            {formik.touched.email && formik.errors.email ? (
-                                <div className="text-red-600 text-xs mt-1">
-                                    {formik.errors.email}
-                                </div>
-                            ) : null}
-                        </div>
-                        <div className="mb-4">
-                            <label
-                                htmlFor="password"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                Password
-                            </label>
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.password}
-                                className="mt-1 p-2 border rounded-md w-full"
-                            />
-                            {formik.touched.password && formik.errors.password ? (
-                                <div className="text-red-600 text-xs mt-1">
-                                    {formik.errors.password}
-                                </div>
-                            ) : null}
-                        </div>
+                        <Input
+                            name="email"
+                            label="Email"
+                            type="email"
+                            placeholder="Email"
+                            onChange={formik.handleChange}
+                            value={formik.values.email}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.email && formik.errors.email}
+                        />
+                        <Input
+                            name="password"
+                            label="Password"
+                            type="password"
+                            placeholder="Password"
+                            onChange={formik.handleChange}
+                            value={formik.values.password}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.password && formik.errors.password}
+                        />
                         <Button type="submit" disabled={isLoading}>
                             {isLoading ? 'Logging in...' : 'Login'}
                         </Button>
