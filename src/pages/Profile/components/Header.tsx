@@ -124,9 +124,7 @@ const Header = ({ user }: { user: User }) => {
                     </div>
                 )}
             </div>
-            {user.id === currentUser.id && currentUser.roleId === ADMIN_ROLE_ID ? (
-                <h1 className="relative text-3xl text-lime-500">Administrator</h1>
-            ) : (
+            {(currentUser.id === user.id || currentUser.roleId === ADMIN_ROLE_ID) && (
                 <CreateReviewButton
                     onClick={() => navigate(`/createReview/${user.id}`)}
                 />

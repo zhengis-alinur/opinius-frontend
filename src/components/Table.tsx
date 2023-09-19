@@ -1,15 +1,16 @@
 import { ReactNode } from 'react';
 
-import Checkbox from './Checkbox';
+import BlockUser from '../icons/BlockUser';
+import Delete from '../icons/Delete';
 
-const TableHeadItem = ({
+export const TableHeadItem = ({
     title,
     sortable = false,
 }: {
     title: string;
     sortable?: boolean;
 }) => (
-    <th scope="col" className="px-6 py-3">
+    <th scope="col" className="pr-6 py-3">
         <div className="flex items-center whitespace-nowrap">
             {title}
             {sortable && (
@@ -32,9 +33,8 @@ const TableHeadItem = ({
 const TableRow = ({ row }: { row: ReactNode[] }) => {
     return (
         <tr className="bg-white border-b dark:bg-gray dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-            <Checkbox />
             {row.map((rowItem, index) => (
-                <td className="px-6 py-4" key={index}>
+                <td className="pr-6 py-4" key={index}>
                     {rowItem}
                 </td>
             ))}
@@ -42,14 +42,9 @@ const TableRow = ({ row }: { row: ReactNode[] }) => {
     );
 };
 
-const TableHead = ({ head }: { head: string[] }) => (
+const TableHead = ({ head }: { head: ReactNode[] }) => (
     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray dark:text-gray-400">
-        <tr>
-            <Checkbox />
-            {head.map((headItem) => (
-                <TableHeadItem key={headItem} title={headItem} />
-            ))}
-        </tr>
+        <tr>{head}</tr>
     </thead>
 );
 
@@ -61,43 +56,66 @@ const TableBody = ({ rows }: { rows: ReactNode[][] }) => (
     </tbody>
 );
 
-const TableSearch = () => (
-    <div className="pb-4 bg-white dark:bg-gray">
-        <label htmlFor="table-search" className="sr-only ">
-            Search
-        </label>
-        <div className="relative mt-1">
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <svg
-                    className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 20 20"
-                >
-                    <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                    />
-                </svg>
-            </div>
-            <input
-                type="text"
-                id="table-search"
-                className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Search for items"
-            />
+export const TableSearch = () => (
+    <div className="flex items-center relative bg-white dark:bg-gray">
+        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <svg
+                className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 20"
+            >
+                <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                />
+            </svg>
         </div>
+        <input
+            type="text"
+            id="table-search"
+            className="p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Search for items"
+        />
     </div>
 );
 
-const Table = ({ rows, head }: { rows: ReactNode[][]; head: string[] }) => {
+export const TableToolbar = ({
+    onDelete,
+    onBlock,
+}: {
+    onDelete?: () => void;
+    onBlock?: () => void;
+}) => {
+    return (
+        <>
+            {onDelete && (
+                <button
+                    onClick={() => onDelete()}
+                    className=" bg-rose-600 p-2 rounded-md"
+                >
+                    <Delete />
+                </button>
+            )}
+            {onBlock && (
+                <button
+                    onClick={() => onBlock()}
+                    className=" bg-amber-400 p-2 rounded-md"
+                >
+                    <BlockUser />
+                </button>
+            )}
+        </>
+    );
+};
+
+const Table = ({ rows, head }: { rows: ReactNode[][]; head: ReactNode[] }) => {
     return (
         <div className="relative bg-white w-full overflow-x-auto shadow-md sm:rounded-lg p-4 dark:bg-gray ">
-            <TableSearch />
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <TableHead head={head} />
                 <TableBody rows={rows} />
