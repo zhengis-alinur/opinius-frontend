@@ -23,6 +23,12 @@ const userApi = rootApi.injectEndpoints({
             }),
             providesTags: ['User'],
         }),
+        getUsers: builder.query<User[], void>({
+            query: () => ({
+                url: `/user/getAll`,
+            }),
+            providesTags: ['User'],
+        }),
         setAvatar: builder.mutation<SetAvatarResponseType, SetAvatarRequestType>({
             query: (body) => ({
                 url: `/user/setAvatar`,
@@ -57,4 +63,5 @@ export const {
     useSetAvatarMutation,
     useGetUserFavoritesQuery,
     useGetUserReviewsQuery,
+    useGetUsersQuery,
 } = userApi;

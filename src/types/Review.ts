@@ -39,5 +39,4 @@ export type UpdateReview = {
     tags: string[];
     categoryId: number;
     image: string;
-    userId: number;
 };

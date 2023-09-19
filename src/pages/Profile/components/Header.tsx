@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { useGetUserStatsQuery, useSetAvatarMutation } from '../../../api/userApi';
 import Button from '../../../components/Button';
 import ImageUpload from '../../../components/ImageUploader';
+import { ADMIN_ROLE_ID } from '../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { setUser } from '../../../redux/reducers/auth';
 import { selectUser } from '../../../redux/selectors';
@@ -51,7 +52,8 @@ const Header = ({ user }: { user: User }) => {
     const getStats = useGetUserStatsQuery(user.id);
     const dispatch = useAppDispatch();
 
-    const [setAvatar, { isLoading }] = useSetAvatarMutation();
+    const [setAvatar] = useSetAvatarMutation();
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -74,7 +76,12 @@ const Header = ({ user }: { user: User }) => {
     };
 
     return (
-        <div className="relative flex flex-col items-center max-w-6xl w-full rounded-lg overflow-hidden pb-5">
+        <div
+            className={`relative flex flex-col items-center w-full rounded-lg overflow-hidden pb-5 ${
+                user.roleId === ADMIN_ROLE_ID &&
+                ' border-lime-500 border-2 shadow-md shadow-lime-500'
+            }`}
+        >
             <div
                 className="absolute w-full h-full bg-center bg-no-repeat bg-cover brightness-50"
                 style={{
@@ -84,7 +91,12 @@ const Header = ({ user }: { user: User }) => {
             <div className="relative flex flex-col w-full items-center gap-10 p-8 2xl:flex-row">
                 <div className="flex flex-col items-center">
                     <ImageUpload
-                        bgImage={user.avatar || '/assets/no-avatar.jpg'}
+                        uploadable={currentUser.id == user.id}
+                        bgImage={
+                            user.id === currentUser.id
+                                ? currentUser.avatar
+                                : user.avatar || '/assets/no-avatar.jpg'
+                        }
                         onUpload={onAvatarUpload}
                     />
                     <p className="text-gray-300">{user.username}</p>
@@ -116,8 +128,12 @@ const Header = ({ user }: { user: User }) => {
                     </div>
                 )}
             </div>
-            {user.id === currentUser.id && (
-                <CreateReviewButton onClick={() => navigate('/createReview')} />
+            {user.id === currentUser.id && currentUser.roleId === ADMIN_ROLE_ID ? (
+                <h1 className="relative text-3xl text-lime-500">Administrator</h1>
+            ) : (
+                <CreateReviewButton
+                    onClick={() => navigate(`/createReview/${user.id}`)}
+                />
             )}
         </div>
     );

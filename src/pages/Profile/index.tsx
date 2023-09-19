@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
 import { useGetUserQuery } from '../../api/userApi';
+import { ADMIN_ROLE_ID } from '../../constants';
 import { User } from '../../types';
+import AdminTable from './components/AdminTable';
 import Header from './components/Header';
 import Table from './components/Table';
 
@@ -22,9 +24,13 @@ const Profile = () => {
     return (
         <>
             {user && (
-                <div className="flex flex-col justify-between w-full overflow-hidden gap-5">
+                <div className="flex flex-col justify-between w-full gap-5">
                     <Header user={user} />
-                    <Table user={user} />
+                    {user.roleId === ADMIN_ROLE_ID ? (
+                        <AdminTable />
+                    ) : (
+                        <Table user={user} />
+                    )}
                 </div>
             )}
         </>

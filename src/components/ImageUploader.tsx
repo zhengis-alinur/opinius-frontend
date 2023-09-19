@@ -3,9 +3,11 @@ import { openUploadWidget, url } from '../utils/cloudinary';
 import AdvancedImage from './AdvancedImage';
 
 const ImageUploader = ({
+    uploadable,
     onUpload,
     bgImage,
 }: {
+    uploadable: boolean;
     onUpload: (imageUrl: string) => void;
     bgImage?: string;
 }) => {
@@ -30,15 +32,19 @@ const ImageUploader = ({
     };
     return (
         <AdvancedImage
-            className="relative mb-1 hover:opacity-50 cursor-pointer"
+            className={`relative mb-1 ${uploadable && 'hover:opacity-50 cursor-pointer'}`}
             large
             src={bgImage}
             rounded
             onClick={() => {
-                uploadImageWidget();
+                if (uploadable) {
+                    uploadImageWidget();
+                }
             }}
         >
-            <UploadImageIcon className="absolute top-0 left-0 opacity-0 hover:opacity-100 transition-opacity" />
+            {uploadable && (
+                <UploadImageIcon className="absolute top-0 left-0 opacity-0 hover:opacity-100 transition-opacity" />
+            )}
         </AdvancedImage>
     );
 };

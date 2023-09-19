@@ -1,5 +1,6 @@
 import { useFormik } from 'formik';
 import { ChangeEventHandler, useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 import * as Yup from 'yup';
 
 import { useGetCategoriesQuery } from '../../api/categoryApi';
@@ -14,18 +15,16 @@ import {
     Select,
     TextArea,
 } from '../../components';
-import { useAppSelector } from '../../redux/hooks';
-import { selectUser } from '../../redux/selectors';
 import { Category } from '../../types';
 import { CreateReview } from '../../types/Review';
 import { extractHashtags } from '../../utils';
 import { url } from '../../utils/cloudinary';
 
 const СreateReview = () => {
-    const user = useAppSelector(selectUser);
-    const [categories, setCategories] = useState<Category[]>([]);
+    const { userId } = useParams();
     const [createReview, { isLoading }] = useCreateReviewMutation();
     const getCategories = useGetCategoriesQuery();
+    const [categories, setCategories] = useState<Category[]>([]);
     const [imageUrl, setImageUrl] = useState('');
     const [tags, setTags] = useState<Set<string>>(new Set());
     useEffect(() => {
@@ -85,7 +84,7 @@ const СreateReview = () => {
                     text: values.text,
                     tags: Array.from(tags),
                     image: imageUrl,
-                    userId: user.id,
+                    userId: parseInt(userId || ''),
                 };
                 await createReview(reviewData);
             } catch (error) {
@@ -153,6 +152,7 @@ const СreateReview = () => {
                         </div>
                     </div>
                     <ImageUploader
+                        uploadable
                         bgImage={imageUrl || '/assets/no-image.jpg'}
                         onUpload={onUpload}
                     />

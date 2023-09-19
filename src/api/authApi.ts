@@ -31,7 +31,7 @@ const authApi = rootApi.injectEndpoints({
             query: (credentials) => ({
                 url: '/auth/signup',
                 method: 'POST',
-                body: { ...credentials, roleId: 1 },
+                body: { ...credentials },
             }),
         }),
     }),

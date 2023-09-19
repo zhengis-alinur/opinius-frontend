@@ -26,8 +26,8 @@ const Signup = () => {
             password: Yup.string().required('Password is required'),
         }),
 
-        onSubmit: (values) => {
-            signup(values);
+        onSubmit: async (values) => {
+            await signup(values);
             navigate('/login');
         },
     });

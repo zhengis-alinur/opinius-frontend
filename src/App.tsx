@@ -31,7 +31,7 @@ function App() {
                     element: <Review />,
                 },
                 {
-                    path: '/createReview',
+                    path: '/createReview/:userId',
                     element: <CreateReview />,
                 },
                 {

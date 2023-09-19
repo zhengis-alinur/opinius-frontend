@@ -112,7 +112,6 @@ const EditReview = () => {
                     text: values.text,
                     tags: Array.from(tags),
                     image: imageUrl || review.image,
-                    userId: user.id,
                 };
                 await updateReview(reviewData);
             } catch (error) {
@@ -192,6 +191,7 @@ const EditReview = () => {
                             </div>
                         </div>
                         <ImageUploader
+                            uploadable
                             bgImage={imageUrl || review.image || '/assets/no-image.jpg'}
                             onUpload={onImageUpload}
                         />
