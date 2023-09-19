@@ -40,7 +40,7 @@ const View = () => {
     };
 
     const onAllSelect = () => {
-        if (selectedUsers.length === 0) {
+        if (selectedUsers.length < users.length) {
             const selected: number[] = [];
             users.forEach((user) => selected.push(user.id));
             setSelectedUsers([...selected]);
@@ -79,6 +79,7 @@ const View = () => {
                     <p>{user.firstName}</p>,
                     <p>{user.lastName}</p>,
                     <p>{user.email}</p>,
+                    <p>{user.reviews.length}</p>,
                     <p>{user.likesCount}</p>,
                     <p>{user.commentsCount}</p>,
                     <p>{user.ratedCount}</p>,
@@ -94,6 +95,7 @@ const View = () => {
                     <TableHeadItem title="First name" />,
                     <TableHeadItem title="Last name" />,
                     <TableHeadItem title="Email" />,
+                    <TableHeadItem title="Reviews" />,
                     <TableHeadItem title="Liked by" />,
                     <TableHeadItem title="Commented by" />,
                     <TableHeadItem title="Rated by" />,

@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { useDeleteReviewsMutation } from '../../../api/reviewApi';
 import { useGetUserReviewsQuery } from '../../../api/userApi';
 import { Checkbox } from '../../../components';
 import Table, {
@@ -20,6 +21,8 @@ const View = ({ user }: { user: User }) => {
     const getReviews = useGetUserReviewsQuery(user.id);
     const [selectedReviews, setSelectedReviews] = useState<number[]>([]);
 
+    const [deleteReviews] = useDeleteReviewsMutation();
+
     const toggleReviewSelection = (reviewId: number) => {
         if (selectedReviews.includes(reviewId)) {
             setSelectedReviews(selectedReviews.filter((id) => id !== reviewId));
@@ -29,7 +32,7 @@ const View = ({ user }: { user: User }) => {
     };
 
     const onAllSelect = () => {
-        if (selectedReviews.length === 0) {
+        if (selectedReviews.length < reviews.length) {
             const selected: number[] = [];
             reviews.forEach((review) => selected.push(review.id));
             setSelectedReviews([...selected]);
@@ -38,21 +41,23 @@ const View = ({ user }: { user: User }) => {
         }
     };
 
-    const onDelete = () => {
-        console.log(selectedReviews);
+    const onDelete = async () => {
+        await deleteReviews({ ids: selectedReviews });
+        await fetchData();
+    };
+
+    const fetchData = async () => {
+        try {
+            const data = (await getReviews.refetch()).data;
+            if (data) {
+                setReviews(data);
+            }
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = (await getReviews.refetch()).data;
-                if (data) {
-                    setReviews(data);
-                }
-            } catch (error) {
-                console.error(error);
-            }
-        };
         fetchData();
     }, []);
     return (
@@ -66,7 +71,10 @@ const View = ({ user }: { user: User }) => {
             <Table
                 rows={reviews.map((review) => [
                     <Checkbox
-                        disabled={currentUser.id !== user.id}
+                        disabled={
+                            currentUser.id !== user.id &&
+                            currentUser.roleId !== ADMIN_ROLE_ID
+                        }
                         checked={selectedReviews.includes(review.id)}
                         onChange={() => toggleReviewSelection(review.id)}
                     />,
@@ -91,7 +99,10 @@ const View = ({ user }: { user: User }) => {
                 ])}
                 head={[
                     <Checkbox
-                        disabled={currentUser.id !== user.id}
+                        disabled={
+                            currentUser.id !== user.id &&
+                            currentUser.roleId !== ADMIN_ROLE_ID
+                        }
                         checked={selectedReviews.length === reviews.length}
                         onChange={() => onAllSelect()}
                     />,

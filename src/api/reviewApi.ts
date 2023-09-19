@@ -41,6 +41,14 @@ const reviewApi = rootApi.injectEndpoints({
             }),
             providesTags: ['Reviews'],
         }),
+        deleteReviews: builder.mutation<void, { ids: number[] }>({
+            query: (ids) => ({
+                url: '/review/delete',
+                method: 'POST',
+                body: ids,
+            }),
+            invalidatesTags: ['Reviews'],
+        }),
         getReviewById: builder.query<GetReviewByIdResponse, string>({
             query: (id: string) => ({
                 url: `/review/?id=${id}`,
@@ -110,6 +118,7 @@ export const {
     useGetReviewsQuery,
     useCreateReviewMutation,
     useGetReviewByIdQuery,
+    useDeleteReviewsMutation,
     useCommentReviewMutation,
     useCommentsOfReviewQuery,
     useRateReviewMutation,

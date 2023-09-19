@@ -34,13 +34,12 @@ const Header = ({ reviewUser, review }: { reviewUser: User; review: Review }) =>
             <p className="absolute text-gray-500 right-5 bottom-3 text-xs">
                 21 September 2021
             </p>
-            {(user && user.id === review.userId) ||
-                (user.roleId === ADMIN_ROLE_ID && (
-                    <Edit
-                        onClick={() => navigate(`/editReview/${review.id}`)}
-                        className="absolute right-5 top-3"
-                    />
-                ))}
+            {((user && user.id === review.userId) || user.roleId === ADMIN_ROLE_ID) && (
+                <Edit
+                    onClick={() => navigate(`/editReview/${review.id}`)}
+                    className="absolute right-5 top-3"
+                />
+            )}
         </div>
     );
 };

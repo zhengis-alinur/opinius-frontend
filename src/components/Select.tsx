@@ -37,7 +37,7 @@ const View = ({
             </label>
             <Select
                 name={name}
-                className="w-full dark:bg-dark"
+                className="w-full outline-none dark:bg-dark"
                 value={selected}
                 onChange={(option) => {
                     setSelected(option);
