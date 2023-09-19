@@ -32,7 +32,7 @@ const ReviewPost = ({
 
     return (
         <Link
-            className={`flex flex-col gap-3 w-full relative p-2 pb-3 rounded-lg overflow-hidden cursor-pointer shadow-xl dark:bg-gray ${props.className}`}
+            className={`flex flex-col gap-3 w-full max-w-3xl relative p-2 pb-3 rounded-lg overflow-hidden cursor-pointer shadow-xl dark:bg-gray ${props.className}`}
             to={`/review/${review.id}`}
         >
             <Link to={`/profile/${review.userId}`} className="flex gap-3 items-center">
@@ -42,24 +42,19 @@ const ReviewPost = ({
                     <p className="text-xs">Munbai, India</p>
                 </div>
             </Link>
-            <div className="flex flex-col items-center gap-8 justify-between lg:flex-row lg:items-start">
+            <div className="items-center gap-8 justify-between lg:items-start">
                 <div
-                    className="flex flex-col-reverse p-2 h-96 w-full flex-3 bg-center bg-no-repeat bg-cover rounded-lg lg:flex-1"
+                    className="flex flex-col-reverse p-2 h-96 w-full flex-3 bg-center bg-no-repeat bg-cover rounded-lg lg:flex-1 hover:opacity-50"
                     style={{
                         backgroundImage: `url(${
                             review.image || '/assets/review-bg.png'
                         })`,
                     }}
                 >
-                    <p className="text-white font-semibold text-center whitespace-nowrap truncate">
+                    <p className="absolute left-0 bottom-0 bg-white w-full p-5 font-semibold text-center whitespace-nowrap truncate dark:bg-gray">
                         {review.title}
                     </p>
-                </div>
-                <div className="flex flex-col gap-3 items-start flex-1">
-                    <p className="line-clamp-3 lg:line-clamp-14">
-                        {HTMLReactParser(review.text)}
-                    </p>
-                    <div className="flex justify-center gap-5">
+                    <div className="absolute flex justify-center gap-5">
                         <div className="flex gap-2">
                             <Likes />
                             <p className="text-xs">
