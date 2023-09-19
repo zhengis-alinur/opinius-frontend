@@ -1,9 +1,6 @@
+import HTMLReactParser from 'html-react-parser';
 const Content = ({ text }: { text: string }) => {
-    return (
-        <div>
-            <p className="text-xl">{text}</p>
-        </div>
-    );
+    return <div className="self-start">{HTMLReactParser(text)}</div>;
 };
 
 export default Content;

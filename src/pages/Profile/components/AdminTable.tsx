@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { useGetUsersQuery } from '../../../api/userApi';
 import Table from '../../../components/Table';
+import { ADMIN_ROLE_ID } from '../../../constants';
 import { User } from '../../../types';
 
 const View = () => {
@@ -33,6 +34,9 @@ const View = () => {
                     <Link to={`/profile/${user.id}`}>
                         <p>{user.username}</p>
                     </Link>,
+                    <p className={user.roleId === ADMIN_ROLE_ID ? 'text-lime-600' : ''}>
+                        {user.roleId === ADMIN_ROLE_ID ? 'Admin' : 'User'}
+                    </p>,
                     <p>{user.firstName}</p>,
                     <p>{user.lastName}</p>,
                     <p>{user.email}</p>,
@@ -43,6 +47,7 @@ const View = () => {
                 head={[
                     'ID',
                     'Username',
+                    'Role',
                     'First name',
                     'LastName',
                     'Email',

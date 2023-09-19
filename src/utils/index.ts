@@ -25,16 +25,9 @@ export const isFetchBaseQueryError = (error: unknown): error is FetchBaseQueryEr
     return typeof error === 'object' && error != null && 'status' in error;
 };
 
-export const extractHashtags = (text: string): Set<string> => {
-    const hashtagRegex = /#(\w+)/g;
+export const extractHashtags = (text: string) => {
+    // eslint-disable-next-line no-useless-escape
+    const hashtagRegex = /#[^\s!@#$%^&*()=+./,\[{\]};:'"?\>\<]+/g;
     const hashtags = text.match(hashtagRegex);
-    const uniqueHashtags = new Set<string>();
-
-    if (hashtags) {
-        hashtags.forEach((tag) => {
-            uniqueHashtags.add(tag.slice(1)); // Remove the '#' symbol and add to Set
-        });
-    }
-
-    return uniqueHashtags;
+    return new Set(hashtags || []);
 };

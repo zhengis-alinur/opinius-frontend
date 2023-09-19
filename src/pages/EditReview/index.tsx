@@ -1,5 +1,6 @@
 import { useFormik } from 'formik';
-import { ChangeEventHandler, useEffect, useState } from 'react';
+import JoditEditor from 'jodit-react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import * as Yup from 'yup';
 
@@ -13,7 +14,6 @@ import {
     Input,
     Range,
     Select,
-    TextArea,
 } from '../../components';
 import { useAppSelector } from '../../redux/hooks';
 import { selectUser } from '../../redux/selectors';
@@ -44,7 +44,15 @@ const EditReview = () => {
     const [category, setCategory] = useState<Category>();
     const [tags, setTags] = useState<Set<string>>(new Set());
 
+    const editor = useRef(null);
+    const [content, setContent] = useState('');
     const [imageUrl, setImageUrl] = useState<string>('');
+
+    const onTextChange = (value: string) => {
+        setContent(value);
+        setTags(extractHashtags(value));
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -52,6 +60,7 @@ const EditReview = () => {
                 if (data) {
                     setReview(data);
                     setTags(new Set(data.tags.map((tag) => tag.name)));
+                    setContent(data.text);
                 }
                 const allCategories = (await getCategories.refetch()).data;
                 if (allCategories) {
@@ -74,11 +83,6 @@ const EditReview = () => {
                 uploadPreset: import.meta.env.VITE_UPLOAD_PRESET,
             }),
         );
-    };
-
-    const onTextChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
-        formik.handleChange(e);
-        setTags(extractHashtags(e.target.value));
     };
 
     const formik = useFormik({
@@ -109,7 +113,7 @@ const EditReview = () => {
                     objectName: values.objectName,
                     grade: values.grade,
                     categoryId: values.category,
-                    text: values.text,
+                    text: content,
                     tags: Array.from(tags),
                     image: imageUrl || review.image,
                 };
@@ -204,16 +208,10 @@ const EditReview = () => {
                                     <b>#anytag</b>
                                 </p>
                             </Alert>
-                            <TextArea
-                                tags={tags}
-                                className="your-custom-textarea-class"
-                                name="text"
-                                label="My Review"
-                                placeholder="Share your opinion ..."
-                                value={formik.values.text}
+                            <JoditEditor
+                                ref={editor}
+                                value={content}
                                 onChange={onTextChange}
-                                onBlur={formik.handleBlur}
-                                error={formik.touched.text && formik.errors.text}
                             />
                         </div>
                     </div>

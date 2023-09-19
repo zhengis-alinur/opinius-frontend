@@ -1,5 +1,5 @@
+import HTMLReactParser from 'html-react-parser';
 import { HTMLAttributes, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import { useGetUserQuery } from '../api/userApi';
@@ -56,7 +56,9 @@ const ReviewPost = ({
                     </p>
                 </div>
                 <div className="flex flex-col gap-3 items-start flex-1">
-                    <p className="line-clamp-3 lg:line-clamp-14">{review.text}</p>
+                    <p className="line-clamp-3 lg:line-clamp-14">
+                        {HTMLReactParser(review.text)}
+                    </p>
                     <div className="flex justify-center gap-5">
                         <div className="flex gap-2">
                             <Likes />

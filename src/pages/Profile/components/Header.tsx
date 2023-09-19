@@ -92,11 +92,7 @@ const Header = ({ user }: { user: User }) => {
                 <div className="flex flex-col items-center">
                     <ImageUpload
                         uploadable={currentUser.id == user.id}
-                        bgImage={
-                            user.id === currentUser.id
-                                ? currentUser.avatar
-                                : user.avatar || '/assets/no-avatar.jpg'
-                        }
+                        bgImage={user.avatar || '/assets/no-avatar.jpg'}
                         onUpload={onAvatarUpload}
                     />
                     <p className="text-gray-300">{user.username}</p>

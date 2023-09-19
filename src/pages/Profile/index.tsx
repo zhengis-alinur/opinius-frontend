@@ -27,9 +27,15 @@ const Profile = () => {
                 <div className="flex flex-col justify-between w-full gap-5">
                     <Header user={user} />
                     {user.roleId === ADMIN_ROLE_ID ? (
-                        <AdminTable />
+                        <>
+                            <h1 className="text-3xl text-center">Users</h1>
+                            <AdminTable />
+                        </>
                     ) : (
-                        <Table user={user} />
+                        <>
+                            <h1 className="text-3xl text-center">Reviews</h1>
+                            <Table user={user} />
+                        </>
                     )}
                 </div>
             )}

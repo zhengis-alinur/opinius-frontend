@@ -1,5 +1,7 @@
 import { useFormik } from 'formik';
-import { ChangeEventHandler, useEffect, useState } from 'react';
+import HTMLReactParser from 'html-react-parser';
+import JoditEditor from 'jodit-react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import * as Yup from 'yup';
 
@@ -7,13 +9,13 @@ import { useGetCategoriesQuery } from '../../api/categoryApi';
 import { useCreateReviewMutation } from '../../api/reviewApi';
 import {
     Alert,
+    Badge,
     Button,
     Container,
     ImageUploader,
     Input,
     Range,
     Select,
-    TextArea,
 } from '../../components';
 import { Category } from '../../types';
 import { CreateReview } from '../../types/Review';
@@ -27,6 +29,9 @@ const СreateReview = () => {
     const [categories, setCategories] = useState<Category[]>([]);
     const [imageUrl, setImageUrl] = useState('');
     const [tags, setTags] = useState<Set<string>>(new Set());
+    const editor = useRef(null);
+    const [content, setContent] = useState('');
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -50,9 +55,9 @@ const СreateReview = () => {
         );
     };
 
-    const onTextChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
-        formik.handleChange(e);
-        setTags(extractHashtags(e.target.value));
+    const onTextChange = (value: string) => {
+        setContent(value);
+        setTags(extractHashtags(value));
     };
 
     const formik = useFormik({
@@ -62,7 +67,6 @@ const СreateReview = () => {
             grade: 0,
             category: 0,
             image: '',
-            text: '',
         },
         validationSchema: Yup.object({
             title: Yup.string().required('Title is required'),
@@ -72,7 +76,6 @@ const СreateReview = () => {
                 .max(10, 'Grade cannot be greater than 10')
                 .required('Grade is required'),
             category: Yup.string().required('Category is required'),
-            text: Yup.string().required('Review text is required'),
         }),
         onSubmit: async (values) => {
             try {
@@ -81,7 +84,7 @@ const СreateReview = () => {
                     objectName: values.objectName,
                     grade: values.grade,
                     categoryId: values.category,
-                    text: values.text,
+                    text: content,
                     tags: Array.from(tags),
                     image: imageUrl,
                     userId: parseInt(userId || ''),
@@ -164,17 +167,27 @@ const СreateReview = () => {
                                 in text usin hash(#) symbol. F.e. <b>#anytag</b>
                             </p>
                         </Alert>
-                        <TextArea
-                            tags={tags}
-                            className="your-custom-textarea-class"
-                            name="text"
-                            label="My Review"
-                            placeholder="Share your opinion ..."
-                            value={formik.values.text}
-                            onChange={onTextChange}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.text && formik.errors.text}
-                        />
+                        <div className="flex flex-col">
+                            <div className="flex gap-1 mb-2">
+                                <span>Tags:</span>
+                                {Array.from(tags).map((tag) => (
+                                    <Badge key={tag}>{tag}</Badge>
+                                ))}
+                            </div>
+                            <JoditEditor
+                                ref={editor}
+                                value={content}
+                                onChange={onTextChange}
+                            />
+                            <div>
+                                <h1 className="text-3xl text-center font-bold m-3">
+                                    Preview
+                                </h1>
+                                <div className=" border-2 p-3">
+                                    {HTMLReactParser(content)}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="flex items-center pt-3 mt-3 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
