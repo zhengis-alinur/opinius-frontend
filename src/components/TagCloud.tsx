@@ -1,28 +1,43 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { TagCloud } from 'react-tagcloud';
+
+import { useGetTagStatsQuery } from '../api/tagApi';
 
 type Tag = {
     value: string;
     count: number;
 };
 
-const data = [
-    { value: 'JavaScript', count: 38 },
-    { value: 'React', count: 30 },
-    { value: 'Nodejs', count: 28 },
-    { value: 'Express.js', count: 25 },
-    { value: 'HTML5', count: 33 },
-    { value: 'MongoDB', count: 18 },
-    { value: 'CSS3', count: 20 },
-];
+const View = () => {
+    const getTags = useGetTagStatsQuery();
+    const [tags, setTags] = useState<Tag[]>([]);
+    const navigate = useNavigate();
 
-const View = () => (
-    <TagCloud
-        minSize={12}
-        maxSize={35}
-        tags={data}
-        className="cursor-pointer"
-        onClick={(tag: Tag) => alert(`'${tag.value}' was selected!`)}
-    />
-);
+    const fetchData = async () => {
+        try {
+            const data = (await getTags.refetch()).data;
+            if (data) {
+                setTags(data);
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    return (
+        <TagCloud
+            minSize={12}
+            maxSize={35}
+            tags={tags}
+            className="cursor-pointer"
+            onClick={(tag: { value: string }) => navigate(`/search/${tag.value}`)}
+        />
+    );
+};
 
 export default View;

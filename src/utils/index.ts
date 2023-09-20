@@ -33,10 +33,15 @@ export const categoriesToSelectOptions = (categories: Category[]) =>
 export const isFetchBaseQueryError = (error: unknown): error is FetchBaseQueryError => {
     return typeof error === 'object' && error != null && 'status' in error;
 };
-
 export const extractHashtags = (text: string) => {
     // eslint-disable-next-line no-useless-escape
-    const hashtagRegex = /#[^\s!@#$%^&*()=+./,\[{\]};:'"?\>\<]+/g;
-    const hashtags = text.match(hashtagRegex);
-    return new Set(hashtags || []);
+    const hashtagRegex = /#([^\s!@#$%^&*()=+./,\[{\]};:'"?\>\<]+)/g;
+    const hashtagsWithHash = text.match(hashtagRegex);
+
+    if (!hashtagsWithHash) {
+        return new Set([]);
+    }
+
+    const hashtagsWithoutHash = hashtagsWithHash.map((hashtag) => hashtag.slice(1));
+    return new Set(hashtagsWithoutHash);
 };
