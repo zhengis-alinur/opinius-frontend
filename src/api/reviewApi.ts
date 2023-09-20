@@ -41,6 +41,15 @@ const reviewApi = rootApi.injectEndpoints({
             }),
             providesTags: ['Reviews'],
         }),
+        search: builder.query<Review[], string>({
+            query: (keyword) => ({
+                url: '/review/getAll',
+                params: {
+                    keyword,
+                },
+            }),
+            providesTags: ['Reviews'],
+        }),
         deleteReviews: builder.mutation<void, { ids: number[] }>({
             query: (body) => ({
                 url: '/review/delete',
@@ -126,4 +135,5 @@ export const {
     useLikeOfReviewQuery,
     useLikeReviewMutation,
     useUpdateReviewMutation,
+    useSearchQuery,
 } = reviewApi;

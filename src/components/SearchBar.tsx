@@ -1,12 +1,22 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router';
+
 const SearchBar = () => {
+    const [keyword, setKeyword] = useState('');
+    const navigate = useNavigate();
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
+        if (keyword !== '') {
+            navigate(`/search/${keyword}`);
+        }
     };
 
     return (
         <form className="max-w-[480px] w-full px-4 border-none" onSubmit={onSubmit}>
             <div className="relative">
                 <input
+                    value={keyword}
+                    onChange={(e) => setKeyword(e.target.value)}
                     type="text"
                     name="search"
                     className="w-full h-12 shadow p-4 rounded-2xl border-none bg-slate-100 border-transparent focus:border-transparent focus:ring-0 dark:bg-dark"

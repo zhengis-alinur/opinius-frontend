@@ -8,6 +8,8 @@ import { useGetUserReviewsQuery } from '../../../api/userApi';
 import { Button, Checkbox, Select } from '../../../components';
 import Table, { TableHeadItem, TableToolbar } from '../../../components/Table';
 import { ADMIN_ROLE_ID, ORDER, SORTBY_REVIEW } from '../../../constants';
+import Edit from '../../../icons/Edit';
+import Eye from '../../../icons/Eye';
 import { useAppSelector } from '../../../redux/hooks';
 import { selectUser } from '../../../redux/selectors';
 import { Review, User } from '../../../types';
@@ -131,12 +133,8 @@ const View = ({ user }: { user: User }) => {
                             checked={selectedReviews.includes(review.id)}
                             onChange={() => toggleReviewSelection(review.id)}
                         />,
-                        <Link to={`/review/${review.id}`}>
-                            <p>{review.title}</p>
-                        </Link>,
-                        <Link to={`/review/${review.id}`}>
-                            <p>{review.objectName}</p>
-                        </Link>,
+                        <p>{review.title}</p>,
+                        <p>{review.objectName}</p>,
                         <p>{review.grade}</p>,
                         <div className="flex flex-col items-start">
                             {review.tags &&
@@ -149,6 +147,12 @@ const View = ({ user }: { user: User }) => {
                         <p>{review.likes.length}</p>,
                         <p>{review.comments.length}</p>,
                         <p>{review.rating}</p>,
+                        <Link to={`/editReview/${review.id}`}>
+                            <Edit />
+                        </Link>,
+                        <Link to={`/review/${review.id}`}>
+                            <Eye />
+                        </Link>,
                     ])}
                     head={[
                         <Checkbox

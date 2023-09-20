@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Review from './pages/Review';
+import Search from './pages/Search';
 import Signup from './pages/Singup';
 import { useAppSelector } from './redux/hooks';
 import { selectMode } from './redux/selectors';
@@ -44,6 +45,10 @@ function App() {
                 {
                     path: '/favorites',
                     element: <Favorites />,
+                },
+                {
+                    path: '/search/:keyword',
+                    element: <Search />,
                 },
             ],
         },
