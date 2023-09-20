@@ -2,16 +2,11 @@
 import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Tooltip } from 'react-tooltip';
 
 import { useDeleteReviewsMutation } from '../../../api/reviewApi';
 import { useGetUserReviewsQuery } from '../../../api/userApi';
 import { Button, Checkbox, Select } from '../../../components';
-import Table, {
-    TableHeadItem,
-    TableSearch,
-    TableToolbar,
-} from '../../../components/Table';
+import Table, { TableHeadItem, TableToolbar } from '../../../components/Table';
 import { ADMIN_ROLE_ID, ORDER, SORTBY_REVIEW } from '../../../constants';
 import { useAppSelector } from '../../../redux/hooks';
 import { selectUser } from '../../../redux/selectors';
@@ -113,6 +108,7 @@ const View = ({ user }: { user: User }) => {
                     />
                     <Button
                         type="submit"
+                        className="text-white"
                         onClick={() => {
                             formik.handleSubmit();
                         }}

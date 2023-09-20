@@ -7,6 +7,7 @@ import {
     useDeleteUsersMutation,
     useGetUsersQuery,
     useSetAdminMutation,
+    useSetUserMutation,
     useUnBlockUsersMutation,
 } from '../../../api/userApi';
 import { Button, Checkbox, Select } from '../../../components';
@@ -34,6 +35,7 @@ const View = () => {
     const [blockUsers] = useBlockUsersMutation();
     const [unBlockUsers] = useUnBlockUsersMutation();
     const [setAdmin] = useSetAdminMutation();
+    const [setUser] = useSetUserMutation();
 
     const fetchData = async () => {
         try {
@@ -73,9 +75,6 @@ const View = () => {
             update({ ids: selectedUsers })
                 .then(() => {
                     return fetchData();
-                })
-                .then(() => {
-                    setSelectedUsers([]);
                 })
                 .catch((error) => {
                     console.error('Error:', error);
@@ -129,6 +128,9 @@ const View = () => {
                             }}
                             onSetAdmin={() => {
                                 onUpdate(setAdmin);
+                            }}
+                            onSetUser={() => {
+                                onUpdate(setUser);
                             }}
                         />
                     )}

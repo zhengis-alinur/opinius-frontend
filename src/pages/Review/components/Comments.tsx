@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import { useCommentsOfReviewQuery } from '../../../api/reviewApi';
-import { Container } from '../../../components';
 import { Comment as CommentType } from '../../../types/Comment';
 import Comment from './Comment';
 

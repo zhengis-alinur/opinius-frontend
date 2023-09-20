@@ -57,6 +57,13 @@ const userApi = rootApi.injectEndpoints({
                 body,
             }),
         }),
+        setUser: builder.mutation<void, { ids: number[] }>({
+            query: (body) => ({
+                url: `/user/setUser`,
+                method: 'POST',
+                body,
+            }),
+        }),
         setAvatar: builder.mutation<SetAvatarResponseType, SetAvatarRequestType>({
             query: (body) => ({
                 url: `/user/setAvatar`,
@@ -101,4 +108,5 @@ export const {
     useBlockUsersMutation,
     useUnBlockUsersMutation,
     useSetAdminMutation,
+    useSetUserMutation,
 } = userApi;

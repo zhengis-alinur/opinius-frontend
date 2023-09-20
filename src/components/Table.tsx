@@ -107,12 +107,14 @@ export const TableToolbar = ({
     onBlock,
     onUnBlock,
     onSetAdmin,
+    onSetUser,
     ...props
 }: {
     onDelete?: () => void;
     onBlock?: () => void;
     onUnBlock?: () => void;
     onSetAdmin?: () => void;
+    onSetUser?: () => void;
 } & HTMLAttributes<HTMLDivElement>) => {
     return (
         <div {...props} className="flex gap-5">
@@ -121,21 +123,42 @@ export const TableToolbar = ({
                     Delete <Delete />
                 </ToolbarButton>
             )}
-            {onBlock && (
-                <ToolbarButton callback={onBlock} className="bg-amber-400">
-                    Block <BlockUser />
-                </ToolbarButton>
-            )}
-            {onUnBlock && (
-                <ToolbarButton callback={onUnBlock} className="bg-amber-400">
-                    Unblock <BlockUser />
-                </ToolbarButton>
-            )}
-            {onSetAdmin && (
-                <ToolbarButton callback={onSetAdmin} className="bg-lime-500">
-                    Set as Admin/User <SetAdmin />
-                </ToolbarButton>
-            )}
+            <div className="flex">
+                {onUnBlock && (
+                    <ToolbarButton
+                        callback={onUnBlock}
+                        className="bg-amber-600  rounded-r-none border-r-2 border-amber-700"
+                    >
+                        Unblock
+                    </ToolbarButton>
+                )}
+                {onBlock && (
+                    <ToolbarButton
+                        callback={onBlock}
+                        className="bg-amber-600 rounded-l-none"
+                    >
+                        Block
+                    </ToolbarButton>
+                )}
+            </div>
+            <div className="flex">
+                {onSetAdmin && (
+                    <ToolbarButton
+                        callback={onSetAdmin}
+                        className="bg-lime-600 rounded-r-none border-r-2 border-lime-700"
+                    >
+                        Admin
+                    </ToolbarButton>
+                )}
+                {onSetUser && (
+                    <ToolbarButton
+                        callback={onSetUser}
+                        className="bg-lime-600  rounded-l-none "
+                    >
+                        User
+                    </ToolbarButton>
+                )}
+            </div>
         </div>
     );
 };
