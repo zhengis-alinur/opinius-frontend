@@ -117,8 +117,9 @@ const View = ({ user }: { user: User }) => {
                     >
                         Apply
                     </Button>
-                    {(currentUser.id === user.id ||
-                        currentUser.roleId === ADMIN_ROLE_ID) &&
+                    {currentUser &&
+                        (currentUser.id === user.id ||
+                            currentUser.roleId === ADMIN_ROLE_ID) &&
                         selectedReviews.length > 0 && (
                             <TableToolbar onDelete={onDelete} />
                         )}
@@ -127,6 +128,7 @@ const View = ({ user }: { user: User }) => {
                     rows={reviews.map((review) => [
                         <Checkbox
                             disabled={
+                                currentUser &&
                                 currentUser.id !== user.id &&
                                 currentUser.roleId !== ADMIN_ROLE_ID
                             }
@@ -157,6 +159,7 @@ const View = ({ user }: { user: User }) => {
                     head={[
                         <Checkbox
                             disabled={
+                                currentUser &&
                                 currentUser.id !== user.id &&
                                 currentUser.roleId !== ADMIN_ROLE_ID
                             }

@@ -29,12 +29,14 @@ const Profile = () => {
             {user && (
                 <div className="flex flex-col justify-between w-full gap-5">
                     <Header user={user} />
-                    {currentUser.id === user.id && user.roleId === ADMIN_ROLE_ID && (
-                        <>
-                            <h1 className="text-3xl text-center">Users</h1>
-                            <AdminTable />
-                        </>
-                    )}
+                    {currentUser &&
+                        currentUser.id === user.id &&
+                        user.roleId === ADMIN_ROLE_ID && (
+                            <>
+                                <h1 className="text-3xl text-center">Users</h1>
+                                <AdminTable />
+                            </>
+                        )}
                     <h1 className="text-3xl text-center">Reviews</h1>
                     <Table user={user} />
                 </div>

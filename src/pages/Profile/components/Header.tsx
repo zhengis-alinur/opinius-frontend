@@ -78,6 +78,7 @@ const Header = ({ user }: { user: User }) => {
     return (
         <div
             className={`relative flex flex-col items-center w-full rounded-lg overflow-hidden pb-5 ${
+                currentUser &&
                 currentUser.id === user.id &&
                 currentUser.roleId === ADMIN_ROLE_ID &&
                 ' border-lime-500 border-2 shadow-md shadow-lime-500'
@@ -92,7 +93,7 @@ const Header = ({ user }: { user: User }) => {
             <div className="relative flex flex-col w-full items-center gap-10 p-8 2xl:flex-row">
                 <div className="flex flex-col items-center">
                     <ImageUpload
-                        uploadable={currentUser.id == user.id}
+                        uploadable={currentUser && currentUser.id == user.id}
                         bgImage={user.avatar || '/assets/no-avatar.jpg'}
                         onUpload={onAvatarUpload}
                     />
@@ -128,12 +129,13 @@ const Header = ({ user }: { user: User }) => {
                     </div>
                 )}
             </div>
-            {(currentUser.id === user.id || currentUser.roleId === ADMIN_ROLE_ID) && (
-                <CreateReviewButton
-                    disabled={user.blocked}
-                    onClick={() => navigate(`/createReview/${user.id}`)}
-                />
-            )}
+            {currentUser &&
+                (currentUser.id === user.id || currentUser.roleId === ADMIN_ROLE_ID) && (
+                    <CreateReviewButton
+                        disabled={user.blocked}
+                        onClick={() => navigate(`/createReview/${user.id}`)}
+                    />
+                )}
         </div>
     );
 };
