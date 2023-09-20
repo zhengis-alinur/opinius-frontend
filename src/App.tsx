@@ -11,8 +11,11 @@ import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Review from './pages/Review';
 import Signup from './pages/Singup';
+import { useAppSelector } from './redux/hooks';
+import { selectMode } from './redux/selectors';
 
 function App() {
+    const darkMode = useAppSelector(selectMode);
     const routers = createBrowserRouter([
         {
             element: <Layout />,
@@ -49,7 +52,7 @@ function App() {
     ]);
 
     return (
-        <div className=" text-primary  bg-bg dark:dark">
+        <div className={`${darkMode && 'dark'} text-primary  bg-bg dark:dark`}>
             <RouterProvider router={routers} />
         </div>
     );

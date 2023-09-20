@@ -15,11 +15,15 @@ import Table, {
     TableToolbar,
 } from '../../../components/Table';
 import { ADMIN_ROLE_ID } from '../../../constants';
+import { useAppSelector } from '../../../redux/hooks';
+import { selectUser } from '../../../redux/selectors';
 import { User } from '../../../types';
 
 type UpdateFunction = (ids: { ids: number[] }) => Promise<any>;
 
 const View = () => {
+    const currentUser = useAppSelector(selectUser);
+
     const [users, setUsers] = useState<User[]>([]);
     const getUsers = useGetUsersQuery();
     const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
@@ -32,7 +36,7 @@ const View = () => {
         try {
             const data = (await getUsers.refetch()).data;
             if (data) {
-                setUsers(data);
+                setUsers(data.filter((user) => user.id !== currentUser.id));
             }
         } catch (error) {
             console.error(error);
@@ -98,25 +102,26 @@ const View = () => {
                         onChange={() => toggleReviewSelection(user.id)}
                     />,
                     <Link to={`/profile/${user.id}`}>
-                        <p className={user.blocked ? 'text-rose-600 font-bold' : ''}>
-                            {user.id}
-                        </p>
+                        <p>{user.id}</p>
                     </Link>,
                     <Link to={`/profile/${user.id}`}>
-                        <p className={user.blocked ? 'text-rose-600 font-bold' : ''}>
-                            {user.username}
-                        </p>
-                        <p className={user.blocked ? 'text-rose-600 font-bold' : ''}>
-                            {user.blocked && 'blocked'}
-                        </p>
+                        <p>{user.username}</p>
                     </Link>,
-                    <p
-                        className={
-                            user.roleId === ADMIN_ROLE_ID ? 'text-lime-600 font-bold' : ''
-                        }
-                    >
-                        {user.roleId === ADMIN_ROLE_ID ? 'Admin' : 'User'}
-                    </p>,
+                    <>
+                        {(user.blocked && (
+                            <p className="text-rose-600 font-bold">Blocked</p>
+                        )) || (
+                            <p
+                                className={
+                                    user.roleId === ADMIN_ROLE_ID
+                                        ? 'text-lime-600 font-bold'
+                                        : ''
+                                }
+                            >
+                                {user.roleId === ADMIN_ROLE_ID ? 'Admin' : 'User'}
+                            </p>
+                        )}
+                    </>,
                     <p>{user.firstName}</p>,
                     <p>{user.lastName}</p>,
                     <p>{user.email}</p>,

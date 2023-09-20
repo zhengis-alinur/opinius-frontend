@@ -1,6 +1,7 @@
 import Login from '../icons/Login';
 import Logo from './Logo';
 import SearchBar from './SearchBar';
+import ThemeSwitcher from './ThemeSwitcher';
 
 const Header = () => {
     return (
@@ -8,6 +9,7 @@ const Header = () => {
             <div className="container mx-auto flex justify-between items-center px-5 py-5">
                 <Logo />
                 <SearchBar />
+                <ThemeSwitcher />
                 <Login />
             </div>
         </div>

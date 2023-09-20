@@ -15,6 +15,15 @@ export const setAuthDataToLocalStorage = (user: User, token?: string) => {
     localStorage.setItem('user', JSON.stringify(user));
 };
 
+export const setModeToLocalStorage = (darkMode: boolean) =>
+    localStorage.setItem('darkMode', JSON.stringify(darkMode));
+export const getModeFromLocalStorage = () => {
+    const darkMode = localStorage.getItem('darkMode');
+    if (darkMode) {
+        return JSON.parse(darkMode);
+    }
+};
+
 export const categoriesToSelectOptions = (categories: Category[]) =>
     categories.map((category) => ({
         value: category.id,

@@ -32,7 +32,7 @@ const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
                         {user.roleId === ADMIN_ROLE_ID ? (
                             <>
                                 <Admin />
-                                <p className=" text-lime-400"> Administration</p>
+                                <p className=" text-lime-700"> Administration</p>
                             </>
                         ) : (
                             <>
