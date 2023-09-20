@@ -7,13 +7,10 @@ import {
     useDeleteUsersMutation,
     useGetUsersQuery,
     useSetAdminMutation,
+    useUnBlockUsersMutation,
 } from '../../../api/userApi';
 import { Button, Checkbox, Select } from '../../../components';
-import Table, {
-    TableHeadItem,
-    TableSearch,
-    TableToolbar,
-} from '../../../components/Table';
+import Table, { TableHeadItem, TableToolbar } from '../../../components/Table';
 import { ADMIN_ROLE_ID, ORDER, SORTBY_USER } from '../../../constants';
 import { useAppSelector } from '../../../redux/hooks';
 import { selectUser } from '../../../redux/selectors';
@@ -35,12 +32,14 @@ const View = () => {
 
     const [deleteUsers] = useDeleteUsersMutation();
     const [blockUsers] = useBlockUsersMutation();
+    const [unBlockUsers] = useUnBlockUsersMutation();
     const [setAdmin] = useSetAdminMutation();
 
     const fetchData = async () => {
         try {
             const data = (await getUsers.refetch()).data;
             if (data) {
+                console.log(data);
                 setUsers(data.filter((user) => user.id !== currentUser.id));
             }
         } catch (error) {
@@ -91,10 +90,7 @@ const View = () => {
     return (
         <>
             <div className="relative bg-white w-full overflow-x-auto shadow-md sm:rounded-lg p-4 dark:bg-gray ">
-                <div
-                    className="flex gap-5 items-center"
-                    onSubmit={(e) => e.preventDefault()}
-                >
+                <div className="flex gap-5 items-center">
                     <Select
                         name="sortBy"
                         label="Sort by"
@@ -127,6 +123,9 @@ const View = () => {
                             }}
                             onBlock={() => {
                                 onUpdate(blockUsers);
+                            }}
+                            onUnBlock={() => {
+                                onUpdate(unBlockUsers);
                             }}
                             onSetAdmin={() => {
                                 onUpdate(setAdmin);

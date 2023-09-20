@@ -105,11 +105,13 @@ export const ToolbarButton = ({
 export const TableToolbar = ({
     onDelete,
     onBlock,
+    onUnBlock,
     onSetAdmin,
     ...props
 }: {
     onDelete?: () => void;
     onBlock?: () => void;
+    onUnBlock?: () => void;
     onSetAdmin?: () => void;
 } & HTMLAttributes<HTMLDivElement>) => {
     return (
@@ -124,9 +126,14 @@ export const TableToolbar = ({
                     Block <BlockUser />
                 </ToolbarButton>
             )}
+            {onUnBlock && (
+                <ToolbarButton callback={onUnBlock} className="bg-amber-400">
+                    Unblock <BlockUser />
+                </ToolbarButton>
+            )}
             {onSetAdmin && (
                 <ToolbarButton callback={onSetAdmin} className="bg-lime-500">
-                    Set as Admin <SetAdmin />
+                    Set as Admin/User <SetAdmin />
                 </ToolbarButton>
             )}
         </div>

@@ -99,9 +99,7 @@ const Header = ({ user }: { user: User }) => {
                     <p className="text-gray-300">{user.username}</p>
                     <p className="text-gray-300">{user.email}</p>
                     {user.blocked && (
-                        <p className="text-rose-900 font-bold text-3xl">
-                            You are blocked
-                        </p>
+                        <p className="text-rose-900 font-bold text-3xl">User blocked</p>
                     )}
                 </div>
                 {stats && (

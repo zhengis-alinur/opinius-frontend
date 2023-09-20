@@ -43,6 +43,13 @@ const userApi = rootApi.injectEndpoints({
                 body,
             }),
         }),
+        unBlockUsers: builder.mutation<void, { ids: number[] }>({
+            query: (body) => ({
+                url: `/user/unblock`,
+                method: 'POST',
+                body,
+            }),
+        }),
         setAdmin: builder.mutation<void, { ids: number[] }>({
             query: (body) => ({
                 url: `/user/setAdmin`,
@@ -92,5 +99,6 @@ export const {
     useGetUserReviewsQuery,
     useGetUsersQuery,
     useBlockUsersMutation,
+    useUnBlockUsersMutation,
     useSetAdminMutation,
 } = userApi;

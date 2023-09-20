@@ -92,10 +92,7 @@ const View = ({ user }: { user: User }) => {
     return (
         <>
             <div className="relative bg-white w-full overflow-x-auto shadow-md sm:rounded-lg p-4 dark:bg-gray ">
-                <div
-                    className="flex gap-5 items-center"
-                    onSubmit={(e) => e.preventDefault()}
-                >
+                <div className="flex gap-5 items-center">
                     <Select
                         name="sortBy"
                         label="Sort by"
