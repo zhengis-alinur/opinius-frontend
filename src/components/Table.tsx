@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react';
 
 import BlockUser from '../icons/BlockUser';
 import Delete from '../icons/Delete';
@@ -85,48 +85,57 @@ export const TableSearch = () => (
     </div>
 );
 
+export const ToolbarButton = ({
+    callback,
+    children,
+    ...props
+}: {
+    callback: () => void;
+    children: ReactNode;
+} & HTMLAttributes<HTMLButtonElement>) => (
+    <button
+        {...props}
+        onClick={() => callback()}
+        className={`flex gap-3 items-center p-2 rounded-md text-white ${props.className}`}
+    >
+        {children}
+    </button>
+);
+
 export const TableToolbar = ({
     onDelete,
     onBlock,
     onSetAdmin,
+    ...props
 }: {
     onDelete?: () => void;
     onBlock?: () => void;
     onSetAdmin?: () => void;
-}) => {
+} & HTMLAttributes<HTMLDivElement>) => {
     return (
-        <>
+        <div {...props} className="flex gap-5">
             {onDelete && (
-                <button
-                    onClick={() => onDelete()}
-                    className=" bg-rose-600 p-2 rounded-md"
-                >
-                    <Delete />
-                </button>
+                <ToolbarButton callback={onDelete} className="bg-rose-600">
+                    Delete <Delete />
+                </ToolbarButton>
             )}
             {onBlock && (
-                <button
-                    onClick={() => onBlock()}
-                    className=" bg-amber-400 p-2 rounded-md"
-                >
-                    <BlockUser />
-                </button>
+                <ToolbarButton callback={onBlock} className="bg-amber-400">
+                    Block <BlockUser />
+                </ToolbarButton>
             )}
             {onSetAdmin && (
-                <button
-                    onClick={() => onSetAdmin()}
-                    className=" bg-lime-500 p-2 rounded-md"
-                >
-                    <SetAdmin />
-                </button>
+                <ToolbarButton callback={onSetAdmin} className="bg-lime-500">
+                    Set as Admin <SetAdmin />
+                </ToolbarButton>
             )}
-        </>
+        </div>
     );
 };
 
 const Table = ({ rows, head }: { rows: ReactNode[][]; head: ReactNode[] }) => {
     return (
-        <div className="relative bg-white w-full overflow-x-auto shadow-md sm:rounded-lg p-4 dark:bg-gray ">
+        <div className="relative bg-white w-full overflow-x-auto shadow-md sm:rounded-lg p-4 dark:bg-gray min-h-[300px]">
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <TableHead head={head} />
                 <TableBody rows={rows} />

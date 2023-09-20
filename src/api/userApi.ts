@@ -23,9 +23,10 @@ const userApi = rootApi.injectEndpoints({
             }),
             providesTags: ['User'],
         }),
-        getUsers: builder.query<User[], void>({
-            query: () => ({
+        getUsers: builder.query<User[], { sortBy?: string; order?: string }>({
+            query: (params) => ({
                 url: `/user/getAll`,
+                params,
             }),
         }),
         deleteUsers: builder.mutation<void, { ids: number[] }>({
@@ -62,9 +63,13 @@ const userApi = rootApi.injectEndpoints({
                 url: `/user/stats/?id=${id}`,
             }),
         }),
-        getUserReviews: builder.query<Review[], number>({
-            query: (id) => ({
-                url: `/user/reviews/?id=${id}`,
+        getUserReviews: builder.query<
+            Review[],
+            { id: number; sortBy?: string; order?: string }
+        >({
+            query: (params) => ({
+                url: `/user/reviews/`,
+                params,
                 providesTags: ['User'],
             }),
         }),

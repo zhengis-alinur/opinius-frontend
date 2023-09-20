@@ -65,7 +65,7 @@ const СreateReview = () => {
             title: '',
             objectName: '',
             grade: 0,
-            category: 0,
+            category: 1,
             image: '',
         },
         validationSchema: Yup.object({
@@ -141,7 +141,10 @@ const СreateReview = () => {
                                 <Select
                                     name="category"
                                     label="Select category"
-                                    options={categories}
+                                    options={categories.map((category) => ({
+                                        value: String(category.id),
+                                        label: category.name,
+                                    }))}
                                     value={formik.values.category}
                                     onChange={(value) =>
                                         formik.setFieldValue('category', value)

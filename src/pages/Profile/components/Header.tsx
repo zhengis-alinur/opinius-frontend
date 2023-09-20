@@ -78,7 +78,8 @@ const Header = ({ user }: { user: User }) => {
     return (
         <div
             className={`relative flex flex-col items-center w-full rounded-lg overflow-hidden pb-5 ${
-                user.roleId === ADMIN_ROLE_ID &&
+                currentUser.id === user.id &&
+                currentUser.roleId === ADMIN_ROLE_ID &&
                 ' border-lime-500 border-2 shadow-md shadow-lime-500'
             }`}
         >

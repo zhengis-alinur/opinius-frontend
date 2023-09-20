@@ -1,11 +1,9 @@
 import { SelectHTMLAttributes, useState } from 'react';
-import Select from 'react-select';
 
-import { Category } from '../types';
 import Alert from './Alert';
 
 type Option = {
-    value: number;
+    value: string;
     label: string;
 };
 
@@ -14,41 +12,37 @@ const View = ({
     options,
     onChange,
     error,
-    selectedOption,
-    name,
     ...props
 }: {
     label: string;
-    error: string | false | undefined;
-    options: Category[];
-    selectedOption?: Option;
-    name: string;
-    onChange: (option?: number) => void;
+    error?: string | false | undefined;
+    options: Option[];
+    onChange: (option: string) => void;
 } & Omit<SelectHTMLAttributes<HTMLSelectElement>, 'onChange'>) => {
-    const [selected, setSelected] = useState<Option | null>(selectedOption || null);
     return (
-        <>
+        <div className="flex items-center gap-5">
             {error && <Alert type="danger">{error}</Alert>}
             <label
-                htmlFor="steps-range"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                htmlFor="select"
+                className="block whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white"
             >
                 {label}
             </label>
-            <Select
-                name={name}
-                className="w-full outline-none dark:bg-dark"
-                value={selected}
-                onChange={(option) => {
-                    setSelected(option);
-                    onChange(option?.value);
+            <select
+                {...props}
+                id="select"
+                className="block w-fit p-2 text-sm text-gray-900 border dark:bg-gray border-gray-300 rounded-lg bg-gray-50 border-transparent focus:border-transparent focus:ring-0 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                onChange={(e) => {
+                    onChange(e.target.value);
                 }}
-                options={options.map((category) => ({
-                    value: category.id,
-                    label: category.name,
-                }))}
-            />
-        </>
+            >
+                {options.map((option, index) => (
+                    <option key={index} value={option.value}>
+                        {option.label}
+                    </option>
+                ))}
+            </select>
+        </div>
     );
 };
 

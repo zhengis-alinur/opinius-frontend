@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-key */
-import { Checkbox } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -9,12 +8,13 @@ import {
     useGetUsersQuery,
     useSetAdminMutation,
 } from '../../../api/userApi';
+import { Button, Checkbox, Select } from '../../../components';
 import Table, {
     TableHeadItem,
     TableSearch,
     TableToolbar,
 } from '../../../components/Table';
-import { ADMIN_ROLE_ID } from '../../../constants';
+import { ADMIN_ROLE_ID, ORDER, SORTBY_USER } from '../../../constants';
 import { useAppSelector } from '../../../redux/hooks';
 import { selectUser } from '../../../redux/selectors';
 import { User } from '../../../types';
@@ -23,9 +23,14 @@ type UpdateFunction = (ids: { ids: number[] }) => Promise<any>;
 
 const View = () => {
     const currentUser = useAppSelector(selectUser);
+    const [sortBy, setSortBy] = useState<string>('username');
+    const [order, setOrder] = useState<string>('ASC');
 
     const [users, setUsers] = useState<User[]>([]);
-    const getUsers = useGetUsersQuery();
+    const getUsers = useGetUsersQuery({
+        sortBy,
+        order,
+    });
     const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
 
     const [deleteUsers] = useDeleteUsersMutation();
@@ -79,75 +84,110 @@ const View = () => {
         }
     };
 
+    const onFilterApply = () => {
+        fetchData();
+    };
+
     return (
-        <div className="relative bg-white w-full overflow-x-auto shadow-md sm:rounded-lg p-4 dark:bg-gray ">
-            <div className="flex justify-start items-center gap-10  mb-3">
-                <TableSearch />
-                <TableToolbar
-                    onDelete={() => {
-                        onUpdate(deleteUsers);
-                    }}
-                    onBlock={() => {
-                        onUpdate(blockUsers);
-                    }}
-                    onSetAdmin={() => {
-                        onUpdate(setAdmin);
-                    }}
+        <>
+            <div className="relative bg-white w-full overflow-x-auto shadow-md sm:rounded-lg p-4 dark:bg-gray ">
+                <div
+                    className="flex gap-5 items-center"
+                    onSubmit={(e) => e.preventDefault()}
+                >
+                    <Select
+                        name="sortBy"
+                        label="Sort by"
+                        options={SORTBY_USER}
+                        value={sortBy}
+                        onChange={(value) => setSortBy(value)}
+                    />
+                    <Select
+                        name="order"
+                        label="Order"
+                        options={ORDER}
+                        value={order}
+                        onChange={(value) => setOrder(value)}
+                    />
+                    <Button
+                        type="submit"
+                        onClick={() => {
+                            onFilterApply();
+                        }}
+                    >
+                        Apply
+                    </Button>
+                    {selectedUsers.length > 0 && (
+                        <TableToolbar
+                            style={{
+                                opacity: selectedUsers.length > 0 ? '100' : '0',
+                            }}
+                            onDelete={() => {
+                                onUpdate(deleteUsers);
+                            }}
+                            onBlock={() => {
+                                onUpdate(blockUsers);
+                            }}
+                            onSetAdmin={() => {
+                                onUpdate(setAdmin);
+                            }}
+                        />
+                    )}
+                </div>
+                <Table
+                    rows={users.map((user) => [
+                        <Checkbox
+                            checked={selectedUsers.includes(user.id)}
+                            onChange={() => toggleReviewSelection(user.id)}
+                        />,
+                        <Link to={`/profile/${user.id}`}>
+                            <p>{user.id}</p>
+                        </Link>,
+                        <Link to={`/profile/${user.id}`}>
+                            <p>{user.username}</p>
+                        </Link>,
+                        <>
+                            {(user.blocked && (
+                                <p className="text-rose-600 font-bold">Blocked</p>
+                            )) || (
+                                <p
+                                    className={
+                                        user.roleId === ADMIN_ROLE_ID
+                                            ? 'text-lime-600 font-bold'
+                                            : ''
+                                    }
+                                >
+                                    {user.roleId === ADMIN_ROLE_ID ? 'Admin' : 'User'}
+                                </p>
+                            )}
+                        </>,
+                        <p>{user.firstName}</p>,
+                        <p>{user.lastName}</p>,
+                        <p>{user.email}</p>,
+                        <p>{user.reviews.length}</p>,
+                        <p>{user.likesCount}</p>,
+                        <p>{user.commentsCount}</p>,
+                        <p>{user.ratedCount}</p>,
+                    ])}
+                    head={[
+                        <Checkbox
+                            checked={selectedUsers.length === users.length}
+                            onChange={onAllSelect}
+                        />,
+                        <TableHeadItem title="ID" />,
+                        <TableHeadItem title="Username" />,
+                        <TableHeadItem title="Role" />,
+                        <TableHeadItem title="First name" />,
+                        <TableHeadItem title="Last name" />,
+                        <TableHeadItem title="Email" />,
+                        <TableHeadItem title="Reviews" />,
+                        <TableHeadItem title="Liked by" />,
+                        <TableHeadItem title="Commented by" />,
+                        <TableHeadItem title="Rated by" />,
+                    ]}
                 />
             </div>
-            <Table
-                rows={users.map((user) => [
-                    <Checkbox
-                        checked={selectedUsers.includes(user.id)}
-                        onChange={() => toggleReviewSelection(user.id)}
-                    />,
-                    <Link to={`/profile/${user.id}`}>
-                        <p>{user.id}</p>
-                    </Link>,
-                    <Link to={`/profile/${user.id}`}>
-                        <p>{user.username}</p>
-                    </Link>,
-                    <>
-                        {(user.blocked && (
-                            <p className="text-rose-600 font-bold">Blocked</p>
-                        )) || (
-                            <p
-                                className={
-                                    user.roleId === ADMIN_ROLE_ID
-                                        ? 'text-lime-600 font-bold'
-                                        : ''
-                                }
-                            >
-                                {user.roleId === ADMIN_ROLE_ID ? 'Admin' : 'User'}
-                            </p>
-                        )}
-                    </>,
-                    <p>{user.firstName}</p>,
-                    <p>{user.lastName}</p>,
-                    <p>{user.email}</p>,
-                    <p>{user.reviews.length}</p>,
-                    <p>{user.likesCount}</p>,
-                    <p>{user.commentsCount}</p>,
-                    <p>{user.ratedCount}</p>,
-                ])}
-                head={[
-                    <Checkbox
-                        checked={selectedUsers.length === users.length}
-                        onChange={onAllSelect}
-                    />,
-                    <TableHeadItem title="ID" />,
-                    <TableHeadItem title="Username" />,
-                    <TableHeadItem title="Role" />,
-                    <TableHeadItem title="First name" />,
-                    <TableHeadItem title="Last name" />,
-                    <TableHeadItem title="Email" />,
-                    <TableHeadItem title="Reviews" />,
-                    <TableHeadItem title="Liked by" />,
-                    <TableHeadItem title="Commented by" />,
-                    <TableHeadItem title="Rated by" />,
-                ]}
-            />
-        </div>
+        </>
     );
 };
 

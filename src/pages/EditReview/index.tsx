@@ -175,11 +175,10 @@ const EditReview = () => {
                                         <Select
                                             name="category"
                                             label="Select category"
-                                            options={categories}
-                                            selectedOption={{
+                                            options={categories.map((category) => ({
+                                                value: String(category.id),
                                                 label: category.name,
-                                                value: category.id,
-                                            }}
+                                            }))}
                                             value={formik.values.category}
                                             onChange={(value) =>
                                                 formik.setFieldValue('category', value)

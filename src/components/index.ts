@@ -18,7 +18,6 @@ import SearchBar from './SearchBar';
 import Select from './Select';
 import TagCloud from './TagCloud';
 import TextArea from './TextArea';
-import Tooltip from './Tooltip';
 
 export {
     AdvancedImage,
