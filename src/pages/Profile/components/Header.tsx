@@ -27,7 +27,7 @@ const UserInfo = ({
 );
 
 const CreateReviewButton = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
-    <Button onClick={props.onClick}>
+    <Button {...props} onClick={props.onClick}>
         Create new Review
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -97,6 +97,11 @@ const Header = ({ user }: { user: User }) => {
                     />
                     <p className="text-gray-300">{user.username}</p>
                     <p className="text-gray-300">{user.email}</p>
+                    {user.blocked && (
+                        <p className="text-rose-900 font-bold text-3xl">
+                            You are blocked
+                        </p>
+                    )}
                 </div>
                 {stats && (
                     <div className="flex flex-col items-center  gap-16 lg:flex-row lg:items-end">
@@ -126,6 +131,7 @@ const Header = ({ user }: { user: User }) => {
             </div>
             {(currentUser.id === user.id || currentUser.roleId === ADMIN_ROLE_ID) && (
                 <CreateReviewButton
+                    disabled={user.blocked}
                     onClick={() => navigate(`/createReview/${user.id}`)}
                 />
             )}

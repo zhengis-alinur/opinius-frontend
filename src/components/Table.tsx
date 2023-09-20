@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 
 import BlockUser from '../icons/BlockUser';
 import Delete from '../icons/Delete';
+import SetAdmin from '../icons/SetAdmin';
 
 export const TableHeadItem = ({
     title,
@@ -87,9 +88,11 @@ export const TableSearch = () => (
 export const TableToolbar = ({
     onDelete,
     onBlock,
+    onSetAdmin,
 }: {
     onDelete?: () => void;
     onBlock?: () => void;
+    onSetAdmin?: () => void;
 }) => {
     return (
         <>
@@ -107,6 +110,14 @@ export const TableToolbar = ({
                     className=" bg-amber-400 p-2 rounded-md"
                 >
                     <BlockUser />
+                </button>
+            )}
+            {onSetAdmin && (
+                <button
+                    onClick={() => onSetAdmin()}
+                    className=" bg-lime-500 p-2 rounded-md"
+                >
+                    <SetAdmin />
                 </button>
             )}
         </>

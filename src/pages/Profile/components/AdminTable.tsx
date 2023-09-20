@@ -3,7 +3,12 @@ import { Checkbox } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useDeleteUsersMutation, useGetUsersQuery } from '../../../api/userApi';
+import {
+    useBlockUsersMutation,
+    useDeleteUsersMutation,
+    useGetUsersQuery,
+    useSetAdminMutation,
+} from '../../../api/userApi';
 import Table, {
     TableHeadItem,
     TableSearch,
@@ -12,12 +17,16 @@ import Table, {
 import { ADMIN_ROLE_ID } from '../../../constants';
 import { User } from '../../../types';
 
+type UpdateFunction = (ids: { ids: number[] }) => Promise<any>;
+
 const View = () => {
     const [users, setUsers] = useState<User[]>([]);
     const getUsers = useGetUsersQuery();
     const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
 
     const [deleteUsers] = useDeleteUsersMutation();
+    const [blockUsers] = useBlockUsersMutation();
+    const [setAdmin] = useSetAdminMutation();
 
     const fetchData = async () => {
         try {
@@ -51,21 +60,36 @@ const View = () => {
         }
     };
 
-    const onDelete = async () => {
+    const onUpdate = async (update: UpdateFunction): Promise<void> => {
         if (selectedUsers.length !== 0) {
-            await deleteUsers({ ids: selectedUsers });
-            await fetchData();
-            setSelectedUsers([]);
+            update({ ids: selectedUsers })
+                .then(() => {
+                    return fetchData();
+                })
+                .then(() => {
+                    setSelectedUsers([]);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
         }
     };
-    const onBlock = () => {
-        console.log('block', selectedUsers);
-    };
+
     return (
         <div className="relative bg-white w-full overflow-x-auto shadow-md sm:rounded-lg p-4 dark:bg-gray ">
             <div className="flex justify-start items-center gap-10  mb-3">
                 <TableSearch />
-                <TableToolbar onDelete={onDelete} onBlock={onBlock} />
+                <TableToolbar
+                    onDelete={() => {
+                        onUpdate(deleteUsers);
+                    }}
+                    onBlock={() => {
+                        onUpdate(blockUsers);
+                    }}
+                    onSetAdmin={() => {
+                        onUpdate(setAdmin);
+                    }}
+                />
             </div>
             <Table
                 rows={users.map((user) => [
@@ -74,12 +98,23 @@ const View = () => {
                         onChange={() => toggleReviewSelection(user.id)}
                     />,
                     <Link to={`/profile/${user.id}`}>
-                        <p>{user.id}</p>
+                        <p className={user.blocked ? 'text-rose-600 font-bold' : ''}>
+                            {user.id}
+                        </p>
                     </Link>,
                     <Link to={`/profile/${user.id}`}>
-                        <p>{user.username}</p>
+                        <p className={user.blocked ? 'text-rose-600 font-bold' : ''}>
+                            {user.username}
+                        </p>
+                        <p className={user.blocked ? 'text-rose-600 font-bold' : ''}>
+                            {user.blocked && 'blocked'}
+                        </p>
                     </Link>,
-                    <p className={user.roleId === ADMIN_ROLE_ID ? 'text-lime-600' : ''}>
+                    <p
+                        className={
+                            user.roleId === ADMIN_ROLE_ID ? 'text-lime-600 font-bold' : ''
+                        }
+                    >
                         {user.roleId === ADMIN_ROLE_ID ? 'Admin' : 'User'}
                     </p>,
                     <p>{user.firstName}</p>,
@@ -112,3 +147,6 @@ const View = () => {
 };
 
 export default View;
+function useSetAdminsMutation(): [any] {
+    throw new Error('Function not implemented.');
+}

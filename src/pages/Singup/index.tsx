@@ -27,7 +27,7 @@ const Signup = () => {
         }),
 
         onSubmit: async (values) => {
-            await signup(values);
+            await signup({ ...values });
             navigate('/login');
         },
     });

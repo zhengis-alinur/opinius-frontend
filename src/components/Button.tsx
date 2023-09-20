@@ -6,6 +6,7 @@ const Button = ({
 }: { children: ReactNode } & React.ButtonHTMLAttributes<HTMLButtonElement>) => {
     return (
         <button
+            {...props}
             onClick={props.onClick}
             data-modal-target="modal"
             data-modal-toggle="modal"
