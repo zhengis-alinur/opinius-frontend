@@ -3,7 +3,7 @@ import { Checkbox } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useGetUsersQuery } from '../../../api/userApi';
+import { useDeleteUsersMutation, useGetUsersQuery } from '../../../api/userApi';
 import Table, {
     TableHeadItem,
     TableSearch,
@@ -17,17 +17,19 @@ const View = () => {
     const getUsers = useGetUsersQuery();
     const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = (await getUsers.refetch()).data;
-                if (data) {
-                    setUsers(data);
-                }
-            } catch (error) {
-                console.error(error);
+    const [deleteUsers] = useDeleteUsersMutation();
+
+    const fetchData = async () => {
+        try {
+            const data = (await getUsers.refetch()).data;
+            if (data) {
+                setUsers(data);
             }
-        };
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    useEffect(() => {
         fetchData();
     }, []);
 
@@ -49,8 +51,12 @@ const View = () => {
         }
     };
 
-    const onDelete = () => {
-        console.log('delete', selectedUsers);
+    const onDelete = async () => {
+        if (selectedUsers.length !== 0) {
+            await deleteUsers({ ids: selectedUsers });
+            await fetchData();
+            setSelectedUsers([]);
+        }
     };
     const onBlock = () => {
         console.log('block', selectedUsers);

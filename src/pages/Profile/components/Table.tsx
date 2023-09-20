@@ -16,12 +16,27 @@ import { selectUser } from '../../../redux/selectors';
 import { Review, User } from '../../../types';
 
 const View = ({ user }: { user: User }) => {
-    const currentUser = useAppSelector(selectUser);
     const [reviews, setReviews] = useState<Review[]>([]);
+    const currentUser = useAppSelector(selectUser);
     const getReviews = useGetUserReviewsQuery(user.id);
     const [selectedReviews, setSelectedReviews] = useState<number[]>([]);
 
     const [deleteReviews] = useDeleteReviewsMutation();
+
+    const fetchData = async () => {
+        try {
+            const data = (await getReviews.refetch()).data;
+            if (data) {
+                setReviews(data);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     const toggleReviewSelection = (reviewId: number) => {
         if (selectedReviews.includes(reviewId)) {
@@ -44,22 +59,9 @@ const View = ({ user }: { user: User }) => {
     const onDelete = async () => {
         await deleteReviews({ ids: selectedReviews });
         await fetchData();
+        setSelectedReviews([]);
     };
 
-    const fetchData = async () => {
-        try {
-            const data = (await getReviews.refetch()).data;
-            if (data) {
-                setReviews(data);
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    useEffect(() => {
-        fetchData();
-    }, []);
     return (
         <div className="relative bg-white w-full overflow-x-auto shadow-md sm:rounded-lg p-4 dark:bg-gray ">
             <div className="flex justify-start items-center gap-10  mb-3">
@@ -104,7 +106,7 @@ const View = ({ user }: { user: User }) => {
                             currentUser.roleId !== ADMIN_ROLE_ID
                         }
                         checked={selectedReviews.length === reviews.length}
-                        onChange={() => onAllSelect()}
+                        onChange={onAllSelect}
                     />,
                     <TableHeadItem title="Review title" />,
                     <TableHeadItem title="Review object" />,

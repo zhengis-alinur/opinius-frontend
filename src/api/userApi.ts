@@ -27,7 +27,15 @@ const userApi = rootApi.injectEndpoints({
             query: () => ({
                 url: `/user/getAll`,
             }),
-            providesTags: ['User'],
+            providesTags: ['Users'],
+        }),
+        deleteUsers: builder.mutation<void, { ids: number[] }>({
+            query: (body) => ({
+                url: `/user/delete`,
+                method: 'POST',
+                body,
+            }),
+            invalidatesTags: ['Users'],
         }),
         setAvatar: builder.mutation<SetAvatarResponseType, SetAvatarRequestType>({
             query: (body) => ({
@@ -46,11 +54,13 @@ const userApi = rootApi.injectEndpoints({
         getUserReviews: builder.query<Review[], number>({
             query: (id) => ({
                 url: `/user/reviews/?id=${id}`,
+                providesTags: ['User'],
             }),
         }),
         getUserFavorites: builder.query<GetFavoritesResponseType, number>({
             query: (id) => ({
                 url: `/user/favorites/?id=${id}`,
+                providesTags: ['User'],
             }),
         }),
     }),
@@ -62,6 +72,7 @@ export const {
     useGetUserStatsQuery,
     useSetAvatarMutation,
     useGetUserFavoritesQuery,
+    useDeleteUsersMutation,
     useGetUserReviewsQuery,
     useGetUsersQuery,
 } = userApi;
