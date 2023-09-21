@@ -34,9 +34,9 @@ const Search = () => {
                 <h1 className="text-2xl text-left w-full">
                     {reviews.length === 0
                         ? t('no-review-found')
-                        : `${t('found')} ${t('n-reviews').toLowerCase()}: ${
-                              reviews.length
-                          }`}
+                        : `${t('found')} ${t('n-reviews').toLowerCase()} related to `}
+                    <b>{keyword}</b>
+                    {`: ${reviews.length}`}
                 </h1>
 
                 {reviews.map((review) => (

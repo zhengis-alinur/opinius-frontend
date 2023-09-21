@@ -1,4 +1,5 @@
 import { HTMLAttributes } from 'react';
+import { Link } from 'react-router-dom';
 
 import Badge from '../../../components/Badge';
 import { Tag } from '../../../types/Tag';
@@ -7,7 +8,9 @@ const Tags = ({ tags, ...props }: { tags: Tag[] } & HTMLAttributes<HTMLDivElemen
     return (
         <div className={`${props.className}`}>
             {tags.map((tag) => (
-                <Badge key={tag.id}>{tag.name}</Badge>
+                <Link key={tag.id} to={`/search/${tag.name}`}>
+                    <Badge key={tag.id}>{tag.name}</Badge>
+                </Link>
             ))}
         </div>
     );

@@ -63,7 +63,7 @@ const View = ({ user }: { user: User }) => {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [user]);
 
     const toggleReviewSelection = (reviewId: number) => {
         if (selectedReviews.includes(reviewId)) {
@@ -144,7 +144,11 @@ const View = ({ user }: { user: User }) => {
                         <div className="flex flex-col items-start">
                             {review.tags &&
                                 review.tags.map((tag) => (
-                                    <Link to={'/'} className="font-bold" key={tag.name}>
+                                    <Link
+                                        to={`/search/${tag.name}`}
+                                        className="font-bold"
+                                        key={tag.name}
+                                    >
                                         #{tag.name}
                                     </Link>
                                 ))}

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useGetReviewsQuery } from '../../api/reviewApi';
+import { useGetBestReviewsQuery } from '../../api/reviewApi';
 import { ReviewCard } from '../../components';
 
 const BestReviews = () => {
     const [hidden, setHidden] = useState(true);
-    const { data, isLoading } = useGetReviewsQuery();
+    const { data, isLoading } = useGetBestReviewsQuery();
     const { t } = useTranslation();
     return (
         <div className="`w-full " id="accordion-collapse" data-accordion="collapse">

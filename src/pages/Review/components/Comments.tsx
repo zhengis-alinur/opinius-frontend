@@ -10,18 +10,20 @@ const Comments = ({ reviewId }: { reviewId: number }) => {
     const [comments, setComments] = useState<CommentType[]>([]);
     const getComments = useCommentsOfReviewQuery(reviewId);
     const { t } = useTranslation();
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const comments = (await getComments.refetch()).data;
-                if (comments) {
-                    setComments(comments);
-                }
-            } catch (error) {
-                console.error(error);
+    const fetchData = async () => {
+        try {
+            const comments = (await getComments.refetch()).data;
+            if (comments) {
+                setComments(comments);
             }
-        };
-        fetchData();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    useEffect(() => {
+        setInterval(() => {
+            fetchData();
+        }, 1000);
     }, []);
     return (
         <>

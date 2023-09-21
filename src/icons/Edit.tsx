@@ -1,6 +1,11 @@
 import { SVGProps } from 'react';
 
+import { useAppSelector } from '../redux/hooks';
+import { selectMode } from '../redux/selectors';
+
 const Edit = (props: SVGProps<SVGSVGElement>) => {
+    const darkMode = useAppSelector(selectMode);
+
     return (
         <svg
             {...props}
@@ -13,7 +18,7 @@ const Edit = (props: SVGProps<SVGSVGElement>) => {
         >
             <path
                 d="M18.6024 0L15.502 3.10039L21.7028 9.30118L24.8032 6.20079L18.6024 0ZM12.4016 6.20079L0 18.6024V24.8032H6.20079L18.6024 12.4016L12.4016 6.20079Z"
-                fill="white"
+                fill={darkMode ? 'white' : 'black'}
             />
         </svg>
     );
