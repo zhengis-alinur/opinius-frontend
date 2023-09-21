@@ -8,7 +8,7 @@ const Eye = (props: SVGProps<SVGSVGElement>) => {
     return (
         <svg
             {...props}
-            className={`hover:opacity-80 cursor-pointer`}
+            className={`hover:opacity-80 cursor-pointer ${props.className}`}
             width="18"
             height="18"
             viewBox="0 0 24 24"

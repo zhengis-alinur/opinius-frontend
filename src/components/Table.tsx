@@ -44,7 +44,7 @@ const TableRow = ({ row }: { row: ReactNode[] }) => {
 };
 
 const TableHead = ({ head }: { head: ReactNode[] }) => (
-    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray dark:text-gray-400">
+    <thead className=" text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray dark:text-gray-400">
         <tr>{head}</tr>
     </thead>
 );
@@ -165,7 +165,7 @@ export const TableToolbar = ({
 
 const Table = ({ rows, head }: { rows: ReactNode[][]; head: ReactNode[] }) => {
     return (
-        <div className="relative bg-white w-full overflow-x-auto shadow-md sm:rounded-lg p-4 dark:bg-gray min-h-[300px]">
+        <div className="relative max-w-100 bg-white overflow-x-auto shadow-md sm:rounded-lg p-4 dark:bg-gray min-h-[300px]">
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <TableHead head={head} />
                 <TableBody rows={rows} />

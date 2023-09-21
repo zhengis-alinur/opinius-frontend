@@ -91,8 +91,8 @@ const View = ({ user }: { user: User }) => {
 
     return (
         <>
-            <div className="relative bg-white w-full overflow-x-auto shadow-md sm:rounded-lg p-4 dark:bg-gray ">
-                <div className="flex gap-5 items-center">
+            <div className="relative bg-white overflow-x-auto shadow-md sm:rounded-lg p-4 dark:bg-gray ">
+                <div className="flex flex-col gap-5">
                     <Select
                         name="sortBy"
                         label={t('sort-by')}
@@ -113,7 +113,7 @@ const View = ({ user }: { user: User }) => {
                     />
                     <Button
                         type="submit"
-                        className="text-white"
+                        className="text-white max-w-[100px]"
                         onClick={() => {
                             formik.handleSubmit();
                         }}
@@ -157,7 +157,14 @@ const View = ({ user }: { user: User }) => {
                         <p>{review.comments.length}</p>,
                         <p>{review.rating}</p>,
                         <Link to={`/editReview/${review.id}`}>
-                            <Edit />
+                            <Edit
+                                className={`hidden ${
+                                    currentUser &&
+                                    (user.id === currentUser.id ||
+                                        currentUser.roleId === ADMIN_ROLE_ID) &&
+                                    'block'
+                                }`}
+                            />
                         </Link>,
                         <Link to={`/review/${review.id}`}>
                             <Eye />

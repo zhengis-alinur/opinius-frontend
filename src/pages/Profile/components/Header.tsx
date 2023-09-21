@@ -23,8 +23,10 @@ const UserInfo = ({
     colorClass: string;
 }) => (
     <div className="flex flex-col items-center">
-        <h1 className={`text-4xl font-thin text-left ${colorClass}`}>{value}</h1>
-        <h1 className={`text-4xl font-thin text-left ${colorClass}`}>{info}</h1>
+        <h1 className={`text-xl font-thin text-left 2xl:text-4xl ${colorClass}`}>
+            {value}
+        </h1>
+        <h1 className={`text-	xl font-thin text-left ${colorClass}`}>{info}</h1>
     </div>
 );
 
@@ -82,7 +84,7 @@ const Header = ({ user }: { user: User }) => {
 
     return (
         <div
-            className={`relative flex flex-col items-center w-full rounded-lg overflow-hidden pb-5 ${
+            className={`relative flex flex-col items-center rounded-lg overflow-hidden pb-5 ${
                 currentUser &&
                 currentUser.id === user.id &&
                 currentUser.roleId === ADMIN_ROLE_ID &&
@@ -95,7 +97,7 @@ const Header = ({ user }: { user: User }) => {
                     backgroundImage: `url(${user.avatar || '/assets/review-bg.png'})`,
                 }}
             />
-            <div className="relative flex flex-col w-full items-center gap-10 p-8 2xl:flex-row">
+            <div className="relative flex flex-col items-center gap-10 p-8 xl:flex-row">
                 <div className="flex flex-col items-center">
                     <ImageUpload
                         uploadable={currentUser && currentUser.id == user.id}

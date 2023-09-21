@@ -44,38 +44,40 @@ const ReviewPost = ({
             </Link>
             <div className="items-center gap-8 justify-between lg:items-start">
                 <div
-                    className="flex flex-col-reverse p-2 h-96 w-full flex-3 bg-center bg-no-repeat bg-cover rounded-lg lg:flex-1 hover:opacity-50"
+                    className="flex flex-col-reverse  h-96 w-full flex-3 bg-center bg-no-repeat bg-cover rounded-lg lg:flex-1 hover:opacity-50"
                     style={{
                         backgroundImage: `url(${
                             review.image || '/assets/review-bg.png'
                         })`,
                     }}
                 >
-                    <p className="absolute left-0 bottom-0 bg-white w-full p-5 font-semibold text-center whitespace-nowrap truncate dark:bg-gray">
-                        {review.title}
-                    </p>
-                    <div className="absolute flex justify-center gap-5">
-                        <div className="flex gap-2">
-                            <Likes />
-                            <p className="text-xs">
-                                <span className="font-bold">
-                                    {review.likes ? review.likes.length : 0}
-                                </span>
-                            </p>
-                        </div>
-                        <div className="flex gap-2">
-                            <Comment />
-                            <p className="text-xs">
-                                <span className="font-bold">
-                                    {review.comments ? review.comments.length : 0}
-                                </span>
-                            </p>
-                        </div>
-                        <div className="flex gap-2">
-                            <Star />
-                            <p className="text-xs">
-                                <span className="font-bold">{review.rating}</span>
-                            </p>
+                    <div className="dark:bg-gray">
+                        <p className="bg-white w-full p-5 font-semibold text-center whitespace-nowrap truncate dark:bg-gray">
+                            {review.title}
+                        </p>
+                        <div className="flex w-full justify-center gap-5 dark:bg-gray ">
+                            <div className="flex gap-2">
+                                <Likes />
+                                <p className="text-xs">
+                                    <span className="font-bold">
+                                        {review.likes ? review.likes.length : 0}
+                                    </span>
+                                </p>
+                            </div>
+                            <div className="flex gap-2">
+                                <Comment />
+                                <p className="text-xs">
+                                    <span className="font-bold">
+                                        {review.comments ? review.comments.length : 0}
+                                    </span>
+                                </p>
+                            </div>
+                            <div className="flex gap-2">
+                                <Star />
+                                <p className="text-xs">
+                                    <span className="font-bold">{review.rating}</span>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>

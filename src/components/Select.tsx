@@ -20,7 +20,7 @@ const View = ({
     onChange: (option: string) => void;
 } & Omit<SelectHTMLAttributes<HTMLSelectElement>, 'onChange'>) => {
     return (
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-5 max-w-[100px]">
             {error && <Alert type="danger">{error}</Alert>}
             <label
                 htmlFor="select"

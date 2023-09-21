@@ -30,7 +30,7 @@ const Profile = () => {
     return (
         <>
             {user && (
-                <div className="flex flex-col justify-between w-full gap-5">
+                <div className="flex flex-col w-full justify-between gap-5">
                     <Header user={user} />
                     {currentUser &&
                         currentUser.id === user.id &&

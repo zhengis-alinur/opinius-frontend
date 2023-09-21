@@ -10,8 +10,10 @@ const Header = () => {
             <div className="container mx-auto flex justify-between items-center px-5 py-5">
                 <Logo />
                 <SearchBar />
-                <ThemeSwitcher />
-                <LanguageToggler />
+                <div className="hidden justify-between gap-20 lg:flex">
+                    <ThemeSwitcher />
+                    <LanguageToggler />
+                </div>
                 <Login />
             </div>
         </div>
