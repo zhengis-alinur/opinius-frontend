@@ -1,4 +1,6 @@
+import { t } from 'i18next';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
 import { useGetUserQuery } from '../../api/userApi';
@@ -15,6 +17,7 @@ const Profile = () => {
     const currentUser = useAppSelector(selectUser);
     const [user, setUser] = useState<User>();
     const getUser = useGetUserQuery(id || 0);
+    const { t } = useTranslation();
     useEffect(() => {
         const fetchUser = async () => {
             const data = (await getUser.refetch()).data;
@@ -33,11 +36,11 @@ const Profile = () => {
                         currentUser.id === user.id &&
                         user.roleId === ADMIN_ROLE_ID && (
                             <>
-                                <h1 className="text-3xl text-center">Users</h1>
+                                <h1 className="text-3xl text-center">{t('users')}</h1>
                                 <AdminTable />
                             </>
                         )}
-                    <h1 className="text-3xl text-center">Reviews</h1>
+                    <h1 className="text-3xl text-center">{t('reviews')}</h1>
                     <Table user={user} />
                 </div>
             )}

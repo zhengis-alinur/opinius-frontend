@@ -1,6 +1,7 @@
 import { useFormik } from 'formik';
 import JoditEditor from 'jodit-react';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import * as Yup from 'yup';
 
@@ -15,8 +16,6 @@ import {
     Range,
     Select,
 } from '../../components';
-import { useAppSelector } from '../../redux/hooks';
-import { selectUser } from '../../redux/selectors';
 import { Category } from '../../types';
 import { Review, UpdateReview } from '../../types/Review';
 import { extractHashtags } from '../../utils';
@@ -24,7 +23,6 @@ import { url } from '../../utils/cloudinary';
 
 const EditReview = () => {
     const { id } = useParams();
-    const user = useAppSelector(selectUser);
     const [review, setReview] = useState<
         Omit<Review, 'likes' | 'id' | 'comments' | 'userId' | 'ratings' | 'rating'>
     >({
@@ -47,6 +45,7 @@ const EditReview = () => {
     const editor = useRef(null);
     const [content, setContent] = useState('');
     const [imageUrl, setImageUrl] = useState<string>('');
+    const { t } = useTranslation();
 
     const onTextChange = (value: string) => {
         setContent(value);
@@ -132,8 +131,8 @@ const EditReview = () => {
                         <div className="flex-1 w-full">
                             <Input
                                 name="title"
-                                label="Title"
-                                placeholder="Title"
+                                label={t('review-title')}
+                                placeholder={t('title-placeholder')}
                                 onChange={formik.handleChange}
                                 value={formik.values.title}
                                 onBlur={formik.handleBlur}
@@ -141,8 +140,8 @@ const EditReview = () => {
                             />
                             <Input
                                 name="objectName"
-                                label="Object name"
-                                placeholder="Object name"
+                                label={t('review-object')}
+                                placeholder={t('object-placeholder')}
                                 onChange={formik.handleChange}
                                 value={formik.values.objectName}
                                 onBlur={formik.handleBlur}
@@ -154,7 +153,7 @@ const EditReview = () => {
                                 <div className="flex w-full  gap-16 justify-start items-center md:w-1/2">
                                     <Range
                                         name="grade"
-                                        label="My grade"
+                                        label={t('my-grade')}
                                         min={0}
                                         max={10}
                                         step={1}
@@ -174,7 +173,7 @@ const EditReview = () => {
                                     {category && (
                                         <Select
                                             name="category"
-                                            label="Select category"
+                                            label={t('select-category')}
                                             options={categories.map((category) => ({
                                                 value: String(category.id),
                                                 label: category.name,
@@ -201,11 +200,7 @@ const EditReview = () => {
 
                         <div className="flex-1 w-full">
                             <Alert type="info">
-                                <p>
-                                    To add <b>anytag</b> into you review just write
-                                    anywhere in text usin hash(#) symbol. F.e.{' '}
-                                    <b>#anytag</b>
-                                </p>
+                                <p>{t('tag-adding-info')}</p>
                             </Alert>
                             <JoditEditor
                                 ref={editor}
@@ -216,7 +211,7 @@ const EditReview = () => {
                     </div>
                     <div className="flex items-center pt-3 mt-3 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
                         <Button type="submit">
-                            {isLoading ? 'Updating...' : 'Update Review'}
+                            {isLoading ? t('updating') : t('update-review')}
                         </Button>
                     </div>
                 </form>

@@ -1,4 +1,5 @@
 import Login from '../icons/Login';
+import LanguageToggler from './LanguageToggler';
 import Logo from './Logo';
 import SearchBar from './SearchBar';
 import ThemeSwitcher from './ThemeSwitcher';
@@ -10,6 +11,7 @@ const Header = () => {
                 <Logo />
                 <SearchBar />
                 <ThemeSwitcher />
+                <LanguageToggler />
                 <Login />
             </div>
         </div>

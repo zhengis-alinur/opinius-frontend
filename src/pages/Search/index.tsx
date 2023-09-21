@@ -1,4 +1,6 @@
+import { t } from 'i18next';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
 import { useSearchQuery } from '../../api/reviewApi';
@@ -9,6 +11,7 @@ const Search = () => {
     const { keyword } = useParams();
     const getReviews = useSearchQuery(keyword || '');
     const [reviews, setReviews] = useState<Review[]>([]);
+    const { t } = useTranslation();
 
     const fetchData = async () => {
         try {
@@ -27,11 +30,18 @@ const Search = () => {
 
     return (
         <div className="relative w-full">
-            <div className="flex items-center justify-center gap-5 w-full flex-wrap">
+            <div className="flex flex-col items-center justify-center gap-5 w-full flex-wrap">
+                <h1 className="text-2xl text-left w-full">
+                    {reviews.length === 0
+                        ? t('no-review-found')
+                        : `${t('found')} ${t('n-reviews').toLowerCase()}: ${
+                              reviews.length
+                          }`}
+                </h1>
+
                 {reviews.map((review) => (
                     <ReviewPost key={review.id} review={review} />
                 ))}
-                {reviews.length === 0 && <h1 className="text-2xl">No review found</h1>}
             </div>
         </div>
     );

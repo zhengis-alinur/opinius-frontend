@@ -27,6 +27,11 @@ const authApi = rootApi.injectEndpoints({
                 body: credentials,
             }),
         }),
+        isAuthenticated: builder.query<User, void>({
+            query: () => ({
+                url: '/auth/isAuthenticated',
+            }),
+        }),
         signup: builder.mutation<UserResponse, SignupRequest>({
             query: (credentials) => ({
                 url: '/auth/signup',
@@ -37,4 +42,4 @@ const authApi = rootApi.injectEndpoints({
     }),
 });
 
-export const { useLoginMutation, useSignupMutation } = authApi;
+export const { useLoginMutation, useSignupMutation, useIsAuthenticatedQuery } = authApi;

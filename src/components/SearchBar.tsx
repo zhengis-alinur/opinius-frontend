@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
 const SearchBar = () => {
@@ -10,6 +11,7 @@ const SearchBar = () => {
             navigate(`/search/${keyword}`);
         }
     };
+    const { t } = useTranslation();
 
     return (
         <form className="max-w-[480px] w-full px-4 border-none" onSubmit={onSubmit}>
@@ -20,7 +22,7 @@ const SearchBar = () => {
                     type="text"
                     name="search"
                     className="w-full h-12 shadow p-4 rounded-2xl border-none bg-slate-100 border-transparent focus:border-transparent focus:ring-0 dark:bg-dark"
-                    placeholder="Search"
+                    placeholder={t('search')}
                 />
                 <button type="submit">
                     <svg

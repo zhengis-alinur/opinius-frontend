@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-key */
 import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { useDeleteReviewsMutation } from '../../../api/reviewApi';
@@ -44,6 +45,8 @@ const View = ({ user }: { user: User }) => {
         order: formik.values.order,
     });
     const [selectedReviews, setSelectedReviews] = useState<number[]>([]);
+
+    const { t } = useTranslation();
 
     const [deleteReviews] = useDeleteReviewsMutation();
 
@@ -92,7 +95,7 @@ const View = ({ user }: { user: User }) => {
                 <div className="flex gap-5 items-center">
                     <Select
                         name="sortBy"
-                        label="Sort by"
+                        label={t('sort-by')}
                         options={SORTBY_REVIEW}
                         value={formik.values.sortBy}
                         onChange={(value) => formik.setFieldValue('sortBy', value)}
@@ -101,7 +104,7 @@ const View = ({ user }: { user: User }) => {
                     />
                     <Select
                         name="order"
-                        label="Order"
+                        label={t('order')}
                         options={ORDER}
                         value={formik.values.order}
                         onChange={(value) => formik.setFieldValue('order', value)}
@@ -115,7 +118,7 @@ const View = ({ user }: { user: User }) => {
                             formik.handleSubmit();
                         }}
                     >
-                        Apply
+                        {t('apply')}
                     </Button>
                     {currentUser &&
                         (currentUser.id === user.id ||
@@ -166,13 +169,13 @@ const View = ({ user }: { user: User }) => {
                             checked={selectedReviews.length === reviews.length}
                             onChange={onAllSelect}
                         />,
-                        <TableHeadItem title="Review title" />,
-                        <TableHeadItem title="Review object" />,
-                        <TableHeadItem title="My grade" />,
-                        <TableHeadItem title="Tags" />,
-                        <TableHeadItem title="Likes" />,
-                        <TableHeadItem title="Comments" />,
-                        <TableHeadItem title="Rating" />,
+                        <TableHeadItem title={t('review-title')} />,
+                        <TableHeadItem title={t('review-object')} />,
+                        <TableHeadItem title={t('my-grade')} />,
+                        <TableHeadItem title={t('tags')} />,
+                        <TableHeadItem title={t('n-likes')} />,
+                        <TableHeadItem title={t('n-comments')} />,
+                        <TableHeadItem title={t('n-rates')} />,
                     ]}
                 />
             </div>

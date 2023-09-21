@@ -1,5 +1,6 @@
 import './index.css';
 import 'react-tooltip/dist/react-tooltip.css';
+import './i18n';
 
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';

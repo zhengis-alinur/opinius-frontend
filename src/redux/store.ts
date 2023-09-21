@@ -3,6 +3,7 @@ import { setupListeners } from '@reduxjs/toolkit/dist/query/react';
 
 import { rootApi } from '../api/rootApi';
 import authReducer from './reducers/auth';
+import languageReducer from './reducers/language';
 import modeReducer from './reducers/mode';
 
 const store = configureStore({
@@ -10,6 +11,7 @@ const store = configureStore({
         [rootApi.reducerPath]: rootApi.reducer,
         auth: authReducer,
         mode: modeReducer,
+        language: languageReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(rootApi.middleware),

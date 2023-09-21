@@ -1,5 +1,7 @@
 /* eslint-disable react/jsx-key */
+import { t } from 'i18next';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import {
@@ -36,6 +38,7 @@ const View = () => {
     const [unBlockUsers] = useUnBlockUsersMutation();
     const [setAdmin] = useSetAdminMutation();
     const [setUser] = useSetUserMutation();
+    const { t } = useTranslation();
 
     const fetchData = async () => {
         try {
@@ -92,14 +95,14 @@ const View = () => {
                 <div className="flex gap-5 items-center">
                     <Select
                         name="sortBy"
-                        label="Sort by"
+                        label={t('sort-by')}
                         options={SORTBY_USER}
                         value={sortBy}
                         onChange={(value) => setSortBy(value)}
                     />
                     <Select
                         name="order"
-                        label="Order"
+                        label={t('order')}
                         options={ORDER}
                         value={order}
                         onChange={(value) => setOrder(value)}
@@ -110,7 +113,7 @@ const View = () => {
                             onFilterApply();
                         }}
                     >
-                        Apply
+                        {t('apply')}
                     </Button>
                     {selectedUsers.length > 0 && (
                         <TableToolbar

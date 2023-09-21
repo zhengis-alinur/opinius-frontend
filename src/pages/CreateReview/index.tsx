@@ -2,6 +2,7 @@ import { useFormik } from 'formik';
 import HTMLReactParser from 'html-react-parser';
 import JoditEditor from 'jodit-react';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import * as Yup from 'yup';
 
@@ -31,6 +32,7 @@ const СreateReview = () => {
     const [tags, setTags] = useState<Set<string>>(new Set());
     const editor = useRef(null);
     const [content, setContent] = useState('');
+    const { t } = useTranslation();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -103,8 +105,8 @@ const СreateReview = () => {
                     <div className="flex-1 w-full">
                         <Input
                             name="title"
-                            label="Title"
-                            placeholder="Title"
+                            label={t('review-title')}
+                            placeholder={t('title-placeholder')}
                             onChange={formik.handleChange}
                             value={formik.values.title}
                             onBlur={formik.handleBlur}
@@ -112,8 +114,8 @@ const СreateReview = () => {
                         />
                         <Input
                             name="objectName"
-                            label="Object name"
-                            placeholder="Object name"
+                            label={t('review-object')}
+                            placeholder={t('object-placeholder')}
                             onChange={formik.handleChange}
                             value={formik.values.objectName}
                             onBlur={formik.handleBlur}
@@ -123,7 +125,7 @@ const СreateReview = () => {
                             <div className="flex w-full gap-16 justify-start items-center md:w-1/2">
                                 <Range
                                     name="grade"
-                                    label="My grade"
+                                    label={t('my-grade')}
                                     min={0}
                                     max={10}
                                     step={1}
@@ -140,7 +142,7 @@ const СreateReview = () => {
                             <div className="w-full md:w-1/2">
                                 <Select
                                     name="category"
-                                    label="Select category"
+                                    label={t('select-category')}
                                     options={categories.map((category) => ({
                                         value: String(category.id),
                                         label: category.name,
@@ -166,8 +168,7 @@ const СreateReview = () => {
                     <div className="flex-1 w-full">
                         <Alert type="info">
                             <p>
-                                To add <b>anytag</b> into you review just write anywhere
-                                in text usin hash(#) symbol. F.e. <b>#anytag</b>
+                                <p>{t('tag-adding-info')}</p>
                             </p>
                         </Alert>
                         <div className="flex flex-col">
@@ -184,7 +185,7 @@ const СreateReview = () => {
                             />
                             <div>
                                 <h1 className="text-3xl text-center font-bold m-3">
-                                    Preview
+                                    {t('preview')}
                                 </h1>
                                 <div className=" border-2 p-3">
                                     {HTMLReactParser(content)}
@@ -195,7 +196,7 @@ const СreateReview = () => {
                 </div>
                 <div className="flex items-center pt-3 mt-3 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
                     <Button type="submit">
-                        {isLoading ? 'Creating...' : 'I accept'}
+                        {isLoading ? t('creating') : t('create-review')}
                     </Button>
                 </div>
             </form>

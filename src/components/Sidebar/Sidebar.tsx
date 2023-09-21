@@ -1,4 +1,5 @@
 import { HTMLAttributes } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { ADMIN_ROLE_ID } from '../../constants';
@@ -16,13 +17,17 @@ const SidebarItem = (props: HTMLAttributes<HTMLDivElement>) => (
 );
 
 const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
+    const { t } = useTranslation();
+
     const user = useAppSelector(selectUser);
     const navigate = useNavigate();
     return (
         <div
-            className={`hidden flex-col items-center whitespace-nowrap h-fit bg-white p-5 gap-10 rounded-xl shadow-xl ${props.className} md:flex dark:bg-gray`}
+            className={`hidden flex-col items-center whitespace-nowrap min-w-[200px] h-fit bg-white p-5 gap-10 rounded-xl shadow-xl ${props.className} md:flex dark:bg-gray`}
         >
-            <ProfileImage src={user.avatar} />
+            <Link to={`/profile/${user.id}`}>
+                <ProfileImage src={user.avatar} />
+            </Link>
             <div className="flex flex-col items-start justify-between gap-10">
                 <SidebarItem>
                     <button
@@ -32,12 +37,14 @@ const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
                         {user.roleId === ADMIN_ROLE_ID ? (
                             <>
                                 <Admin />
-                                <p className=" text-lime-700"> Administration</p>
+                                <p className=" text-lime-700">
+                                    {t('sidebar-admin-page')}
+                                </p>
                             </>
                         ) : (
                             <>
                                 <Account />
-                                <p>Profile page</p>
+                                <p>{t('sidebar-profile-page')}</p>
                             </>
                         )}
                     </button>
@@ -45,20 +52,20 @@ const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
                 <SidebarItem>
                     <Link to="/" className="flex flex-nowrap gap-2 items-center ">
                         <Home />
-                        <p> Home page</p>
+                        <p>{t('sidebar-home-page')}</p>
                     </Link>
                 </SidebarItem>
                 <SidebarItem>
                     <Link to="/favorites" className="flex flex-nowrap gap-2 items-center">
                         <Likes />
-                        <p>Favorites reviews</p>
+                        <p>{t('sidebar-favorites-page')}</p>
                     </Link>
                 </SidebarItem>
 
                 <SidebarItem>
                     <Link to="/" className="flex flex-nowrap gap-2 items-center">
                         <Settings />
-                        <p>Settings</p>
+                        <p>{t('sidebar-settings-page')}</p>
                     </Link>
                 </SidebarItem>
             </div>

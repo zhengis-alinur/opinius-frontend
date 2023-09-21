@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
 import {
@@ -26,6 +27,7 @@ const View = () => {
     const [reviewUser, setReviewUserUser] = useState<User>();
     const [review, setReview] = useState<Review>();
     const [likeReview] = useLikeReviewMutation();
+    const { t } = useTranslation();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -55,13 +57,14 @@ const View = () => {
                         <Content text={review.text} />
                         <div className="self-start">
                             <p className="font-bold">
-                                {reviewUser.username + "'"}s final rate:{' '}
+                                {reviewUser.username + t('final-rate')}
+                                {': '}
                                 <span className="text-3xl">{review.grade}</span>/10
                             </p>
                         </div>
                         {user ? (
                             <>
-                                <h1>Did you like this review?</h1>
+                                <h1>{t('did-liked-q')}</h1>
                                 <Likes
                                     scale={4}
                                     liked={getLike.data}
@@ -72,9 +75,7 @@ const View = () => {
                                 <Rate review={review} />
                             </>
                         ) : (
-                            <h1>
-                                Please, log in to be able to like, rate or comment review
-                            </h1>
+                            <h1>{t('login-to-rate')}</h1>
                         )}
                     </Container>
                     {user && <AddComment review={review} />}

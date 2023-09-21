@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useGetReviewsQuery } from '../../api/reviewApi';
 import { ReviewCard } from '../../components';
@@ -6,6 +7,7 @@ import { ReviewCard } from '../../components';
 const BestReviews = () => {
     const [hidden, setHidden] = useState(true);
     const { data, isLoading } = useGetReviewsQuery();
+    const { t } = useTranslation();
     return (
         <div className="`w-full " id="accordion-collapse" data-accordion="collapse">
             <h2 id="accordion-collapse-heading-1">
@@ -19,7 +21,7 @@ const BestReviews = () => {
                     aria-expanded="true"
                     aria-controls="accordion-collapse-body-1"
                 >
-                    <span>Top 12 the best reviews</span>
+                    <span>{t('top-12-title')}</span>
                     <svg
                         data-accordion-icon
                         className={`w-3 h-3 rotate-${hidden ? 180 : 0} shrink-0`}

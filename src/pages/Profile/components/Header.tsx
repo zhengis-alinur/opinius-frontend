@@ -1,4 +1,6 @@
+import { t } from 'i18next';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
 import { useGetUserStatsQuery, useSetAvatarMutation } from '../../../api/userApi';
@@ -26,25 +28,27 @@ const UserInfo = ({
     </div>
 );
 
-const CreateReviewButton = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
-    <Button {...props} onClick={props.onClick}>
-        Create new Review
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="30"
-            height="30"
-            fill="currentColor"
-            className="bi bi-plus"
-            viewBox="0 0 16 16"
-        >
-            <path
-                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
-                fill="white"
-            ></path>
-        </svg>
-    </Button>
-);
-
+const CreateReviewButton = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
+    const { t } = useTranslation();
+    return (
+        <Button {...props} onClick={props.onClick}>
+            {t('create-review')}
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="30"
+                height="30"
+                fill="currentColor"
+                className="bi bi-plus"
+                viewBox="0 0 16 16"
+            >
+                <path
+                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
+                    fill="white"
+                ></path>
+            </svg>
+        </Button>
+    );
+};
 const Header = ({ user }: { user: User }) => {
     const navigate = useNavigate();
     const currentUser = useAppSelector(selectUser);
@@ -53,6 +57,7 @@ const Header = ({ user }: { user: User }) => {
     const dispatch = useAppDispatch();
 
     const [setAvatar] = useSetAvatarMutation();
+    const { t } = useTranslation();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -100,30 +105,34 @@ const Header = ({ user }: { user: User }) => {
                     <p className="text-gray-300">{user.username}</p>
                     <p className="text-gray-300">{user.email}</p>
                     {user.blocked && (
-                        <p className="text-rose-900 font-bold text-3xl">User blocked</p>
+                        <p className="text-rose-900 font-bold text-3xl">
+                            {t('user-blocked')}
+                        </p>
                     )}
                 </div>
                 {stats && (
                     <div className="flex flex-col items-center  gap-16 lg:flex-row lg:items-end">
                         <div className="flewwx flex-col items-center">
                             <h1 className="text-gray-200 text-3xl text-left ">
-                                {stats.reviews === 0 ? 'No' : stats.reviews} review
-                                {stats.reviews === 1 ? '' : 's'}
+                                {stats.reviews === 0 && t('no-reviews')}
+                                {stats.reviews === 1 && '1 ' + t('review').toLowerCase()}
+                                {stats.reviews > 1 &&
+                                    `${t('n-reviews')}: ${stats.reviews}`}
                             </h1>
                         </div>
                         <UserInfo
                             colorClass="text-red-500"
-                            info="Likes"
+                            info={t('n-likes')}
                             value={user.likesCount}
                         />
                         <UserInfo
                             colorClass="text-cyan-500"
-                            info="Comments"
+                            info={t('n-comments')}
                             value={user.commentsCount}
                         />
                         <UserInfo
                             colorClass="text-amber-500"
-                            info="Rated"
+                            info={t('n-rates')}
                             value={user.ratedCount}
                         />
                     </div>

@@ -17,12 +17,18 @@ export const setAuthDataToLocalStorage = (user: User, token?: string) => {
 
 export const setModeToLocalStorage = (darkMode: boolean) =>
     localStorage.setItem('darkMode', JSON.stringify(darkMode));
+
+export const setLanguageToLocalStorage = (language: string) =>
+    localStorage.setItem('language', language);
+
 export const getModeFromLocalStorage = () => {
     const darkMode = localStorage.getItem('darkMode');
     if (darkMode) {
         return JSON.parse(darkMode);
     }
 };
+
+export const getLanguageFromLocalStorage = () => localStorage.getItem('language');
 
 export const categoriesToSelectOptions = (categories: Category[]) =>
     categories.map((category) => ({
