@@ -7,6 +7,7 @@ import Comment from '../icons/Comment';
 import Likes from '../icons/Likes';
 import Star from '../icons/Star';
 import { Review, User } from '../types';
+import { getDateFromMysql } from '../utils';
 import ProfileImage from './ProfileImage';
 
 const ReviewPost = ({
@@ -51,8 +52,8 @@ const ReviewPost = ({
                         })`,
                     }}
                 >
-                    <div className="dark:bg-gray">
-                        <p className="bg-white w-full p-5 font-semibold text-center whitespace-nowrap truncate dark:bg-gray">
+                    <div className="bg-bg dark:bg-gray">
+                        <p className=" w-full p-5 font-semibold text-center whitespace-nowrap truncate dark:bg-gray">
                             {review.title}
                         </p>
                         <div className="flex w-full justify-center gap-5 dark:bg-gray ">
@@ -83,7 +84,7 @@ const ReviewPost = ({
                 </div>
             </div>
             <p className="absolute text-gray-500 right-5 top-5 text-xs">
-                21 September 2021
+                {getDateFromMysql(review.createdAt)}
             </p>
         </Link>
     );

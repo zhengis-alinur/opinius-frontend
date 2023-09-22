@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import { useGetUserQuery } from '../../../api/userApi';
+import { ProfileImage } from '../../../components';
 import Container from '../../../components/Container';
 import { Comment as CommentType } from '../../../types';
+import { getDateFromMysql, getTimeFromMysql } from '../../../utils';
 
 const Comment = ({ comment }: { comment: CommentType }) => {
     const { data } = useGetUserQuery(comment.userId);
@@ -32,24 +35,25 @@ const Comment = ({ comment }: { comment: CommentType }) => {
                 </div>
 
                 <footer className="mt-6">
-                    <div className="flex items-center">
+                    <Link to={`/profile/${data?.id}`} className="flex items-center">
                         <div className="flex-shrink-0">
-                            <img
+                            <ProfileImage
                                 className="h-10 w-10 rounded-full"
                                 src={data?.avatar}
-                                alt="Description"
                             />
                         </div>
                         <div className="ml-4">
                             <div className="text-base font-semibold text-gray-800 dark:text-gray-400">
                                 {data?.username}
                             </div>
-                            <div className="text-xs text-gray-500">Source title</div>
+                            <div className="text-xs text-gray-500">{data?.email}</div>
                         </div>
-                    </div>
+                    </Link>
                 </footer>
-                <p className="absolute text-gray-500 right-5 bottom-5 text-xs">
-                    21 September 2021
+                <p className="absolute right-5 bottom-5 text-xs">
+                    {getDateFromMysql(comment.createdAt)}
+                    <span> at </span>
+                    <span>{getTimeFromMysql(comment.createdAt)}</span>
                 </p>
             </blockquote>
         </Container>

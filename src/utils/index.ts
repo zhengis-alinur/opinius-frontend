@@ -51,3 +51,9 @@ export const extractHashtags = (text: string) => {
     const hashtagsWithoutHash = hashtagsWithHash.map((hashtag) => hashtag.slice(1));
     return new Set(hashtagsWithoutHash);
 };
+
+export const getDateFromMysql = (date: string) => date.split('T')[0];
+export const getTimeFromMysql = (date: string) => {
+    const time = date.split('T')[1].split(':');
+    return `${time[0]}:${time[1]}`;
+};

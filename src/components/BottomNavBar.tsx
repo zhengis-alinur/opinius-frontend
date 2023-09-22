@@ -1,19 +1,15 @@
-import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import Moon from '../icons/Moon';
 import { useAppSelector } from '../redux/hooks';
 import { selectUser } from '../redux/selectors';
-import ThemeSwitcher from './ThemeSwitcher';
 
 const BottomNavBar = () => {
-    const { t } = useTranslation();
     const user = useAppSelector(selectUser);
     return (
         <>
             {user && (
                 <div className="fixed block z-50 w-full h-16 max-w-lg -translate-x-1/2 bg-white border border-gray-200 rounded-full bottom-0 left-1/2 dark:bg-gray dark:border-gray-600 md:hidden">
-                    <div className="grid h-full max-w-lg grid-cols-4 mx-auto sm:grid-cols-5">
+                    <div className="grid h-full max-w-lg mx-auto grid-cols-5">
                         <Link
                             to={`/`}
                             data-tooltip-target="tooltip-home"
@@ -50,12 +46,11 @@ const BottomNavBar = () => {
 
                             <span className="sr-only">Wallet</span>
                         </Link>
-
-                        <div className=" hidden items-center justify-center sm:flex">
+                        <div className="flex items-center justify-center">
                             <Link
                                 to={`/createReview/${user.id}`}
-                                data-tooltip-target="tooltip-new"
-                                className="items-center justify-center w-10 h-10 font-medium bg-blue-600 rounded-full hover:bg-blue-700 group focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800"
+                                type="button"
+                                className="inline-flex items-center justify-center w-10 h-10 font-medium bg-blue-600 rounded-full hover:bg-blue-700 group focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800"
                             >
                                 <svg
                                     className="w-4 h-4 text-white"
@@ -76,7 +71,28 @@ const BottomNavBar = () => {
                             </Link>
                         </div>
 
-                        <ThemeSwitcher />
+                        <Link
+                            to="/settings"
+                            data-tooltip-target="tooltip-settings"
+                            className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+                        >
+                            <svg
+                                className="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 20 20"
+                            >
+                                <path
+                                    stroke="currentColor"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M4 12.25V1m0 11.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M4 19v-2.25m6-13.5V1m0 2.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M10 19V7.75m6 4.5V1m0 11.25a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5ZM16 19v-2"
+                                />
+                            </svg>
+                            <span className="sr-only">Settings</span>
+                        </Link>
                         <Link
                             to={`/profile/${user.id}`}
                             data-tooltip-target="tooltip-profile"

@@ -1,6 +1,8 @@
 import { FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import Spinner from '../../../components/Spinner';
+
 const CommentInput = ({ onComment }: { onComment: (text: string) => void }) => {
     const [comment, setComment] = useState('');
     const { t } = useTranslation();

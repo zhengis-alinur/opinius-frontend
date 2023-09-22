@@ -16,6 +16,7 @@ export type Review = {
     ratings: Rating[];
     rating: number;
     userId: number;
+    createdAt: string;
     comments: Comment[];
 };
 

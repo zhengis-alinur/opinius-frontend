@@ -2,7 +2,7 @@ import { useFormik } from 'formik';
 import JoditEditor from 'jodit-react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import * as Yup from 'yup';
 
 import { useGetCategoriesQuery } from '../../api/categoryApi';
@@ -24,7 +24,10 @@ import { url } from '../../utils/cloudinary';
 const EditReview = () => {
     const { id } = useParams();
     const [review, setReview] = useState<
-        Omit<Review, 'likes' | 'id' | 'comments' | 'userId' | 'ratings' | 'rating'>
+        Omit<
+            Review,
+            'likes' | 'id' | 'comments' | 'userId' | 'ratings' | 'rating' | 'createdAt'
+        >
     >({
         title: '',
         objectName: '',
@@ -34,6 +37,7 @@ const EditReview = () => {
         tags: [],
         text: '',
     });
+    const navigate = useNavigate();
     const [updateReview, { isLoading }] = useUpdateReviewMutation();
     const getReview = useGetReviewByIdQuery(id || '');
 
@@ -116,7 +120,9 @@ const EditReview = () => {
                     tags: Array.from(tags),
                     image: imageUrl || review.image,
                 };
-                await updateReview(reviewData);
+                updateReview(reviewData).then(() => navigate(`/review/${id}`));
+                formik.resetForm();
+                setContent('');
             } catch (error) {
                 console.error('Error creating review:', error);
             }

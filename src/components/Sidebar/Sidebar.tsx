@@ -23,10 +23,11 @@ const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
     const navigate = useNavigate();
     return (
         <div
-            className={`hidden flex-col items-center whitespace-nowrap min-w-[200px] h-fit bg-white p-5 gap-10 rounded-xl shadow-xl ${props.className} md:flex dark:bg-gray`}
+            className={`hidden flex-col items-center whitespace-nowrap xl:min-w-[200px] h-fit bg-white p-5 gap-10 rounded-xl shadow-xl ${props.className} md:flex dark:bg-gray`}
         >
             <Link to={`/profile/${user.id}`}>
                 <ProfileImage src={user.avatar} />
+                <p className="mt-3">{user.username}</p>
             </Link>
             <div className="flex flex-col items-start justify-between gap-10">
                 <SidebarItem>
@@ -37,14 +38,16 @@ const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
                         {user.roleId === ADMIN_ROLE_ID ? (
                             <>
                                 <Admin />
-                                <p className=" text-lime-700">
+                                <p className=" hidden xl:block text-lime-700">
                                     {t('sidebar-admin-page')}
                                 </p>
                             </>
                         ) : (
                             <>
                                 <Account />
-                                <p>{t('sidebar-profile-page')}</p>
+                                <p className="hidden xl:block">
+                                    {t('sidebar-profile-page')}
+                                </p>
                             </>
                         )}
                     </button>
@@ -52,20 +55,20 @@ const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
                 <SidebarItem>
                     <Link to="/" className="flex flex-nowrap gap-2 items-center ">
                         <Home />
-                        <p>{t('sidebar-home-page')}</p>
+                        <p className="hidden xl:block">{t('sidebar-home-page')}</p>
                     </Link>
                 </SidebarItem>
                 <SidebarItem>
                     <Link to="/favorites" className="flex flex-nowrap gap-2 items-center">
                         <Likes />
-                        <p>{t('sidebar-favorites-page')}</p>
+                        <p className="hidden xl:block">{t('sidebar-favorites-page')}</p>
                     </Link>
                 </SidebarItem>
 
                 <SidebarItem>
-                    <Link to="/" className="flex flex-nowrap gap-2 items-center">
+                    <Link to="/settings" className="flex flex-nowrap gap-2 items-center">
                         <Settings />
-                        <p>{t('sidebar-settings-page')}</p>
+                        <p className="hidden xl:block">{t('sidebar-settings-page')}</p>
                     </Link>
                 </SidebarItem>
             </div>

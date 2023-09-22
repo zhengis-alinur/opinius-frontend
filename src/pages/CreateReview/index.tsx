@@ -3,7 +3,7 @@ import HTMLReactParser from 'html-react-parser';
 import JoditEditor from 'jodit-react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import * as Yup from 'yup';
 
 import { useGetCategoriesQuery } from '../../api/categoryApi';
@@ -25,7 +25,7 @@ import { url } from '../../utils/cloudinary';
 
 const СreateReview = () => {
     const { userId } = useParams();
-    const [createReview, { isLoading }] = useCreateReviewMutation();
+    const [createReview, { isLoading, isSuccess }] = useCreateReviewMutation();
     const getCategories = useGetCategoriesQuery();
     const [categories, setCategories] = useState<Category[]>([]);
     const [imageUrl, setImageUrl] = useState('');
@@ -33,7 +33,7 @@ const СreateReview = () => {
     const editor = useRef(null);
     const [content, setContent] = useState('');
     const { t } = useTranslation();
-
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -91,7 +91,9 @@ const СreateReview = () => {
                     image: imageUrl,
                     userId: parseInt(userId || ''),
                 };
-                await createReview(reviewData);
+                createReview(reviewData).then(() => navigate(`/profile/${userId}}`));
+                formik.resetForm();
+                setContent('');
             } catch (error) {
                 console.error('Error creating review:', error);
             }

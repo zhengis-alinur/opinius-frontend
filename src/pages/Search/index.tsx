@@ -5,6 +5,7 @@ import { useParams } from 'react-router';
 
 import { useSearchQuery } from '../../api/reviewApi';
 import { ReviewPost } from '../../components';
+import Spinner from '../../components/Spinner';
 import { Review } from '../../types';
 
 const Search = () => {
@@ -29,16 +30,19 @@ const Search = () => {
     }, [keyword]);
 
     return (
-        <div className="relative w-full">
-            <div className="flex flex-col items-center justify-center gap-5 w-full flex-wrap">
-                <h1 className="text-2xl text-left w-full">
-                    {reviews.length === 0
-                        ? t('no-review-found')
-                        : `${t('found')} ${t('n-reviews').toLowerCase()} "${keyword}": ${
-                              reviews.length
-                          }`}
-                </h1>
-
+        <div className="relative w-full ">
+            <div className="flex flex-col min-h-screen items-center justify-start gap-5 w-full flex-wrap">
+                {getReviews.isLoading ? (
+                    <Spinner />
+                ) : (
+                    <h1 className="text-2xl text-left w-full">
+                        {reviews.length === 0
+                            ? t('no-review-found')
+                            : `${t('found')} ${t(
+                                  'n-reviews',
+                              ).toLowerCase()} "${keyword}": ${reviews.length}`}
+                    </h1>
+                )}
                 {reviews.map((review) => (
                     <ReviewPost key={review.id} review={review} />
                 ))}

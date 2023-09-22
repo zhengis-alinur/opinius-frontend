@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useGetBestReviewsQuery } from '../../api/reviewApi';
 import { ReviewCard } from '../../components';
+import Spinner from '../../components/Spinner';
 
 const BestReviews = () => {
     const [hidden, setHidden] = useState(true);
@@ -48,7 +49,7 @@ const BestReviews = () => {
                 <div className="relative w-full mt-4">
                     <div className="flex items-center justify-center gap-5 w-full flex-wrap">
                         {isLoading ? (
-                            <p>Loading</p>
+                            <Spinner />
                         ) : (
                             data?.map((review) => (
                                 <ReviewCard key={review.id} review={review} />

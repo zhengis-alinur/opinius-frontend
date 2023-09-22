@@ -27,6 +27,9 @@ const Comments = ({ reviewId }: { reviewId: number }) => {
     }, []);
     return (
         <>
+            <h1>
+                {t('n-comments')} ({comments.length})
+            </h1>
             {comments.length > 0 ? (
                 comments.map((comment, index) => (
                     <Comment comment={comment} key={index} />

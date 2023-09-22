@@ -7,6 +7,7 @@ import Likes from '../icons/Likes';
 import Star from '../icons/Star';
 import { Review, User } from '../types';
 import ProfileImage from './ProfileImage';
+import ReviewStats from './ReviewStats';
 
 const ReviewCard = ({
     review,
@@ -49,26 +50,7 @@ const ReviewCard = ({
                     {review.title}
                 </p>
             </div>
-            <div className="flex justify-center gap-5">
-                <div className="flex gap-1">
-                    <Likes />
-                    <p className="text-xs">
-                        <span className="font-bold">{review.likes.length}</span>
-                    </p>
-                </div>
-                <div className="flex gap-1">
-                    <Comment />
-                    <p className="text-xs">
-                        <span className="font-bold">{review.comments.length}</span>
-                    </p>
-                </div>
-                <div className="flex gap-1">
-                    <Star />
-                    <p className="text-xs">
-                        <span className="font-bold">{review.rating}</span>
-                    </p>
-                </div>
-            </div>
+            <ReviewStats review={review} />
         </Link>
     );
 };

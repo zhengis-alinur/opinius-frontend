@@ -138,7 +138,7 @@ const View = ({ user }: { user: User }) => {
                             checked={selectedReviews.includes(review.id)}
                             onChange={() => toggleReviewSelection(review.id)}
                         />,
-                        <p>{review.title}</p>,
+                        <Link to={`/editReview/${review.id}`}>{review.title}</Link>,
                         <p>{review.objectName}</p>,
                         <p>{review.grade}</p>,
                         <div className="flex flex-col items-start">
@@ -158,11 +158,12 @@ const View = ({ user }: { user: User }) => {
                         <p>{review.rating}</p>,
                         <Link to={`/editReview/${review.id}`}>
                             <Edit
-                                className={`hidden ${
+                                className={`${
                                     currentUser &&
                                     (user.id === currentUser.id ||
-                                        currentUser.roleId === ADMIN_ROLE_ID) &&
-                                    'block'
+                                        currentUser.roleId === ADMIN_ROLE_ID)
+                                        ? 'block'
+                                        : 'hidden'
                                 }`}
                             />
                         </Link>,

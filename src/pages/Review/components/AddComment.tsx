@@ -1,3 +1,4 @@
+import { Spinner } from 'flowbite-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -7,10 +8,13 @@ import CommentInput from './CommentInput';
 
 const AddComment = ({ review }: { review: Review }) => {
     const [showArea, setShowArea] = useState(false);
-    const [comment] = useCommentReviewMutation();
-    const onComment = (text: string) => {
-        comment({ reviewId: review.id, comment: text });
-        setShowArea(false);
+    const [comment, { isLoading }] = useCommentReviewMutation();
+    const onComment = async (text: string) => {
+        try {
+            await comment({ reviewId: review.id, comment: text });
+        } catch (error) {
+            console.error(error);
+        }
     };
     const { t } = useTranslation();
     return (

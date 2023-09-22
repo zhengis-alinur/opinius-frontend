@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
 import { useGetUserQuery } from '../../api/userApi';
+import ReviewStats from '../../components/ReviewStats';
 import { ADMIN_ROLE_ID } from '../../constants';
 import { useAppSelector } from '../../redux/hooks';
 import { selectUser } from '../../redux/selectors';

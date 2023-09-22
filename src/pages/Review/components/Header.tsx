@@ -2,11 +2,16 @@ import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import ProfileImage from '../../../components/ProfileImage';
+import ReviewStats from '../../../components/ReviewStats';
 import { ADMIN_ROLE_ID } from '../../../constants';
+import Comment from '../../../icons/Comment';
 import Edit from '../../../icons/Edit';
+import Likes from '../../../icons/Likes';
+import Star from '../../../icons/Star';
 import { useAppSelector } from '../../../redux/hooks';
 import { selectUser } from '../../../redux/selectors';
 import { Review, User } from '../../../types';
+import { getDateFromMysql } from '../../../utils';
 
 const Header = ({ reviewUser, review }: { reviewUser: User; review: Review }) => {
     const navigate = useNavigate();
@@ -31,14 +36,16 @@ const Header = ({ reviewUser, review }: { reviewUser: User; review: Review }) =>
                     <h1 className="text-white">{review.title}</h1>
                 </div>
             </div>
-            <p className="absolute text-gray-500 right-5 bottom-3 text-xs">
-                21 September 2021
+            <p className="absolute bg-white p-2 rounded-md right-5 bottom-3 text-xs">
+                {getDateFromMysql(review.createdAt)}
             </p>
             {user && (user.id === review.userId || user.roleId === ADMIN_ROLE_ID) && (
-                <Edit
-                    onClick={() => navigate(`/editReview/${review.id}`)}
-                    className="absolute right-5 top-3"
-                />
+                <Link
+                    to={`/editReview/${review.id}`}
+                    className="absolute  right-5 top-3 bg-white p-3 rounded-md"
+                >
+                    <Edit />
+                </Link>
             )}
         </div>
     );

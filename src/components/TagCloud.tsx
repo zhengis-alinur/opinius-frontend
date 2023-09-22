@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import { TagCloud } from 'react-tagcloud';
 
 import { useGetTagStatsQuery } from '../api/tagApi';
+import Spinner from './Spinner';
 
 type Tag = {
     value: string;
@@ -30,13 +31,19 @@ const View = () => {
     }, []);
 
     return (
-        <TagCloud
-            minSize={12}
-            maxSize={35}
-            tags={tags}
-            className="cursor-pointer"
-            onClick={(tag: { value: string }) => navigate(`/search/${tag.value}`)}
-        />
+        <>
+            {getTags.isLoading ? (
+                <Spinner />
+            ) : (
+                <TagCloud
+                    minSize={12}
+                    maxSize={35}
+                    tags={tags}
+                    className="cursor-pointer"
+                    onClick={(tag: { value: string }) => navigate(`/search/${tag.value}`)}
+                />
+            )}
+        </>
     );
 };
 
