@@ -3,12 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import { useLoginMutation, UserResponse } from '../../api/authApi';
-import { Alert, Button, Input, Logo } from '../../components';
+import { Button, Input, Logo } from '../../components';
 import { useAppDispatch } from '../../redux/hooks';
 import { setAuthData } from '../../redux/reducers/auth';
 
 const Login = () => {
-    const [login, { isLoading, error }] = useLoginMutation();
+    const [login, { isLoading }] = useLoginMutation();
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -41,7 +41,7 @@ const Login = () => {
             <div className="flex flex-col items-center gap-6 bg-white rounded-lg shadow-xl p-10 pb-3 dark:bg-gray">
                 <Logo />
                 <form onSubmit={formik.handleSubmit}>
-                    <div className="flex flex-col w-96">
+                    <div className="flex flex-col w-full xl:w-96">
                         <Input
                             name="email"
                             label="Email"

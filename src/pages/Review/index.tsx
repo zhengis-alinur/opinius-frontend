@@ -5,6 +5,7 @@ import { useParams } from 'react-router';
 import { useGetReviewByIdQuery } from '../../api/reviewApi';
 import Container from '../../components/Container';
 import ReviewStats from '../../components/ReviewStats';
+import Spinner from '../../components/Spinner';
 import { useAppSelector } from '../../redux/hooks';
 import { selectUser } from '../../redux/selectors';
 import { Review, User } from '../../types';
@@ -36,33 +37,38 @@ const View = () => {
     }, []);
 
     return (
-        <div className="flex flex-col justify-between w-full gap-5">
-            {review && reviewUser && (
-                <>
-                    <Container className="flex flex-col gap-5 items-center">
-                        <Header reviewUser={reviewUser} review={review} />
-                        <Tags tags={review.tags} />
-                        <Content text={review.text} />
-                        <div className="self-start">
-                            <p className="font-bold">
-                                {reviewUser.username + t('final-rate')}
-                                {': '}
-                                <span className="text-3xl">{review.grade}</span>/10
-                            </p>
-                        </div>
-                        {user ? (
-                            <>
-                                <h1>{t('did-liked-q')}</h1>
-                                <Like review={review} user={user} />
-                                <Rate review={review} />
-                            </>
-                        ) : (
-                            <h1>{t('login-to-rate')}</h1>
-                        )}
-                    </Container>
-                    {user && <AddComment review={review} />}
-                    <Comments reviewId={review.id} />
-                </>
+        <div className="flex flex-col justify-between items-center w-full gap-5 min-h-screen">
+            {getReview.isLoading ? (
+                <Spinner />
+            ) : (
+                review &&
+                reviewUser && (
+                    <>
+                        <Container className="flex flex-col gap-5 items-center">
+                            <Header reviewUser={reviewUser} review={review} />
+                            <Tags tags={review.tags} />
+                            <Content text={review.text} />
+                            <div className="self-start">
+                                <p className="font-bold">
+                                    {reviewUser.username + t('final-rate')}
+                                    {': '}
+                                    <span className="text-3xl">{review.grade}</span>/10
+                                </p>
+                            </div>
+                            {user ? (
+                                <>
+                                    <h1>{t('did-liked-q')}</h1>
+                                    <Like review={review} user={user} />
+                                    <Rate review={review} />
+                                </>
+                            ) : (
+                                <h1>{t('login-to-rate')}</h1>
+                            )}
+                        </Container>
+                        {user && <AddComment review={review} />}
+                        <Comments reviewId={review.id} />
+                    </>
+                )
             )}
         </div>
     );

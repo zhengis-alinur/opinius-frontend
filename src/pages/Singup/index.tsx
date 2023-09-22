@@ -33,9 +33,9 @@ const Signup = () => {
     });
     return (
         <div className="container mx-auto w-full h-screen flex flex-col justify-center items-center dark:bg-dark dark:text-dark-text">
-            <div className="flex flex-col items-center gap-6 bg-white rounded-lg shadow-xl p-10 pb-3 dark:bg-gray">
+            <div className="flex flex-col items-center gap-6 bg-white rounded-lg shadow-xl p-3 pb-3 dark:bg-gray m-3 xl:m-0 md:p-10">
                 <Logo />
-                <form className="flex flex-col w-96">
+                <form className="flex flex-col w-full xl:w-96">
                     <div className="flex gap-5 mb-2">
                         <Input
                             name="firstName"
