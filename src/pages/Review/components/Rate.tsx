@@ -38,8 +38,8 @@ const Rate = ({ review }: { review: Review }) => {
                     });
                     fetchData();
                 }}
-                emptySymbol={isLoading ? <Spinner /> : <Star scale={3} />}
-                fullSymbol={isLoading ? <Spinner /> : <Star full scale={3} />}
+                emptySymbol={isLoading ? <Spinner /> : <Star scale={2} />}
+                fullSymbol={isLoading ? <Spinner /> : <Star full scale={2} />}
             />
             <span>{getRating.data?.rating}/5</span>
         </div>
